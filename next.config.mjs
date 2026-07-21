@@ -2,15 +2,13 @@
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  output: "export",
+  basePath: process.env.NODE_ENV === "production" ? "/Demo_Website" : "",
   compiler: {
     removeConsole: process.env.NODE_ENV === "production" ? { exclude: ["error"] } : false,
   },
   images: {
-    formats: ["image/avif", "image/webp"],
-    remotePatterns: [
-      { protocol: "https", hostname: "images.unsplash.com" },
-      { protocol: "https", hostname: "plus.unsplash.com" },
-    ],
+    unoptimized: true,
   },
   transpilePackages: ["three"],
   experimental: {

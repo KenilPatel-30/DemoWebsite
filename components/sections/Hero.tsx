@@ -7,6 +7,7 @@ import Button from "@/components/ui/Button";
 import { SITE } from "@/lib/site";
 
 const ease = [0.16, 1, 0.3, 1] as const;
+const basePath = process.env.NODE_ENV === "production" ? "/Demo_Website" : "";
 
 export default function Hero() {
   const [isHovered, setIsHovered] = useState(false);
@@ -172,7 +173,7 @@ export default function Hero() {
             className="text-center font-syne font-extrabold tracking-tighter leading-[0.85] uppercase text-[clamp(2.5rem,10.5vw,10rem)] pointer-events-none"
             style={{
               fontFamily: "var(--font-syne), sans-serif",
-              backgroundImage: textureType === "beans" ? "url('/images/coffee-beans.png')" : "url('/images/coffee-foam.png')",
+              backgroundImage: textureType === "beans" ? `url('${basePath}/images/coffee-beans.png')` : `url('${basePath}/images/coffee-foam.png')`,
               backgroundSize: textureType === "beans" ? "clamp(150px, 30vw, 250px)" : "clamp(300px, 60vw, 600px)", 
               backgroundRepeat: "repeat",
               WebkitBackgroundClip: "text",
