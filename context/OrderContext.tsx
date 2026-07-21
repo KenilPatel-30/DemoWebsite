@@ -26,8 +26,8 @@ type OrderContextType = {
   cartTotal: number;
   cartCount: number;
   // Navigation State
-  currentView: "home" | "menu" | "cart" | "checkout" | "orderConfirmed" | "orders" | "bookTable" | "bookingConfirmed";
-  setCurrentView: (view: "home" | "menu" | "cart" | "checkout" | "orderConfirmed" | "orders" | "bookTable" | "bookingConfirmed") => void;
+  currentView: "home" | "menu" | "cart" | "checkout" | "orderConfirmed" | "bookTable" | "bookingConfirmed";
+  setCurrentView: (view: "home" | "menu" | "cart" | "checkout" | "orderConfirmed" | "bookTable" | "bookingConfirmed") => void;
   activeItem: OrderItem | null;
   setActiveItem: (item: OrderItem | null) => void;
   // Booking State

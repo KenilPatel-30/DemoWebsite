@@ -5,7 +5,6 @@ import { useOrder } from "@/context/OrderContext";
 import { ORDER_MENU } from "@/lib/orderData";
 import { IMG } from "@/lib/site";
 import { BookOpen, Wifi, Calendar, Info, Plus, CupSoda, CalendarDays, ArrowLeft, Globe } from "lucide-react";
-import Link from "next/link";
 
 export default function OrderHome() {
   const { setCurrentView, setActiveItem } = useOrder();
@@ -24,18 +23,18 @@ export default function OrderHome() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#FCF6F0] to-transparent" />
         
-        <Link href="/" className="absolute top-6 left-6 z-10 text-white/90 hover:text-white transition-colors bg-black/20 hover:bg-black/40 rounded-full p-2 backdrop-blur-sm flex items-center gap-2 pr-4 shadow-sm border border-white/10">
+        <a href="/" className="absolute top-6 left-6 z-10 text-white/90 hover:text-white transition-colors bg-black/20 hover:bg-black/40 rounded-full p-2 backdrop-blur-sm flex items-center gap-2 pr-4 shadow-sm border border-white/10">
           <ArrowLeft className="w-4 h-4" />
           <span className="text-[12px] font-medium leading-none">Main Site</span>
-        </Link>
+        </a>
         
         <div className="absolute inset-0 flex flex-col items-center justify-center pt-8">
           <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg mb-3">
             <CupSoda className="w-8 h-8 text-[#9A5015]" strokeWidth={2} />
           </div>
-          <Link href="/" className="transition-transform hover:scale-105 active:scale-95">
+          <a href="/" className="transition-transform hover:scale-105 active:scale-95">
             <h1 className="text-3xl font-display font-bold text-white mb-2 shadow-sm drop-shadow-md text-center">Demo Cafe</h1>
-          </Link>
+          </a>
           <div className="bg-[#FCF6F0] px-4 py-1.5 rounded-full flex items-center gap-2 text-[12px] font-medium text-ink shadow-md">
             <div className="w-2 h-2 rounded-full bg-green-500" />
             <span>Open Now • Prep: 10 mins</span>
@@ -55,7 +54,7 @@ export default function OrderHome() {
 
       <div className="mt-16 px-6 max-w-7xl mx-auto w-full">
         <div className="flex justify-between items-end mb-4">
-          <h2 className="text-[18px] md:text-[22px] font-medium text-ink">Chef&apos;s Recommended</h2>
+          <h2 className="text-[18px] md:text-[22px] font-medium text-ink">Chef's Recommended</h2>
           <button onClick={() => setCurrentView("menu")} className="text-[13px] md:text-[15px] text-[#9A5015] font-medium">See All</button>
         </div>
         
@@ -93,7 +92,7 @@ export default function OrderHome() {
         {[
           { label: "View Full Menu", icon: BookOpen, action: () => setCurrentView("menu") },
           { label: "Join Free Wi-Fi", icon: Wifi, action: () => alert("Network: DemoCafe_Guest\nPassword: democafe2026") },
-          { label: "Catering & Events", icon: Calendar, action: () => window.location.href = "/reserve" },
+          { label: "Catering & Events", icon: Calendar, action: () => {} },
           { label: "Our Story", icon: Info, action: () => window.location.href = "/#about" },
           { label: "Visit Main Website", icon: Globe, action: () => window.location.href = "/" }
         ].map((link, idx) => (

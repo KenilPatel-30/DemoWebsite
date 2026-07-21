@@ -21,7 +21,7 @@ export default function BookingConfirmation() {
       </motion.div>
 
       <h1 className="text-[28px] font-bold text-ink mb-2">Table Reserved!</h1>
-      <p className="text-[15px] text-ink/60 mb-10 text-center">We&apos;re looking forward to hosting you.</p>
+      <p className="text-[15px] text-ink/60 mb-10 text-center">We're looking forward to hosting you.</p>
 
       {/* Confirmation Card */}
       <div className="w-full bg-[#f2e6db] rounded-2xl p-6 mb-8">

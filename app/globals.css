@@ -59,9 +59,21 @@
   html, body {
     height: auto; /* Allow content to dictate height */
   }
+
+  /* Protect images and maps from being inverted by the custom cursor */
+  img, iframe, .parallax-image, [data-cursor='View'] {
+    position: relative;
+    z-index: 50;
+  }
 }
 
 @layer components {
+  /* Protect images and maps from being inverted by the custom cursor */
+  img, iframe, .parallax-image, [data-cursor='View'] {
+    position: relative;
+    z-index: 50;
+  }
+
   .container-x {
     @apply mx-auto w-full max-w-[1500px] px-6 md:px-10 lg:px-16;
   }

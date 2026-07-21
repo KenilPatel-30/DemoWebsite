@@ -35,7 +35,7 @@ export default function ReservePage() {
         </motion.div>
 
         <h1 className="text-[28px] font-bold text-ink mb-2">Table Reserved!</h1>
-        <p className="text-[15px] text-ink/60 mb-10 text-center">We&apos;re looking forward to hosting you.</p>
+        <p className="text-[15px] text-ink/60 mb-10 text-center">We're looking forward to hosting you.</p>
 
         <div className="w-full max-w-lg bg-[#f2e6db] rounded-2xl p-8 mb-8">
           <div className="flex justify-between items-center border-b border-ink/10 pb-6 mb-6">
@@ -71,10 +71,10 @@ export default function ReservePage() {
         </div>
 
         <div className="w-full max-w-lg flex flex-col sm:flex-row gap-4 mb-10">
-          <button onClick={() => alert("Calendar invite generated!")} className="flex-1 bg-[#9A5015] hover:bg-[#804210] transition-colors text-white py-4 rounded-full font-medium text-[15px] shadow-lg flex items-center justify-center gap-2">
+          <button className="flex-1 bg-[#9A5015] hover:bg-[#804210] transition-colors text-white py-4 rounded-full font-medium text-[15px] shadow-lg flex items-center justify-center gap-2">
             <CalendarDays className="w-4 h-4" /> Add to Calendar
           </button>
-          <button onClick={() => window.open("https://maps.google.com/?q=cafe", "_blank")} className="flex-1 bg-transparent border border-ink hover:bg-ink hover:text-white transition-colors text-ink py-4 rounded-full font-medium text-[15px] flex items-center justify-center gap-2">
+          <button className="flex-1 bg-transparent border border-ink hover:bg-ink hover:text-white transition-colors text-ink py-4 rounded-full font-medium text-[15px] flex items-center justify-center gap-2">
             <Navigation className="w-4 h-4" /> Directions
           </button>
         </div>

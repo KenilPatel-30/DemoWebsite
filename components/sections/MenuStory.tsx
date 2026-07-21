@@ -35,7 +35,7 @@ export default function MenuStory() {
         </div>
         <Reveal delay={0.15}>
           <p className="max-w-xs prose-body md:pb-3">
-            Explore our artisanal coffee, wood-fired mains, and crafted desserts. Or if you&apos;re ready, order straight to your table.
+            Explore our artisanal coffee, wood-fired mains, and crafted desserts. Or if you're ready, order straight to your table.
           </p>
         </Reveal>
       </div>
@@ -70,8 +70,8 @@ export default function MenuStory() {
 
       {/* Action Buttons */}
       <div className="container-x flex flex-col sm:flex-row items-center justify-center gap-6 mt-16">
-        <Button href="/order" variant="outline" className="w-full sm:w-auto" cursor="Menu">
-          View Full Menu
+        <Button href="/menu.pdf" variant="outline" className="w-full sm:w-auto" cursor="Menu">
+          View Menu
         </Button>
         <Button href="/order" variant="solid" className="w-full sm:w-auto" cursor="Taste">
           Order Now

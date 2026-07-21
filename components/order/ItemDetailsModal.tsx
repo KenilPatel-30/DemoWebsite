@@ -23,14 +23,14 @@ export default function ItemDetailsModal() {
     };
   }, [activeItem]);
 
+  if (!activeItem) return null;
+
   // Local state for selections
-  const [size, setSize] = useState(activeItem?.sizes?.[0]?.label || "");
-  const [milk, setMilk] = useState(activeItem?.milkTypes?.[0] || "");
-  const [sugar, setSugar] = useState(activeItem?.sugarLevels?.[0] || "");
+  const [size, setSize] = useState(activeItem.sizes?.[0]?.label || "");
+  const [milk, setMilk] = useState(activeItem.milkTypes?.[0] || "");
+  const [sugar, setSugar] = useState(activeItem.sugarLevels?.[0] || "");
   const [selectedAddons, setSelectedAddons] = useState<string[]>([]);
   const [quantity, setQuantity] = useState(1);
-
-  if (!activeItem) return null;
 
   // Calculate dynamic price
   let currentPrice = activeItem.price;
