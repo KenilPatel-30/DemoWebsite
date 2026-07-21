@@ -10,7 +10,7 @@ import Footer from "@/components/sections/Footer";
 
 export default function Home() {
   return (
-    <>
+    <div className="bg-transparent dummy-hash-1">
       <Navbar />
       <Hero />
       <CoffeeStory />
@@ -19,6 +19,6 @@ export default function Home() {
       <Testimonials />
       <Contact />
       <Footer />
-    </>
+    </div>
   );
 }

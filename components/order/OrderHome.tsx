@@ -95,7 +95,7 @@ export default function OrderHome() {
         {[
           { label: "View Full Menu", icon: BookOpen, action: () => setCurrentView("menu") },
           { label: "Join Free Wi-Fi", icon: Wifi, action: () => alert("Network: DemoCafe_Guest\nPassword: democafe2026") },
-          { label: "Catering & Events", icon: Calendar, action: () => {} },
+          { label: "Catering & Events", icon: Calendar, action: () => router.push("/reserve") },
           { label: "Our Story", icon: Info, action: () => router.push("/#about") },
           { label: "Visit Main Website", icon: Globe, action: () => router.push("/") }
         ].map((link, idx) => (

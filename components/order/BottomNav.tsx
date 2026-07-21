@@ -25,7 +25,7 @@ export default function BottomNav() {
             <button
               key={item.id}
               onClick={() => {
-                if (item.id === "home" || item.id === "menu") {
+                if (item.id === "home" || item.id === "menu" || item.id === "orders") {
                   setCurrentView(item.id as any);
                 }
               }}

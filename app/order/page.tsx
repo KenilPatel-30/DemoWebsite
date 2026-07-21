@@ -4,6 +4,7 @@ import { useOrder } from "@/context/OrderContext";
 import OrderHome from "@/components/order/OrderHome";
 import OrderMenu from "@/components/order/OrderMenu";
 import Cart from "@/components/order/Cart";
+import OrderHistory from "@/components/order/OrderHistory";
 import Checkout from "@/components/order/Checkout";
 import OrderConfirmation from "@/components/order/OrderConfirmation";
 import BookTable from "@/components/order/BookTable";
@@ -20,6 +21,7 @@ export default function OrderPage() {
       {currentView === "home" && <OrderHome />}
       {currentView === "menu" && <OrderMenu />}
       {currentView === "cart" && <Cart />}
+      {currentView === "orders" && <OrderHistory />}
       {currentView === "checkout" && <Checkout />}
       {currentView === "orderConfirmed" && <OrderConfirmation />}
       {currentView === "bookTable" && <BookTable />}
