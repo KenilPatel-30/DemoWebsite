@@ -5,7 +5,6 @@ import Image from "next/image";
 import { useOrder } from "@/context/OrderContext";
 import { motion } from "framer-motion";
 import { X, Plus, Minus, ChevronDown } from "lucide-react";
-import { v4 as uuidv4 } from "uuid"; // We might not have uuid installed. Let's use a simple random string generator.
 
 const generateId = () => Math.random().toString(36).substr(2, 9);
 
