@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   output: "export",
-  basePath: process.env.GITHUB_ACTIONS ? "/Demo_Website" : "",
+  basePath: process.env.CF_PAGES ? "" : process.env.NODE_ENV === "production" ? "/Demo_Website" : "",
   compiler: {
     removeConsole: process.env.NODE_ENV === "production" ? { exclude: ["error"] } : false,
   },
