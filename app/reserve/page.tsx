@@ -74,9 +74,9 @@ export default function ReservePage() {
           <button className="flex-1 bg-[#9A5015] hover:bg-[#804210] transition-colors text-white py-4 rounded-full font-medium text-[15px] shadow-lg flex items-center justify-center gap-2">
             <CalendarDays className="w-4 h-4" /> Add to Calendar
           </button>
-          <button className="flex-1 bg-transparent border border-ink hover:bg-ink hover:text-white transition-colors text-ink py-4 rounded-full font-medium text-[15px] flex items-center justify-center gap-2">
+          <a href="https://maps.google.com/?q=Surat" target="_blank" rel="noreferrer" className="flex-1 bg-transparent border border-ink hover:bg-ink hover:text-white transition-colors text-ink py-4 rounded-full font-medium text-[15px] flex items-center justify-center gap-2">
             <Navigation className="w-4 h-4" /> Directions
-          </button>
+          </a>
         </div>
 
         <Link href="/" className="text-[15px] font-medium text-ink hover:underline">

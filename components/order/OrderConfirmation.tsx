@@ -4,9 +4,11 @@ import { useOrder } from "@/context/OrderContext";
 import { Check, Clock, Upload, Coffee } from "lucide-react";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function OrderConfirmation() {
   const { cart, setCurrentView, clearCart } = useOrder();
+  const router = useRouter();
   
   // A simple countdown timer for visual effect
   const [timeLeft, setTimeLeft] = useState(600); // 10 mins
@@ -103,7 +105,7 @@ export default function OrderConfirmation() {
       <button 
         onClick={() => {
           clearCart();
-          window.location.href = "/";
+          router.push("/");
         }}
         className="w-full pb-4 text-ink/50 font-medium text-[13px] hover:underline"
       >

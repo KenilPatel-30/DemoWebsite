@@ -7,6 +7,7 @@ import type Lenis from "lenis";
 import { NAV_LINKS, SITE } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 function scrollToHash(hash: string) {
   const lenis = (window as unknown as { lenis?: Lenis }).lenis;
@@ -161,12 +162,12 @@ export default function Navbar() {
                 </motion.a>
               ))}
             </nav>
-            <a
+            <Link
               href="/reserve"
               className="mt-12 w-fit border-b border-primary pb-1 text-sm uppercase tracking-[0.2em] text-primary"
             >
               Reserve a Table · {SITE.phone}
-            </a>
+            </Link>
           </motion.div>
         )}
       </AnimatePresence>
