@@ -54,7 +54,7 @@ export default function MenuStory() {
           {marqueeImages.map((src, i) => (
             <div
               key={i}
-              className="relative w-[70vw] md:w-[35vw] lg:w-[25vw] aspect-[4/5] shrink-0 overflow-hidden rounded-[8px]"
+              className="relative z-50 w-[70vw] md:w-[35vw] lg:w-[25vw] aspect-[4/5] shrink-0 overflow-hidden rounded-[8px]"
             >
               <Image
                 src={src}

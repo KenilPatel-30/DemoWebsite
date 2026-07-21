@@ -101,7 +101,7 @@ export default function Gallery() {
             key={item.src}
             className="flex w-full shrink-0 flex-col justify-center px-6 py-6 md:px-16 lg:h-screen lg:w-[46vw] lg:px-6 lg:py-0"
           >
-            <div className="g-frame group relative h-[58vh] w-full overflow-hidden rounded-[3px] shadow-soft lg:h-[70vh]">
+            <div className="g-frame group relative z-50 h-[58vh] w-full overflow-hidden rounded-[3px] shadow-soft lg:h-[70vh]">
               <div className="g-img absolute -left-[10%] top-0 h-full w-[120%]">
                 <Image
                   src={item.src}

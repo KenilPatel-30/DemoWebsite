@@ -25,7 +25,7 @@ export default function Contact() {
             <Reveal>
               <div
                 data-cursor="Map"
-                className="group relative aspect-[4/3] w-full overflow-hidden rounded-[3px] shadow-soft"
+                className="group relative z-50 aspect-[4/3] w-full overflow-hidden rounded-[3px] shadow-soft"
               >
                 <iframe
                   title="Demo Cafe location on Google Maps"
