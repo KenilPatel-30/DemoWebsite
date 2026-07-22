@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+
+Host: https://democafe.com
+Sitemap: https://democafe.com/sitemap.xml
