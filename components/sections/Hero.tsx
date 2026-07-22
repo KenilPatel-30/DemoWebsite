@@ -7,7 +7,7 @@ import Button from "@/components/ui/Button";
 import { SITE } from "@/lib/site";
 
 const ease = [0.16, 1, 0.3, 1] as const;
-const basePath = process.env.CF_PAGES ? "" : process.env.NODE_ENV === "production" ? "/Demo_Website" : "";
+const basePath = process.env.CF_PAGES ? "" : process.env.NODE_ENV === "production" ? "/DemoWebsite" : "";
 
 export default function Hero() {
   const [isHovered, setIsHovered] = useState(false);
