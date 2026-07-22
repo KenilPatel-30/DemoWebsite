@@ -7,7 +7,6 @@ import ScrollProgress from "@/components/ui/ScrollProgress";
 import Loader from "@/components/ui/Loader";
 import Navbar from "@/components/ui/Navbar";
 import FloatingActions from "@/components/ui/FloatingActions";
-import CustomCursor from "@/components/ui/CustomCursor";
 import { LocalBusinessSchema } from "@/components/seo/JsonLd";
 
 const display = Fraunces({
@@ -108,7 +107,6 @@ export default function RootLayout({
         <SmoothScroll>
           <main>{children}</main>
         </SmoothScroll>
-        <CustomCursor />
       </body>
     </html>
   );

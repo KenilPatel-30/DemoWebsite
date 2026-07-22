@@ -40,6 +40,13 @@ export default function Hero() {
   }
 
   function handlePointerMove(e: React.PointerEvent<HTMLDivElement>) {
+    // Hide the blob if it gets too close to the Navbar (top 100px) 
+    // or Floating Actions (right 100px) to prevent obscuring them.
+    if (e.clientY < 100 || window.innerWidth - e.clientX < 100) {
+      setIsHovered(false);
+      setIsMoving(false);
+      return;
+    }
     updatePointer(e.clientX, e.clientY, e.currentTarget);
   }
 
