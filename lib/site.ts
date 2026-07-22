@@ -1,3 +1,5 @@
+const basePath = process.env.NODE_ENV === "production" ? "/DemoWebsite" : "";
+
 /**
  * Central source of truth for all Demo Cafe business & content data.
  */
@@ -65,27 +67,27 @@ export const NAV_LINKS = [
 
 /** Curated, cleaned photographs of the real Belluno Cafe (in /public/venue). */
 export const IMG = {
-  heroNight: "/venue/venue-03.jpg",
-  signInterior: "/venue/venue-04.jpg",
-  latte: "/venue/venue-08.jpg",
-  drinks: "/venue/venue-09.jpg",
-  archDining: "/venue/venue-10.jpg",
-  courtyardTables: "/venue/venue-17.jpg",
-  brunchPlate: "/venue/venue-18.jpg",
-  pizzaCocktails: "/venue/venue-23.jpg",
-  fountainWall: "/venue/venue-28.jpg",
-  dessert: "/venue/venue-33.jpg",
-  skylightSign: "/venue/venue-38.jpg",
-  redCarpet: "/venue/venue-41.jpg",
-  pizzaOven: "/venue/venue-44.jpg",
-  matcha: "/venue/venue-32.jpg",
-  spiralStair: "/venue/venue-27.jpg",
-  ceilingChandelier: "/venue/venue-35.jpg",
-  loungeArt: "/venue/venue-19.jpg",
-  eveningWalk: "/venue/venue-11.jpg",
-  blueSignNight: "/venue/venue-07.jpg",
-  margherita: "/venue/venue-02.jpg",
-  warmInterior: "/venue/venue-24.jpg",
+  heroNight: `${basePath}/venue/venue-03.jpg`,
+  signInterior: `${basePath}/venue/venue-04.jpg`,
+  latte: `${basePath}/venue/venue-08.jpg`,
+  drinks: `${basePath}/venue/venue-09.jpg`,
+  archDining: `${basePath}/venue/venue-10.jpg`,
+  courtyardTables: `${basePath}/venue/venue-17.jpg`,
+  brunchPlate: `${basePath}/venue/venue-18.jpg`,
+  pizzaCocktails: `${basePath}/venue/venue-23.jpg`,
+  fountainWall: `${basePath}/venue/venue-28.jpg`,
+  dessert: `${basePath}/venue/venue-33.jpg`,
+  skylightSign: `${basePath}/venue/venue-38.jpg`,
+  redCarpet: `${basePath}/venue/venue-41.jpg`,
+  pizzaOven: `${basePath}/venue/venue-44.jpg`,
+  matcha: `${basePath}/venue/venue-32.jpg`,
+  spiralStair: `${basePath}/venue/venue-27.jpg`,
+  ceilingChandelier: `${basePath}/venue/venue-35.jpg`,
+  loungeArt: `${basePath}/venue/venue-19.jpg`,
+  eveningWalk: `${basePath}/venue/venue-11.jpg`,
+  blueSignNight: `${basePath}/venue/venue-07.jpg`,
+  margherita: `${basePath}/venue/venue-02.jpg`,
+  warmInterior: `${basePath}/venue/venue-24.jpg`,
 } as const;
 
 export const STATS = [
@@ -120,7 +122,7 @@ export const MENU: MenuCategory[] = [
     description:
       "Single-origin beans, roasted in small batches and pulled to perfection by hands that care.",
     object: "cup",
-    image: "/venue/venue-09.jpg",
+    image: `${basePath}/venue/venue-09.jpg`,
     items: [
       {
         name: "Belluno Signature Latte",
@@ -149,7 +151,7 @@ export const MENU: MenuCategory[] = [
     description:
       "Sunlit plates and flaky pastries baked fresh at dawn — the reason mornings are worth waking for.",
     object: "croissant",
-    image: "/venue/venue-18.jpg",
+    image: `${basePath}/venue/venue-18.jpg`,
     items: [
       {
         name: "Almond Butter Croissant",
@@ -178,7 +180,7 @@ export const MENU: MenuCategory[] = [
     description:
       "Seasonal, honest cooking. Ingredients sourced close to home, plated with quiet precision.",
     object: "plate",
-    image: "/venue/venue-02.jpg",
+    image: `${basePath}/venue/venue-02.jpg`,
     items: [
       {
         name: "Charred Pesto Orzo",
@@ -207,7 +209,7 @@ export const MENU: MenuCategory[] = [
     description:
       "The last, lingering note — patisserie built for the golden hour and the perfect photograph.",
     object: "pastry",
-    image: "/venue/venue-33.jpg",
+    image: `${basePath}/venue/venue-33.jpg`,
     items: [
       {
         name: "Burnt Basque Cheesecake",
