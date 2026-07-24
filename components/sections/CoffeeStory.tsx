@@ -8,6 +8,8 @@ import AmbientParticles from "@/components/ui/AmbientParticles";
 import SectionSeam from "@/components/ui/SectionSeam";
 import { IMG } from "@/lib/site";
 
+const basePath = process.env.CF_PAGES ? "" : process.env.NODE_ENV === "production" ? "/DemoWebsite" : "";
+
 export default function CoffeeStory() {
   return (
     <section id="about" className="relative overflow-hidden bg-sand py-20 md:py-40">
@@ -20,18 +22,18 @@ export default function CoffeeStory() {
           <div className="relative lg:col-span-6">
             <Tilt max={5}>
               <ParallaxImage
-                src="/images/user_upload_1.jpg"
+                src={`${basePath}/images/user_upload_1.jpg`}
                 alt="A premium crafted cocktail with an orange slice at Demo Cafe"
-                className="aspect-[3/4] md:aspect-[4/5] w-full lg:w-[86%]"
+                className="aspect-[3/4] w-full md:aspect-[4/5] lg:w-[86%]"
                 sizes="(max-width: 1024px) 100vw, 45vw"
                 priority
               />
             </Tilt>
             <div className="absolute -bottom-6 -right-2 w-32 md:-bottom-10 md:right-0 md:w-44 lg:w-52">
               <ParallaxImage
-                src="/images/user_upload_2.jpg"
+                src={`${basePath}/images/user_upload_2.jpg`}
                 alt="An elegant iced cocktail with mint against a bokeh background"
-                className="aspect-[2/3] md:aspect-[3/4] w-full shadow-2xl"
+                className="aspect-[2/3] w-full shadow-2xl md:aspect-[3/4]"
                 amount={20}
                 sizes="220px"
               />
