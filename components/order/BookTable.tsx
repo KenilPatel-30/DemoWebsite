@@ -3,24 +3,10 @@
 import { useState, useMemo } from "react";
 import { useOrder } from "@/context/OrderContext";
 import { ArrowLeft, ShoppingCart, CheckCircle } from "lucide-react";
+import { Calendar } from "@/components/ui/Calendar";
 
 export default function BookTable() {
   const { setCurrentView, setBookingDetails } = useOrder();
-  
-  const dates = useMemo(() => {
-    const arr = [];
-    const today = new Date();
-    for (let i = 0; i < 5; i++) {
-      const d = new Date(today);
-      d.setDate(today.getDate() + i);
-      arr.push({
-        day: d.toLocaleDateString("en-US", { weekday: "short" }),
-        date: d.getDate().toString(),
-        fullDate: d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
-      });
-    }
-    return arr;
-  }, []);
 
   const times = useMemo(() => {
     const arr = [];
@@ -42,7 +28,9 @@ export default function BookTable() {
   }, []);
 
   const [partySize, setPartySize] = useState("2");
-  const [selectedDate, setSelectedDate] = useState(dates[0].fullDate);
+  const [selectedDate, setSelectedDate] = useState(() => {
+    return new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+  });
   const [time, setTime] = useState(times[0]);
   const [seating, setSeating] = useState("Window seat");
   
@@ -62,11 +50,6 @@ export default function BookTable() {
     });
     setCurrentView("bookingConfirmed");
   };
-
-  const currentMonthYear = useMemo(() => {
-    const d = new Date(selectedDate);
-    return d.toLocaleDateString("en-US", { month: "long", year: "numeric" });
-  }, [selectedDate]);
 
   return (
     <div className="flex flex-col w-full min-h-screen bg-[#FCF6F0] pb-10">
@@ -109,48 +92,28 @@ export default function BookTable() {
 
         {/* Date */}
         <div className="mb-8">
-          <div className="flex justify-between items-end mb-4">
-            <h2 className="text-[16px] font-medium text-ink">Date</h2>
-            <span className="text-[13px] text-[#9A5015] font-medium">{currentMonthYear}</span>
-          </div>
-          <div className="flex gap-3 overflow-x-auto no-scrollbar -mx-6 px-6 pb-2">
-            {dates.map(d => (
-              <button 
-                key={d.fullDate}
-                onClick={() => setSelectedDate(d.fullDate)}
-                className={`w-[60px] h-[75px] shrink-0 rounded-2xl flex flex-col items-center justify-center gap-1 transition-colors ${
-                  selectedDate === d.fullDate 
-                    ? "bg-[#9A5015] text-white shadow-md" 
-                    : "bg-[#f2e6db] text-ink hover:bg-[#ebdccc]"
-                }`}
-              >
-                <span className="text-[12px] font-medium opacity-80">{d.day}</span>
-                <span className="text-[20px] font-bold">{d.date}</span>
-              </button>
-            ))}
-          </div>
+          <h2 className="text-[16px] font-medium text-ink mb-4">Date</h2>
+          <Calendar selectedDate={selectedDate} onSelect={setSelectedDate} />
         </div>
 
         {/* Time */}
         <div className="mb-8">
           <h2 className="text-[16px] font-medium text-ink mb-4">Time</h2>
-          <div className="grid grid-cols-3 gap-3">
-            {times.map((t, i) => (
-              <button 
-                key={t}
-                disabled={i === 5}
-                onClick={() => setTime(t)}
-                className={`py-3 rounded-full text-[13px] font-medium transition-colors ${
-                  i === 5
-                    ? "bg-[#f2e6db]/50 text-ink/30 line-through cursor-not-allowed"
-                    : time === t 
-                      ? "bg-[#9A5015] text-white shadow-md" 
-                      : "bg-[#f2e6db] text-ink hover:bg-[#ebdccc]"
-                }`}
-              >
-                {t}
-              </button>
-            ))}
+          <div className="relative">
+            <select 
+              value={time} 
+              onChange={e => setTime(e.target.value)}
+              className="w-full bg-[#f2e6db] text-[15px] font-medium text-ink rounded-2xl px-5 py-4 appearance-none outline-none focus:ring-1 focus:ring-[#9A5015]/30 cursor-pointer shadow-sm"
+            >
+              {times.map((t, i) => (
+                <option key={t} value={t} disabled={i === 5}>{t}</option>
+              ))}
+            </select>
+            <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-ink/50">
+              <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
           </div>
         </div>
 
