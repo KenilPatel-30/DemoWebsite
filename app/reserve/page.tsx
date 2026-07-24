@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Check, CalendarDays, Users, Armchair, Navigation, ArrowLeft, CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -9,9 +9,43 @@ import { SITE } from "@/lib/site";
 export default function ReservePage() {
   const [step, setStep] = useState<"book" | "confirm">("book");
   
+  const dates = useMemo(() => {
+    const arr = [];
+    const today = new Date();
+    for (let i = 0; i < 5; i++) {
+      const d = new Date(today);
+      d.setDate(today.getDate() + i);
+      arr.push({
+        day: d.toLocaleDateString("en-US", { weekday: "short" }),
+        date: d.getDate().toString(),
+        fullDate: d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
+      });
+    }
+    return arr;
+  }, []);
+
+  const times = useMemo(() => {
+    const arr = [];
+    let currentHour = 10;
+    let currentMinute = 0;
+    while (currentHour < 21) {
+      const ampm = currentHour >= 12 ? 'PM' : 'AM';
+      const displayHour = currentHour > 12 ? currentHour - 12 : currentHour;
+      const displayMinute = currentMinute === 0 ? '00' : '30';
+      arr.push(`${displayHour}:${displayMinute} ${ampm}`);
+      
+      currentMinute += 30;
+      if (currentMinute >= 60) {
+        currentMinute = 0;
+        currentHour++;
+      }
+    }
+    return arr;
+  }, []);
+
   const [partySize, setPartySize] = useState("2");
-  const [date, setDate] = useState("13");
-  const [time, setTime] = useState("10:30 AM");
+  const [selectedDate, setSelectedDate] = useState(dates[0].fullDate);
+  const [time, setTime] = useState(times[0]);
   const [seating, setSeating] = useState("Window seat");
   
   const [name, setName] = useState("");
@@ -21,6 +55,11 @@ export default function ReservePage() {
   const handleConfirm = () => {
     setStep("confirm");
   };
+
+  const currentMonthYear = useMemo(() => {
+    const d = new Date(selectedDate);
+    return d.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+  }, [selectedDate]);
 
   if (step === "confirm") {
     return (
@@ -48,7 +87,7 @@ export default function ReservePage() {
               <CalendarDays className="w-5 h-5 text-ink/60 mt-0.5" />
               <div>
                 <span className="text-[13px] font-medium text-ink/60 block mb-0.5">Date & Time</span>
-                <span className="text-[16px] font-medium text-ink">October {date}, 2026, {time}</span>
+                <span className="text-[16px] font-medium text-ink">{selectedDate} at {time}</span>
               </div>
             </div>
 
@@ -125,21 +164,15 @@ export default function ReservePage() {
         <div className="mb-10">
           <div className="flex justify-between items-end mb-4">
             <h2 className="text-[16px] font-medium text-ink">Date</h2>
-            <span className="text-[13px] text-[#9A5015] font-medium">October 2026</span>
+            <span className="text-[13px] text-[#9A5015] font-medium">{currentMonthYear}</span>
           </div>
           <div className="flex gap-4 overflow-x-auto no-scrollbar pb-2 snap-x -mx-6 px-6 md:mx-0 md:px-0">
-            {[
-              { day: "Thu", date: "12" },
-              { day: "Fri", date: "13" },
-              { day: "Sat", date: "14" },
-              { day: "Sun", date: "15" },
-              { day: "Mon", date: "16" }
-            ].map(d => (
+            {dates.map(d => (
               <button 
-                key={d.date}
-                onClick={() => setDate(d.date)}
+                key={d.fullDate}
+                onClick={() => setSelectedDate(d.fullDate)}
                 className={`w-[70px] h-[90px] shrink-0 snap-start rounded-2xl flex flex-col items-center justify-center gap-2 transition-colors ${
-                  date === d.date 
+                  selectedDate === d.fullDate 
                     ? "bg-[#9A5015] text-white shadow-md" 
                     : "bg-[#f2e6db] text-ink hover:bg-[#ebdccc]"
                 }`}
@@ -155,7 +188,7 @@ export default function ReservePage() {
         <div className="mb-10">
           <h2 className="text-[16px] font-medium text-ink mb-4">Time</h2>
           <div className="grid grid-cols-2 min-[400px]:grid-cols-3 sm:grid-cols-4 gap-3">
-            {["10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM", "1:00 PM"].map((t, i) => (
+            {times.map((t, i) => (
               <button 
                 key={t}
                 onClick={() => setTime(t)}
