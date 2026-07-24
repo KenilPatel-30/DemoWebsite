@@ -24,8 +24,8 @@ export default function CoffeeStory() {
               <ParallaxImage
                 src={`${basePath}/images/user_upload_1.jpg`}
                 alt="A premium crafted cocktail with an orange slice at Demo Cafe"
-                className="aspect-[3/4] w-full md:aspect-[4/5] lg:w-[86%]"
-                sizes="(max-width: 1024px) 100vw, 45vw"
+                className="aspect-[3/4] w-full md:aspect-[4/5] lg:w-full"
+                sizes="(max-width: 1024px) 100vw, 50vw"
                 priority
               />
             </Tilt>
