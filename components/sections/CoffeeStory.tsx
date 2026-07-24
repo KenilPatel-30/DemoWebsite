@@ -25,7 +25,6 @@ export default function CoffeeStory() {
                 src={`${basePath}/images/user_upload_1.jpg`}
                 alt="A premium crafted cocktail with an orange slice at Demo Cafe"
                 className="aspect-[3/4] w-full md:aspect-[4/5] lg:w-full"
-                imgClassName="object-[center_85%]"
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 priority
               />
@@ -35,7 +34,6 @@ export default function CoffeeStory() {
                 src={`${basePath}/images/user_upload_2.jpg`}
                 alt="An elegant iced cocktail with mint against a bokeh background"
                 className="aspect-[2/3] w-full shadow-2xl md:aspect-[3/4]"
-                imgClassName="object-[center_80%]"
                 amount={20}
                 sizes="220px"
               />
