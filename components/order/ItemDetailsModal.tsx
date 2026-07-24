@@ -89,12 +89,6 @@ export default function ItemDetailsModal() {
         {/* Hero Image */}
         <div className="relative w-full h-[240px] md:h-[320px] shrink-0 bg-white">
           <Image src={activeItem.image} alt={activeItem.name} fill className="object-cover" />
-          <button 
-            onClick={() => setActiveItem(null)}
-            className="absolute top-4 right-4 w-8 h-8 bg-white/80 backdrop-blur-md rounded-full flex items-center justify-center text-ink shadow-sm"
-          >
-            <X className="w-5 h-5" />
-          </button>
         </div>
 
         {/* Scrollable Content */}
