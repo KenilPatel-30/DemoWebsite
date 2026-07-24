@@ -1,15 +1,49 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useOrder } from "@/context/OrderContext";
 import { ArrowLeft, ShoppingCart, CheckCircle } from "lucide-react";
 
 export default function BookTable() {
   const { setCurrentView, setBookingDetails } = useOrder();
   
+  const dates = useMemo(() => {
+    const arr = [];
+    const today = new Date();
+    for (let i = 0; i < 5; i++) {
+      const d = new Date(today);
+      d.setDate(today.getDate() + i);
+      arr.push({
+        day: d.toLocaleDateString("en-US", { weekday: "short" }),
+        date: d.getDate().toString(),
+        fullDate: d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
+      });
+    }
+    return arr;
+  }, []);
+
+  const times = useMemo(() => {
+    const arr = [];
+    let currentHour = 10;
+    let currentMinute = 0;
+    while (currentHour < 21) {
+      const ampm = currentHour >= 12 ? 'PM' : 'AM';
+      const displayHour = currentHour > 12 ? currentHour - 12 : currentHour;
+      const displayMinute = currentMinute === 0 ? '00' : '30';
+      arr.push(`${displayHour}:${displayMinute} ${ampm}`);
+      
+      currentMinute += 30;
+      if (currentMinute >= 60) {
+        currentMinute = 0;
+        currentHour++;
+      }
+    }
+    return arr;
+  }, []);
+
   const [partySize, setPartySize] = useState("2");
-  const [date, setDate] = useState("13");
-  const [time, setTime] = useState("10:30 AM");
+  const [selectedDate, setSelectedDate] = useState(dates[0].fullDate);
+  const [time, setTime] = useState(times[0]);
   const [seating, setSeating] = useState("Window seat");
   
   const [name, setName] = useState("");
@@ -19,7 +53,7 @@ export default function BookTable() {
   const handleConfirm = () => {
     setBookingDetails({
       partySize,
-      date: `October ${date}, 2023`, // hardcoded month for demo purposes as per figma
+      date: selectedDate,
       time,
       seating,
       name,
@@ -28,6 +62,11 @@ export default function BookTable() {
     });
     setCurrentView("bookingConfirmed");
   };
+
+  const currentMonthYear = useMemo(() => {
+    const d = new Date(selectedDate);
+    return d.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+  }, [selectedDate]);
 
   return (
     <div className="flex flex-col w-full min-h-screen bg-[#FCF6F0] pb-10">
@@ -72,21 +111,15 @@ export default function BookTable() {
         <div className="mb-8">
           <div className="flex justify-between items-end mb-4">
             <h2 className="text-[16px] font-medium text-ink">Date</h2>
-            <span className="text-[13px] text-[#9A5015] font-medium">October 2026</span>
+            <span className="text-[13px] text-[#9A5015] font-medium">{currentMonthYear}</span>
           </div>
           <div className="flex gap-3 overflow-x-auto no-scrollbar -mx-6 px-6 pb-2">
-            {[
-              { day: "Thu", date: "12" },
-              { day: "Fri", date: "13" },
-              { day: "Sat", date: "14" },
-              { day: "Sun", date: "15" },
-              { day: "Mon", date: "16" }
-            ].map(d => (
+            {dates.map(d => (
               <button 
-                key={d.date}
-                onClick={() => setDate(d.date)}
+                key={d.fullDate}
+                onClick={() => setSelectedDate(d.fullDate)}
                 className={`w-[60px] h-[75px] shrink-0 rounded-2xl flex flex-col items-center justify-center gap-1 transition-colors ${
-                  date === d.date 
+                  selectedDate === d.fullDate 
                     ? "bg-[#9A5015] text-white shadow-md" 
                     : "bg-[#f2e6db] text-ink hover:bg-[#ebdccc]"
                 }`}
@@ -102,22 +135,22 @@ export default function BookTable() {
         <div className="mb-8">
           <h2 className="text-[16px] font-medium text-ink mb-4">Time</h2>
           <div className="grid grid-cols-3 gap-3">
-            {["10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM"].map(t => (
+            {times.map((t, i) => (
               <button 
                 key={t}
+                disabled={i === 5}
                 onClick={() => setTime(t)}
                 className={`py-3 rounded-full text-[13px] font-medium transition-colors ${
-                  time === t 
-                    ? "bg-[#9A5015] text-white shadow-md" 
-                    : "bg-[#f2e6db] text-ink hover:bg-[#ebdccc]"
+                  i === 5
+                    ? "bg-[#f2e6db]/50 text-ink/30 line-through cursor-not-allowed"
+                    : time === t 
+                      ? "bg-[#9A5015] text-white shadow-md" 
+                      : "bg-[#f2e6db] text-ink hover:bg-[#ebdccc]"
                 }`}
               >
                 {t}
               </button>
             ))}
-            <button disabled className="py-3 rounded-full text-[13px] font-medium bg-[#f2e6db]/50 text-ink/30 line-through">
-              12:30 PM
-            </button>
           </div>
         </div>
 
