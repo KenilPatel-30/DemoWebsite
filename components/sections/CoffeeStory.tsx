@@ -1,9 +1,8 @@
 "use client";
 
 import { Reveal, SplitText } from "@/components/ui/Reveal";
-import ParallaxImage from "@/components/ui/ParallaxImage";
+import Image from "next/image";
 import Button from "@/components/ui/Button";
-import Tilt from "@/components/ui/Tilt";
 import AmbientParticles from "@/components/ui/AmbientParticles";
 import SectionSeam from "@/components/ui/SectionSeam";
 import { IMG } from "@/lib/site";
@@ -20,23 +19,26 @@ export default function CoffeeStory() {
         <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-12 lg:gap-8">
           {/* Layered photography — broken grid */}
           <div className="relative lg:col-span-6">
-            <Tilt max={5}>
-              <ParallaxImage
+            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[3px] shadow-soft lg:w-full">
+              <Image
                 src={`${basePath}/images/user_upload_1.jpg`}
                 alt="A premium crafted cocktail with an orange slice at Demo Cafe"
-                className="aspect-[3/4] w-full md:aspect-[4/5] lg:w-full"
+                fill
+                className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 priority
               />
-            </Tilt>
+            </div>
             <div className="absolute -bottom-6 -right-2 w-32 md:-bottom-10 md:right-0 md:w-44 lg:w-52">
-              <ParallaxImage
-                src={`${basePath}/images/user_upload_2.jpg`}
-                alt="An elegant iced cocktail with mint against a bokeh background"
-                className="aspect-[2/3] w-full shadow-2xl md:aspect-[3/4]"
-                amount={20}
-                sizes="220px"
-              />
+              <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[3px] shadow-2xl">
+                <Image
+                  src={`${basePath}/images/user_upload_2.jpg`}
+                  alt="An elegant iced cocktail with mint against a bokeh background"
+                  fill
+                  className="object-cover"
+                  sizes="220px"
+                />
+              </div>
             </div>
           </div>
 
