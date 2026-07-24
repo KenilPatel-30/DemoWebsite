@@ -68,7 +68,7 @@ export default function OrderHome() {
               className="min-w-[160px] md:min-w-0 bg-[#f2e6db] rounded-2xl p-3 snap-start md:snap-none cursor-pointer hover:bg-[#ebdccc] transition group"
               onClick={() => setActiveItem(item)}
             >
-              <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden mb-3">
+              <div className="relative w-full pt-[75%] rounded-xl overflow-hidden mb-3 transform-gpu" style={{ WebkitMaskImage: '-webkit-radial-gradient(white, black)' }}>
                 <Image src={item.image} alt={item.name} fill className="object-cover" />
               </div>
               <h3 className="font-medium text-[14px] leading-tight mb-3 text-ink line-clamp-2">{item.name}</h3>
