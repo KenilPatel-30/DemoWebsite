@@ -8,6 +8,8 @@ import { IMG } from "@/lib/site";
 import { BookOpen, Wifi, Calendar, Info, Plus, CupSoda, ArrowLeft, Globe } from "lucide-react";
 import { useRouter } from "next/navigation";
 
+const basePath = process.env.NODE_ENV === "production" ? "/DemoWebsite" : "";
+
 export default function OrderHome() {
   const { setCurrentView, setActiveItem } = useOrder();
   const router = useRouter();
@@ -26,29 +28,26 @@ export default function OrderHome() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#FCF6F0] to-transparent" />
         
-        <Link href="/" className="absolute top-6 left-6 z-10 text-white/90 hover:text-white transition-colors bg-black/20 hover:bg-black/40 rounded-full p-2 backdrop-blur-sm flex items-center gap-2 pr-4 shadow-sm border border-white/10">
+        <a href={`${basePath}/`} className="absolute top-6 left-6 z-10 text-white/90 hover:text-white transition-colors bg-black/20 hover:bg-black/40 rounded-full p-2 backdrop-blur-sm flex items-center gap-2 pr-4 shadow-sm border border-white/10">
           <ArrowLeft className="w-4 h-4" />
           <span className="text-[12px] font-medium leading-none">Main Site</span>
-        </Link>
+        </a>
         
         <div className="absolute inset-0 flex flex-col items-center justify-center pt-8">
           <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg mb-3">
             <CupSoda className="w-8 h-8 text-[#9A5015]" strokeWidth={2} />
           </div>
-          <Link href="/" className="transition-transform hover:scale-105 active:scale-95">
+          <a href={`${basePath}/`} className="transition-transform hover:scale-105 active:scale-95">
             <h1 className="text-3xl font-display font-bold text-white mb-2 shadow-sm drop-shadow-md text-center">Demo Cafe</h1>
-          </Link>
-          <div className="bg-[#FCF6F0] px-4 py-1.5 rounded-full flex items-center gap-2 text-[12px] font-medium text-ink shadow-md">
+          </a>
+          <div className="bg-[#FCF6F0] px-4 py-1.5 rounded-full flex items-center gap-2 text-[12px] font-medium text-ink shadow-md mb-6">
             <div className="w-2 h-2 rounded-full bg-green-500" />
             <span>Open Now • Prep: 10 mins</span>
           </div>
-        </div>
-
-        {/* Action Buttons */}
-        <div className="absolute -bottom-6 left-0 right-0 px-6 flex justify-center gap-4">
+          
           <button 
             onClick={() => setCurrentView("menu")}
-            className="w-[200px] bg-[#d87c34] hover:bg-[#c26b27] text-white py-3.5 rounded-full font-medium shadow-lg flex items-center justify-center gap-2 transition"
+            className="w-[200px] bg-[#d87c34] hover:bg-[#c26b27] text-white py-3.5 rounded-full font-medium shadow-lg flex items-center justify-center gap-2 transition hover:scale-105 active:scale-95"
           >
             <CupSoda className="w-4 h-4" /> Order Ahead
           </button>
@@ -96,8 +95,8 @@ export default function OrderHome() {
           { label: "View Full Menu", icon: BookOpen, action: () => setCurrentView("menu") },
           { label: "Join Free Wi-Fi", icon: Wifi, action: () => alert("Network: DemoCafe_Guest\nPassword: democafe2026") },
           { label: "Catering & Events", icon: Calendar, action: () => router.push("/reserve") },
-          { label: "Our Story", icon: Info, action: () => router.push("/#about") },
-          { label: "Visit Main Website", icon: Globe, action: () => router.push("/") }
+          { label: "Our Story", icon: Info, action: () => window.location.href = `${basePath}/#about` },
+          { label: "Visit Main Website", icon: Globe, action: () => window.location.href = `${basePath}/` }
         ].map((link, idx) => (
           <button 
             key={idx}
