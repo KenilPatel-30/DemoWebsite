@@ -14,9 +14,12 @@ export default function FloatingCartButton() {
       initial={{ y: 50, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       exit={{ y: 50, opacity: 0 }}
-      className="fixed bottom-[90px] left-0 right-0 z-30 px-6 flex justify-center pointer-events-none md:left-auto md:w-[360px] md:bottom-6 md:right-6 md:px-0"
+      className="fixed bottom-[120px] left-0 right-0 z-50 px-6 flex justify-center pointer-events-none md:left-auto md:w-[360px] md:bottom-6 md:right-6 md:px-0"
     >
-      <div className="w-full max-w-md bg-white rounded-full shadow-[0_8px_30px_rgba(0,0,0,0.12)] p-2 pr-4 flex items-center justify-between pointer-events-auto border border-ink/5">
+      <div 
+        onClick={() => setCurrentView("cart")}
+        className="w-full max-w-md bg-white rounded-full shadow-[0_8px_30px_rgba(0,0,0,0.12)] p-2 pr-4 flex items-center justify-between pointer-events-auto border border-ink/5 cursor-pointer hover:shadow-lg transition-shadow"
+      >
         <div className="flex items-center gap-3 pl-2">
           <div className="relative">
             <ShoppingBag className="w-5 h-5 text-ink/80" />
@@ -30,7 +33,6 @@ export default function FloatingCartButton() {
           </div>
         </div>
         <button
-          onClick={() => setCurrentView("cart")}
           className="bg-[#9A5015] hover:bg-[#804210] transition-colors text-white text-[13px] font-medium px-5 py-2.5 rounded-full shadow-md"
         >
           Checkout
