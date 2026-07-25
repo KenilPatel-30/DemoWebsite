@@ -85,10 +85,19 @@ export default function ItemDetailsModal() {
           className="w-full max-w-md md:max-w-xl h-[90dvh] md:h-auto md:max-h-[85dvh] bg-[#FCF6F0] rounded-t-3xl md:rounded-3xl flex flex-col overflow-hidden shadow-2xl relative"
         >
         {/* Scrollable Content (Including Image) */}
-        <div className="flex-1 overflow-y-auto min-h-0 pb-[100px]">
+        <div className="flex-1 overflow-y-auto min-h-0 pb-[100px] no-scrollbar">
           {/* Hero Image */}
           <div className="relative w-full h-[240px] md:h-[320px] shrink-0 bg-white">
             <Image src={activeItem.image} alt={activeItem.name} fill className="object-cover" />
+            <button 
+              onClick={(e) => {
+                e.stopPropagation();
+                setActiveItem(null);
+              }}
+              className="absolute top-4 right-4 w-8 h-8 bg-white/80 backdrop-blur-md rounded-full flex items-center justify-center text-ink shadow-sm z-10"
+            >
+              <X className="w-5 h-5" />
+            </button>
           </div>
 
           <div className="px-6 py-6">
