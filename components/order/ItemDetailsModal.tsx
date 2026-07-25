@@ -14,11 +14,14 @@ export default function ItemDetailsModal() {
   useEffect(() => {
     if (activeItem) {
       document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "auto";
+      document.documentElement.style.overflow = "auto";
     }
     return () => {
       document.body.style.overflow = "auto";
+      document.documentElement.style.overflow = "auto";
     };
   }, [activeItem]);
 
@@ -82,7 +85,7 @@ export default function ItemDetailsModal() {
           exit={{ y: "100%" }}
           transition={{ type: "spring", damping: 25, stiffness: 200 }}
           onClick={(e) => e.stopPropagation()}
-          className="w-full max-w-md md:max-w-xl h-[90dvh] md:h-auto md:max-h-[85dvh] bg-[#FCF6F0] rounded-t-3xl md:rounded-3xl flex flex-col overflow-hidden shadow-2xl relative"
+          className="w-full max-w-md md:max-w-xl h-[90dvh] md:h-[85dvh] bg-[#FCF6F0] rounded-t-3xl md:rounded-3xl flex flex-col overflow-hidden shadow-2xl relative"
         >
         {/* Scrollable Content (Including Image) */}
         <div className="flex-1 overflow-y-auto min-h-0 pb-[100px] no-scrollbar">
