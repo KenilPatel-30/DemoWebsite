@@ -84,14 +84,15 @@ export default function ItemDetailsModal() {
           onClick={(e) => e.stopPropagation()}
           className="w-full max-w-md md:max-w-xl h-[90dvh] md:h-auto md:max-h-[85dvh] bg-[#FCF6F0] rounded-t-3xl md:rounded-3xl flex flex-col overflow-hidden shadow-2xl relative"
         >
-        {/* Hero Image */}
-        <div className="relative w-full h-[240px] md:h-[320px] shrink-0 bg-white">
-          <Image src={activeItem.image} alt={activeItem.name} fill className="object-cover" />
-        </div>
+        {/* Scrollable Content (Including Image) */}
+        <div className="flex-1 overflow-y-auto min-h-0 pb-[100px]">
+          {/* Hero Image */}
+          <div className="relative w-full h-[240px] md:h-[320px] shrink-0 bg-white">
+            <Image src={activeItem.image} alt={activeItem.name} fill className="object-cover" />
+          </div>
 
-        {/* Scrollable Content */}
-        <div className="flex-1 overflow-y-auto min-h-0 px-6 py-6 pb-32">
-          <div className="flex justify-between items-start mb-2">
+          <div className="px-6 py-6">
+            <div className="flex justify-between items-start mb-2">
             <h2 className="text-[24px] font-medium text-ink leading-tight pr-4">{activeItem.name}</h2>
             <span className="text-[18px] font-bold text-[#9A5015]">₹{activeItem.price}</span>
           </div>
@@ -188,6 +189,7 @@ export default function ItemDetailsModal() {
               <span>Allergens & Info</span>
               <ChevronDown className="w-5 h-5 text-ink/50" />
             </button>
+          </div>
           </div>
         </div>
 
