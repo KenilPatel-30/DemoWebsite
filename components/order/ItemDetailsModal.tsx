@@ -68,23 +68,21 @@ export default function ItemDetailsModal() {
 
   return (
     <>
-      {/* Backdrop */}
-      <motion.div
+      {/* Modal Backdrop & Container */}
+      <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
+        className="fixed inset-0 z-50 flex items-end md:items-center justify-center bg-ink/40 backdrop-blur-sm md:p-4"
         onClick={() => setActiveItem(null)}
-        className="fixed inset-0 bg-ink/40 backdrop-blur-sm z-50"
-      />
-
-      {/* Modal */}
-      <div className="fixed inset-0 z-50 flex items-end md:items-center justify-center pointer-events-none md:p-4">
+      >
         <motion.div
           initial={{ y: "100%" }}
           animate={{ y: 0 }}
           exit={{ y: "100%" }}
           transition={{ type: "spring", damping: 25, stiffness: 200 }}
-          className="w-full max-w-md md:max-w-xl h-[90dvh] md:h-auto md:max-h-[85dvh] bg-[#FCF6F0] rounded-t-3xl md:rounded-3xl flex flex-col overflow-hidden shadow-2xl pointer-events-auto relative"
+          onClick={(e) => e.stopPropagation()}
+          className="w-full max-w-md md:max-w-xl h-[90dvh] md:h-auto md:max-h-[85dvh] bg-[#FCF6F0] rounded-t-3xl md:rounded-3xl flex flex-col overflow-hidden shadow-2xl relative"
         >
         {/* Hero Image */}
         <div className="relative w-full h-[240px] md:h-[320px] shrink-0 bg-white">
@@ -92,7 +90,7 @@ export default function ItemDetailsModal() {
         </div>
 
         {/* Scrollable Content */}
-        <div className="flex-1 overflow-y-auto overscroll-contain px-6 py-6 pb-32 no-scrollbar">
+        <div className="flex-1 overflow-y-auto min-h-0 px-6 py-6 pb-32">
           <div className="flex justify-between items-start mb-2">
             <h2 className="text-[24px] font-medium text-ink leading-tight pr-4">{activeItem.name}</h2>
             <span className="text-[18px] font-bold text-[#9A5015]">₹{activeItem.price}</span>
@@ -219,7 +217,7 @@ export default function ItemDetailsModal() {
           </button>
           </div>
         </motion.div>
-      </div>
+      </motion.div>
     </>
   );
 }
