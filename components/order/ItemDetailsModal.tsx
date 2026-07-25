@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { useOrder } from "@/context/OrderContext";
 import { motion } from "framer-motion";
@@ -33,6 +33,32 @@ export default function ItemDetailsModal() {
   const [sugar, setSugar] = useState(activeItem.sugarLevels?.[0] || "");
   const [selectedAddons, setSelectedAddons] = useState<string[]>([]);
   const [quantity, setQuantity] = useState(1);
+
+  // Drag to scroll logic
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startY, setStartY] = useState(0);
+  const [scrollTop, setScrollTop] = useState(0);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsDragging(true);
+    setStartY(e.pageY - (scrollRef.current?.offsetTop || 0));
+    setScrollTop(scrollRef.current?.scrollTop || 0);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const y = e.pageY - (scrollRef.current?.offsetTop || 0);
+    const walk = (y - startY) * 1.5;
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollTop - walk;
+    }
+  };
+
+  const handleMouseUpOrLeave = () => {
+    setIsDragging(false);
+  };
 
   // Calculate dynamic price
   let currentPrice = activeItem.price;
@@ -88,7 +114,14 @@ export default function ItemDetailsModal() {
           className="w-full max-w-md md:max-w-xl h-[90dvh] md:h-[85dvh] bg-[#FCF6F0] rounded-t-3xl md:rounded-3xl flex flex-col overflow-hidden shadow-2xl relative"
         >
         {/* Scrollable Content (Including Image) */}
-        <div className="flex-1 overflow-y-auto min-h-0 pb-[100px] no-scrollbar">
+        <div 
+          ref={scrollRef}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUpOrLeave}
+          onMouseLeave={handleMouseUpOrLeave}
+          className="flex-1 overflow-y-auto overscroll-contain min-h-0 pb-[100px] no-scrollbar cursor-grab active:cursor-grabbing select-none"
+        >
           {/* Hero Image */}
           <div className="relative w-full h-[240px] md:h-[320px] shrink-0 bg-white">
             <Image src={activeItem.image} alt={activeItem.name} fill className="object-cover" />
