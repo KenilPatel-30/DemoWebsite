@@ -119,7 +119,7 @@ export default function ItemDetailsModal() {
                 <h3 className="font-medium text-[16px] text-ink mb-3">Size</h3>
                 <div className="bg-[#f2e6db] rounded-2xl p-2 space-y-1">
                   {activeItem.sizes.map((s) => (
-                    <label key={s.label} className="flex items-center justify-between p-3 rounded-xl cursor-pointer hover:bg-white/40 transition">
+                    <div key={s.label} onClick={() => setSize(s.label)} className="flex items-center justify-between p-3 rounded-xl cursor-pointer hover:bg-white/40 transition">
                       <div className="flex items-center gap-3">
                         <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${size === s.label ? 'border-[#9A5015]' : 'border-ink/20'}`}>
                           {size === s.label && <div className="w-2.5 h-2.5 bg-[#9A5015] rounded-full" />}
@@ -130,7 +130,7 @@ export default function ItemDetailsModal() {
                         <span className="text-[13px] text-ink/50">{s.oz}</span>
                         {s.priceAdd > 0 && <span className="text-[13px] text-ink/50">+₹{s.priceAdd}</span>}
                       </div>
-                    </label>
+                    </div>
                   ))}
                 </div>
               </div>
@@ -183,7 +183,7 @@ export default function ItemDetailsModal() {
                 <h3 className="font-medium text-[16px] text-ink mb-3">Add-ons</h3>
                 <div className="bg-[#f2e6db] rounded-2xl p-2 space-y-1">
                   {activeItem.addons.map((a) => (
-                    <label key={a.id} className="flex items-center justify-between p-3 rounded-xl cursor-pointer hover:bg-white/40 transition">
+                    <div key={a.id} onClick={() => toggleAddon(a.id)} className="flex items-center justify-between p-3 rounded-xl cursor-pointer hover:bg-white/40 transition">
                       <div className="flex items-center gap-3">
                         <div className={`w-5 h-5 rounded-[4px] border-2 flex items-center justify-center ${selectedAddons.includes(a.id) ? 'border-[#9A5015] bg-[#9A5015]' : 'border-ink/20 bg-transparent'}`}>
                           {selectedAddons.includes(a.id) && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>}
@@ -191,7 +191,7 @@ export default function ItemDetailsModal() {
                         <span className="text-[15px] text-ink">{a.name}</span>
                       </div>
                       <span className="text-[13px] text-ink/50">+₹{a.price}</span>
-                    </label>
+                    </div>
                   ))}
                 </div>
               </div>

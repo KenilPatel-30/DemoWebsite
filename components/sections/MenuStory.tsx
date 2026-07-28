@@ -70,7 +70,7 @@ export default function MenuStory() {
 
       {/* Action Buttons */}
       <div className="container-x flex flex-col sm:flex-row items-center justify-center gap-6 mt-16">
-        <Button href="/menu.pdf" variant="outline" className="w-full sm:w-auto" cursor="Menu">
+        <Button href="/order" variant="outline" className="w-full sm:w-auto" cursor="Menu">
           View Menu
         </Button>
         <Button href="/order" variant="solid" className="w-full sm:w-auto" cursor="Taste">
