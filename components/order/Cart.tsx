@@ -36,7 +36,15 @@ export default function Cart() {
         </div>
 
         {cart.length === 0 ? (
-          <div className="text-center py-20 text-ink/50">Your cart is empty.</div>
+          <div className="text-center py-20 flex flex-col items-center">
+            <p className="text-ink/50 mb-6">Your cart is empty.</p>
+            <button 
+              onClick={() => setCurrentView("menu")}
+              className="inline-flex items-center gap-2 bg-[#9A5015] hover:bg-[#804210] text-white px-6 py-3 rounded-full font-medium transition-colors"
+            >
+              <Plus className="w-5 h-5" /> Add Item
+            </button>
+          </div>
         ) : (
           <div className="space-y-4">
             {cart.map((item) => (
@@ -149,15 +157,25 @@ export default function Cart() {
               {/* Desktop Checkout Buttons (Inline) */}
               <div className="hidden md:flex flex-col gap-3 mt-6">
                 <button 
-                  onClick={() => setCurrentView("checkout")}
-                  className="w-full bg-[#9A5015] hover:bg-[#804210] transition-colors text-white py-4 rounded-full font-medium text-[15px] shadow-lg flex items-center justify-between px-6"
+                  onClick={() => cart.length > 0 ? setCurrentView("checkout") : undefined}
+                  disabled={cart.length === 0}
+                  className={`w-full py-4 rounded-full font-medium text-[15px] flex items-center justify-between px-6 transition-colors ${
+                    cart.length > 0 
+                      ? "bg-[#9A5015] hover:bg-[#804210] text-white shadow-lg" 
+                      : "bg-ink/10 text-ink/40 cursor-not-allowed shadow-none"
+                  }`}
                 >
                   <span>Pay Online</span>
-                  <span>₹{total.toFixed(0)}</span>
+                  <span>₹{cart.length > 0 ? total.toFixed(0) : "0"}</span>
                 </button>
                 <button 
-                  onClick={() => setCurrentView("orderConfirmed")}
-                  className="w-full bg-transparent border border-ink/20 hover:bg-ink/5 transition-colors text-ink py-4 rounded-full font-medium text-[15px]"
+                  onClick={() => cart.length > 0 ? setCurrentView("orderConfirmed") : undefined}
+                  disabled={cart.length === 0}
+                  className={`w-full py-4 rounded-full font-medium text-[15px] transition-colors ${
+                    cart.length > 0 
+                      ? "bg-transparent border border-ink/20 hover:bg-ink/5 text-ink" 
+                      : "bg-transparent border border-ink/10 text-ink/30 cursor-not-allowed"
+                  }`}
                 >
                   Pay at Counter
                 </button>
