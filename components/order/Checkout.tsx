@@ -122,7 +122,7 @@ export default function Checkout() {
       </div>
 
       {/* Mobile Bottom Fixed Action Bar */}
-      <div className="md:hidden fixed bottom-[80px] left-0 right-0 bg-[#FCF6F0] p-4 pb-safe border-t border-ink/5 z-30">
+      <div className="md:hidden fixed bottom-[100px] left-0 right-0 bg-[#FCF6F0] p-4 pb-safe border-t border-ink/5 z-50">
         <div className="max-w-md mx-auto">
           <button 
             onClick={() => setCurrentView("orderConfirmed")}

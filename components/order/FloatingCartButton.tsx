@@ -33,6 +33,10 @@ export default function FloatingCartButton() {
           </div>
         </div>
         <button
+          onClick={(e) => {
+            e.stopPropagation();
+            setCurrentView("cart");
+          }}
           className="bg-[#9A5015] hover:bg-[#804210] transition-colors text-white text-[13px] font-medium px-5 py-2.5 rounded-full shadow-md"
         >
           Checkout
