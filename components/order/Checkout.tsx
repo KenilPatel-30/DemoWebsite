@@ -49,12 +49,33 @@ export default function Checkout() {
             </div>
           </div>
           <div className="space-y-3 text-[14px] text-ink/80">
-            {cart.map(item => (
-              <div key={item.id} className="flex justify-between">
-                <span className="truncate pr-4">{item.quantity}x {item.menuItem.name}</span>
-                <span>₹{item.totalPrice * item.quantity}</span>
-              </div>
-            ))}
+            {cart.map(item => {
+              const sizePrice = item.menuItem.sizes?.find(s => s.label === item.selections.size)?.priceAdd || 0;
+              const baseAndSizeTotal = (item.menuItem.price + sizePrice) * item.quantity;
+              
+              return (
+                <div key={item.id} className="mb-2 last:mb-0">
+                  <div className="flex justify-between">
+                    <span className="truncate pr-4 font-medium text-ink">{item.quantity}x {item.menuItem.name}</span>
+                    <span className="font-medium text-ink">₹{baseAndSizeTotal}</span>
+                  </div>
+                  {item.selections.addons.length > 0 && (
+                    <div className="pl-6 mt-1 space-y-1">
+                      {item.selections.addons.map(addonId => {
+                        const addon = item.menuItem.addons?.find(a => a.id === addonId);
+                        if (!addon) return null;
+                        return (
+                          <div key={addon.id} className="flex justify-between text-[13px] text-ink/60">
+                            <span className="truncate pr-4">+ {addon.name}</span>
+                            <span>₹{addon.price * item.quantity}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
             <div className="flex justify-between pt-3 border-t border-ink/10">
               <span>Taxes & Fees</span>
               <span>₹{(serviceFee + gst).toFixed(0)}</span>
