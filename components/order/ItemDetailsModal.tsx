@@ -33,6 +33,7 @@ export default function ItemDetailsModal() {
   const [sugar, setSugar] = useState(activeItem.sugarLevels?.[0] || "");
   const [selectedAddons, setSelectedAddons] = useState<string[]>([]);
   const [quantity, setQuantity] = useState(1);
+  const [showAllergens, setShowAllergens] = useState(false);
 
   // Calculate dynamic price
   let currentPrice = activeItem.price;
@@ -197,10 +198,30 @@ export default function ItemDetailsModal() {
               </div>
             )}
 
-            <button className="w-full flex items-center justify-between bg-[#f2e6db] p-4 rounded-2xl text-[15px] font-medium text-ink">
-              <span>Allergens & Info</span>
-              <ChevronDown className="w-5 h-5 text-ink/50" />
-            </button>
+            <div className="pt-2">
+              <button 
+                onClick={() => setShowAllergens(!showAllergens)}
+                className="w-full flex items-center justify-between bg-[#f2e6db] p-4 rounded-2xl text-[15px] font-medium text-ink"
+              >
+                <span>Allergens & Info</span>
+                <ChevronDown className={`w-5 h-5 text-ink/50 transition-transform ${showAllergens ? 'rotate-180' : ''}`} />
+              </button>
+              {showAllergens && (
+                <div className="bg-[#f2e6db]/50 p-4 rounded-2xl text-[14px] text-ink/80 mt-2">
+                  {activeItem.allergens && activeItem.allergens.length > 1 ? (
+                    <ul className="list-disc pl-5 space-y-1">
+                      {activeItem.allergens.map((allergen, idx) => (
+                        <li key={idx}>{allergen}</li>
+                      ))}
+                    </ul>
+                  ) : activeItem.allergens && activeItem.allergens.length === 1 ? (
+                    <p>{activeItem.allergens[0]}</p>
+                  ) : (
+                    <p>No specific allergen information provided.</p>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
           </div>
         </div>

@@ -17,6 +17,7 @@ export type OrderItem = {
   milkTypes?: string[];
   sugarLevels?: string[];
   addons?: Addon[];
+  allergens?: string[];
 };
 
 export const ORDER_CATEGORIES = ["All", "Coffee", "Tea", "Breakfast", "Lunch", "Dessert"];
@@ -41,6 +42,7 @@ export const ORDER_MENU: OrderItem[] = [
       { id: "whip", name: "Whipped cream", price: 40 },
       { id: "vanilla", name: "Vanilla syrup", price: 30 },
     ],
+    allergens: ["Contains Gluten (Oat Milk)"],
   },
   {
     id: "avocado-toast",
@@ -53,6 +55,7 @@ export const ORDER_MENU: OrderItem[] = [
       { id: "poached-egg", name: "Poached Egg", price: 60 },
       { id: "bacon", name: "Crispy Bacon", price: 90 },
     ],
+    allergens: ["Contains Gluten (Sourdough).", "May contain traces of tree nuts and sesame."],
   },
   {
     id: "artisan-cappuccino",
@@ -67,6 +70,7 @@ export const ORDER_MENU: OrderItem[] = [
     ],
     milkTypes: ["Whole", "Oat", "Almond", "Soy"],
     sugarLevels: ["No Sugar", "Regular"],
+    allergens: ["Contains Dairy (unless a milk alternative is chosen)."],
   },
   {
     id: "cold-brew-classic",
@@ -80,6 +84,7 @@ export const ORDER_MENU: OrderItem[] = [
       { label: "Large", oz: "16 oz", priceAdd: 40 },
     ],
     sugarLevels: ["No Sugar", "Regular", "Extra Sweet"],
+    allergens: ["No known allergens."],
   },
   {
     id: "ethiopian-yirgacheffe",
@@ -88,6 +93,7 @@ export const ORDER_MENU: OrderItem[] = [
     price: 340,
     image: IMG.drinks,
     tags: ["Single Origin"],
+    allergens: ["No known allergens."],
   },
   {
     id: "almond-croissant",
@@ -96,5 +102,6 @@ export const ORDER_MENU: OrderItem[] = [
     price: 220,
     image: IMG.dessert,
     tags: ["Fresh Baked"],
+    allergens: ["Contains Gluten.", "Contains Tree Nuts (Almonds).", "Contains Dairy (Butter).", "Contains Eggs."],
   },
 ];
