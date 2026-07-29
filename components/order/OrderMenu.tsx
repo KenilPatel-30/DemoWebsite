@@ -136,7 +136,7 @@ export default function OrderMenu() {
         >
           <div 
             ref={trackRef}
-            className="flex gap-4 w-max px-6 py-2"
+            className="flex gap-8 md:gap-10 w-max px-6 py-2"
           >
             {ORDER_CATEGORIES.map((cat, i) => (
               <div 
