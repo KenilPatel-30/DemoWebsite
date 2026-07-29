@@ -42,8 +42,16 @@ type OrderContextType = {
     instructions: string;
     total: number;
     id: string;
+    status: "paid" | "unpaid";
   } | null;
   setActiveOrder: (order: any) => void;
+  // Unpaid Tab
+  unpaidTab: {
+    items: CartItem[];
+    total: number;
+  } | null;
+  setUnpaidTab: (tab: any) => void;
+  clearUnpaidTab: () => void;
 };
 
 const OrderContext = createContext<OrderContextType | undefined>(undefined);
@@ -55,6 +63,9 @@ export function OrderProvider({ children }: { children: ReactNode }) {
   const [bookingDetails, setBookingDetails] = useState<any>({});
   const [orderInstructions, setOrderInstructions] = useState("");
   const [activeOrder, setActiveOrder] = useState<any>(null);
+  const [unpaidTab, setUnpaidTab] = useState<{ items: CartItem[]; total: number } | null>(null);
+
+  const clearUnpaidTab = () => setUnpaidTab(null);
 
   const addToCart = (item: CartItem) => {
     setCart((prev) => [...prev, item]);
@@ -103,6 +114,9 @@ export function OrderProvider({ children }: { children: ReactNode }) {
         setOrderInstructions,
         activeOrder,
         setActiveOrder,
+        unpaidTab,
+        setUnpaidTab,
+        clearUnpaidTab,
       }}
     >
       {children}

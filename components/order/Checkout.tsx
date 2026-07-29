@@ -5,7 +5,7 @@ import { useOrder } from "@/context/OrderContext";
 import { ArrowLeft, ShoppingCart, Clock, ChevronUp, Lock, CheckCircle2 } from "lucide-react";
 
 export default function Checkout() {
-  const { cart, cartTotal, setCurrentView, orderInstructions, setOrderInstructions, setActiveOrder, clearCart } = useOrder();
+  const { cart, cartTotal, setCurrentView, orderInstructions, setOrderInstructions, setActiveOrder, clearCart, setUnpaidTab } = useOrder();
   const [paymentMethod, setPaymentMethod] = useState("UPI");
 
   const serviceFee = cartTotal * 0.05;
@@ -13,12 +13,26 @@ export default function Checkout() {
   const total = cartTotal + serviceFee + gst;
 
   const handlePlaceOrder = () => {
+    const isUnpaid = paymentMethod === "Cash";
+    
     setActiveOrder({
       items: [...cart],
       instructions: orderInstructions,
       total: total,
-      id: "#AB-" + Math.floor(1000 + Math.random() * 9000)
+      id: "#AB-" + Math.floor(1000 + Math.random() * 9000),
+      status: isUnpaid ? "unpaid" : "paid"
     });
+
+    if (isUnpaid) {
+      setUnpaidTab((prev: any) => {
+        if (!prev) return { items: [...cart], total: total };
+        return {
+          items: [...prev.items, ...cart],
+          total: prev.total + total
+        };
+      });
+    }
+
     clearCart();
     setOrderInstructions("");
     setCurrentView("orderConfirmed");

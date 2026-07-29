@@ -5,7 +5,7 @@ import { useOrder } from "@/context/OrderContext";
 import { ArrowLeft, Clock, Trash2, Plus, Minus } from "lucide-react";
 
 export default function Cart() {
-  const { cart, updateQuantity, removeFromCart, setCurrentView, cartTotal, orderInstructions, setOrderInstructions, setActiveOrder, clearCart } = useOrder();
+  const { cart, updateQuantity, removeFromCart, setCurrentView, cartTotal, orderInstructions, setOrderInstructions, setActiveOrder, clearCart, setUnpaidTab } = useOrder();
 
   let baseTotal = 0;
   let addonsTotal = 0;
@@ -36,8 +36,18 @@ export default function Cart() {
       items: [...cart],
       instructions: orderInstructions,
       total: total,
-      id: "#AB-" + Math.floor(1000 + Math.random() * 9000)
+      id: "#AB-" + Math.floor(1000 + Math.random() * 9000),
+      status: "unpaid"
     });
+
+    setUnpaidTab((prev: any) => {
+      if (!prev) return { items: [...cart], total: total };
+      return {
+        items: [...prev.items, ...cart],
+        total: prev.total + total
+      };
+    });
+
     clearCart();
     setOrderInstructions("");
     setCurrentView("orderConfirmed");

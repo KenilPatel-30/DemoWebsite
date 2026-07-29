@@ -1,13 +1,14 @@
 "use client";
 
 import { useOrder } from "@/context/OrderContext";
-import { Check, Clock, Upload, Coffee } from "lucide-react";
+import { CheckCircle2, Coffee, Upload, Wallet } from "lucide-react";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function OrderConfirmation() {
-  const { activeOrder, setCurrentView } = useOrder();
+  const { activeOrder, unpaidTab, setCurrentView, clearUnpaidTab, setActiveOrder } = useOrder();
+  const [showPaidAnim, setShowPaidAnim] = useState(false);
   const router = useRouter();
   
   // A simple countdown timer for visual effect
@@ -23,7 +24,7 @@ export default function OrderConfirmation() {
   const mins = Math.floor(timeLeft / 60).toString().padStart(2, '0');
   const secs = (timeLeft % 60).toString().padStart(2, '0');
 
-  if (!activeOrder) {
+  if (!activeOrder && !unpaidTab) {
     return (
       <div className="flex flex-col w-full min-h-screen bg-[#FCF6F0] items-center justify-center">
         <p className="text-ink/60 mb-4">No active order found.</p>
@@ -34,8 +35,31 @@ export default function OrderConfirmation() {
     );
   }
 
+  const isTab = unpaidTab !== null;
+  const displayItems = isTab ? unpaidTab.items : activeOrder?.items;
+  const displayTotal = isTab ? unpaidTab.total : activeOrder?.total;
+  const orderId = activeOrder?.id || "#AB-2847";
+
+  const handlePaid = () => {
+    setShowPaidAnim(true);
+    setTimeout(() => {
+      clearUnpaidTab();
+      setActiveOrder(null);
+      setCurrentView("menu");
+    }, 2500);
+  };
+
   return (
     <div className="flex flex-col w-full min-h-screen bg-[#FCF6F0] pb-40">
+      {/* Fun Success Overlay */}
+      {showPaidAnim && (
+        <div className="fixed inset-0 z-[100] bg-[#9A5015] flex flex-col items-center justify-center animate-in fade-in duration-300">
+          <div className="text-[80px] mb-6 animate-bounce">💸🎉</div>
+          <h2 className="text-3xl font-bold text-white text-center px-6">You're all squared up!</h2>
+          <p className="text-white/80 mt-3 text-lg">Thanks for dropping by Demo Cafe. See you next time!</p>
+        </div>
+      )}
+
       <div className="flex flex-col items-center pt-[100px] px-6 max-w-xl mx-auto w-full">
       
       {/* Success Icon */}
@@ -43,20 +67,26 @@ export default function OrderConfirmation() {
         initial={{ scale: 0.5, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ type: "spring", damping: 15 }}
-        className="w-24 h-24 bg-[#c8e6c9] rounded-full flex items-center justify-center mb-6"
+        className="w-24 h-24 bg-[#9A5015]/10 rounded-full flex items-center justify-center mb-6"
       >
-        <Check className="w-12 h-12 text-[#2e7d32]" strokeWidth={3} />
+        <CheckCircle2 className="w-12 h-12 text-[#9A5015]" />
       </motion.div>
 
-      <h1 className="text-[28px] font-bold text-ink mb-2">Order Confirmed!</h1>
-      <p className="text-[15px] text-ink/60 mb-10 text-center">Your craft coffee is being prepared.</p>
+      <h1 className="text-[28px] font-bold text-ink mb-2">
+        {isTab ? "Added to your Tab!" : "Order Confirmed!"}
+      </h1>
+      <p className="text-ink/60 text-[15px] mb-8 text-center max-w-sm">
+        {isTab 
+          ? "Your craft coffee is being prepared. Pay at the counter when you're ready." 
+          : "Your payment was successful and your order is being prepared."}
+      </p>
 
       {/* Order Info Card */}
       <div className="w-full bg-[#f2e6db] rounded-2xl p-6 mb-6">
         <div className="flex justify-between items-start border-b border-ink/10 pb-4 mb-4">
           <div>
             <span className="text-[11px] font-bold text-ink/50 tracking-wider mb-1 block">ORDER NUMBER</span>
-            <span className="text-[20px] font-medium text-ink">{activeOrder.id}</span>
+            <span className="text-[20px] font-medium text-ink">{orderId}</span>
           </div>
           <div className="text-right">
             <span className="text-[11px] font-bold text-ink/50 tracking-wider mb-1 block">EST. READY</span>
@@ -72,7 +102,7 @@ export default function OrderConfirmation() {
         <div className="flex flex-col items-center justify-center">
           <span className="text-[13px] font-medium text-ink/70 mb-2">Time remaining</span>
           <div className="flex items-center gap-2 text-[24px] font-bold text-ink">
-            <Clock className="w-6 h-6 text-[#2e7d32]" />
+            <span className="text-[#2e7d32]">●</span>
             {mins}:{secs}
           </div>
         </div>
@@ -80,10 +110,15 @@ export default function OrderConfirmation() {
 
       {/* Order Summary simple list */}
       <div className="w-full bg-[#f2e6db] rounded-2xl p-6 mb-8">
-        <h3 className="font-medium text-[16px] text-ink mb-4">Order Summary</h3>
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="font-medium text-[16px] text-ink">{isTab ? "Running Tab" : "Order Summary"}</h3>
+          {isTab && (
+             <span className="font-bold text-[18px] text-[#9A5015]">Total: ₹{displayTotal?.toFixed(0)}</span>
+          )}
+        </div>
         <div className="space-y-4">
-          {activeOrder.items.map((item: any) => (
-            <div key={item.id} className="flex gap-4">
+          {displayItems?.map((item: any, i: number) => (
+            <div key={`${item.id}-${i}`} className="flex gap-4">
               <div className="w-10 h-10 bg-[#ebdccc] rounded-lg flex items-center justify-center shrink-0 text-[#9A5015]">
                 <Coffee className="w-5 h-5" />
               </div>
@@ -97,13 +132,24 @@ export default function OrderConfirmation() {
             </div>
           ))}
         </div>
-        {activeOrder.instructions && (
+        {activeOrder?.instructions && (
           <div className="mt-6 pt-5 border-t border-ink/10">
-            <h4 className="font-medium text-[13px] text-ink/70 mb-2 uppercase tracking-wide">Special Instructions</h4>
+            <h4 className="font-medium text-[13px] text-ink/70 mb-2 uppercase tracking-wide">Recent Instructions</h4>
             <p className="text-[14px] text-ink font-medium bg-[#ebdccc] p-3 rounded-xl italic">"{activeOrder.instructions}"</p>
           </div>
         )}
       </div>
+
+      {/* Interactive Pay Button for Tab */}
+      {isTab && (
+        <button 
+          onClick={handlePaid}
+          className="w-full bg-[#9A5015] hover:bg-[#804210] shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all text-white py-5 rounded-2xl font-bold text-[16px] flex items-center justify-center gap-3 mb-6"
+        >
+          <Wallet className="w-5 h-5" /> 
+          Already paid the bill dude, let me go!
+        </button>
+      )}
 
       <button className="w-full bg-transparent border border-ink hover:bg-ink hover:text-white transition-colors text-ink py-4 rounded-full font-medium text-[15px] flex items-center justify-center gap-2 mb-4">
         <Upload className="w-4 h-4" /> Share with Friends

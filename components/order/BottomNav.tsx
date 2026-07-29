@@ -5,14 +5,16 @@ import { UtensilsCrossed, Receipt, ShoppingBag } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export default function BottomNav() {
-  const { currentView, setCurrentView, cartCount, cartTotal } = useOrder();
+  const { currentView, setCurrentView, cartCount, cartTotal, unpaidTab } = useOrder();
 
   const navItems = [
     { id: "menu", label: "Menu", icon: UtensilsCrossed },
     { id: "orders", label: "Orders", icon: Receipt },
   ] as const;
 
-  const showCartButton = cartCount > 0 && !["cart", "checkout", "orderConfirmed"].includes(currentView);
+  const displayCount = cartCount > 0 ? cartCount : (unpaidTab?.items?.length || 0);
+  const displayTotal = cartCount > 0 ? cartTotal : (unpaidTab?.total || 0);
+  const showCartButton = (cartCount > 0 || unpaidTab !== null) && !["cart", "checkout", "orderConfirmed"].includes(currentView);
 
   return (
     <div className="fixed bottom-6 left-0 right-0 z-[90] px-4 flex justify-center pointer-events-none pb-safe">
@@ -48,17 +50,20 @@ export default function BottomNav() {
         {/* Floating Cart Button (Right side) */}
         {showCartButton && (
           <button
-            onClick={() => setCurrentView("cart")}
+            onClick={() => {
+              if (cartCount > 0) setCurrentView("cart");
+              else if (unpaidTab) setCurrentView("orderConfirmed");
+            }}
             className="flex items-center justify-center gap-2.5 rounded-full bg-[#9A5015] hover:bg-[#804210] text-white px-5 py-3 shadow-2xl pointer-events-auto transition-transform active:scale-95 flex-1 max-w-[140px]"
           >
             <div className="relative shrink-0">
               <ShoppingBag className="w-5 h-5" />
               <span className="absolute -top-1.5 -right-1.5 flex h-[15px] w-[15px] items-center justify-center rounded-full bg-white text-[9px] font-bold text-[#9A5015] shadow-sm">
-                {cartCount}
+                {displayCount}
               </span>
             </div>
             <div className="font-bold text-[14px] truncate">
-               ₹{cartTotal.toFixed(0)}
+               ₹{displayTotal.toFixed(0)}
             </div>
           </button>
         )}
