@@ -25,6 +25,67 @@ export default function OrderMenu() {
   const { setCurrentView, setActiveItem, cart, updateQuantity, addToCart } = useOrder();
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
+  const containerRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    const track = trackRef.current;
+    if (!container || !track) return;
+
+    let animationFrameId: number;
+    let position = 0;
+    let direction = -1; // start by moving left
+    let lastTime = performance.now();
+
+    const scroll = (time: number) => {
+      const deltaTime = time - lastTime;
+      lastTime = time;
+      
+      const speed = 0.05 * deltaTime;
+      const trackWidth = track.scrollWidth;
+      const containerWidth = container.clientWidth;
+      
+      // Calculate max translation (if track is wider than container, it's negative)
+      const maxTranslate = Math.min(0, containerWidth - trackWidth);
+
+      // If it fully fits on screen, just do a gentle +/- 30px pan to satisfy the "keep moving" request
+      if (maxTranslate === 0) {
+        if (position <= -30) direction = 1;
+        else if (position >= 30) direction = -1;
+      } else {
+        // Normal bouncing across the overflow
+        if (position <= maxTranslate) direction = 1;
+        else if (position >= 0) direction = -1;
+      }
+
+      position += speed * direction;
+      track.style.transform = `translateX(${position}px)`;
+
+      animationFrameId = requestAnimationFrame(scroll);
+    };
+
+    const handleInteractionStart = () => cancelAnimationFrame(animationFrameId);
+    const handleInteractionEnd = () => {
+      lastTime = performance.now();
+      animationFrameId = requestAnimationFrame(scroll);
+    };
+
+    container.addEventListener("mouseenter", handleInteractionStart);
+    container.addEventListener("mouseleave", handleInteractionEnd);
+    container.addEventListener("touchstart", handleInteractionStart, { passive: true });
+    container.addEventListener("touchend", handleInteractionEnd);
+
+    animationFrameId = requestAnimationFrame(scroll);
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      container.removeEventListener("mouseenter", handleInteractionStart);
+      container.removeEventListener("mouseleave", handleInteractionEnd);
+      container.removeEventListener("touchstart", handleInteractionStart);
+      container.removeEventListener("touchend", handleInteractionEnd);
+    };
+  }, []);
 
   const filteredMenu = ORDER_MENU.filter(item => {
     const matchesCategory = activeCategory === "All" || item.category === activeCategory;
@@ -60,16 +121,16 @@ export default function OrderMenu() {
           />
         </div>
 
-        {/* Category Marquee */}
+        {/* Category Row */}
         <div 
-          className="w-full overflow-hidden pb-4 mt-2" 
-          style={{ 
-            maskImage: "linear-gradient(to right, transparent, black 5%, black 95%, transparent)",
-            WebkitMaskImage: "linear-gradient(to right, transparent, black 5%, black 95%, transparent)"
-          }}
+          ref={containerRef}
+          className="w-full overflow-hidden pb-4 mt-2 px-6"
         >
-          <div className="flex gap-4 w-max animate-marquee hover:[animation-play-state:paused]">
-            {[...ORDER_CATEGORIES, ...ORDER_CATEGORIES, ...ORDER_CATEGORIES].map((cat, i) => (
+          <div 
+            ref={trackRef}
+            className="flex gap-4 w-max"
+          >
+            {ORDER_CATEGORIES.map((cat, i) => (
               <div 
                 key={`${cat}-${i}`}
                 onClick={() => setActiveCategory(cat)}
