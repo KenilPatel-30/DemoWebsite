@@ -25,55 +25,6 @@ export default function OrderMenu() {
   const { setCurrentView, setActiveItem, cart, updateQuantity, addToCart } = useOrder();
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-
-    let animationFrameId: number;
-    let direction = 1;
-    let lastTime = performance.now();
-
-    const scroll = (time: number) => {
-      const deltaTime = time - lastTime;
-      lastTime = time;
-
-      // Adjust speed (pixels per millisecond)
-      const speed = 0.03 * deltaTime;
-
-      if (container.scrollWidth > container.clientWidth) {
-        if (container.scrollLeft >= (container.scrollWidth - container.clientWidth - 1)) {
-          direction = -1;
-        } else if (container.scrollLeft <= 0) {
-          direction = 1;
-        }
-        container.scrollLeft += speed * direction;
-      }
-      animationFrameId = requestAnimationFrame(scroll);
-    };
-
-    const handleInteractionStart = () => cancelAnimationFrame(animationFrameId);
-    const handleInteractionEnd = () => {
-      lastTime = performance.now();
-      animationFrameId = requestAnimationFrame(scroll);
-    };
-
-    container.addEventListener("mouseenter", handleInteractionStart);
-    container.addEventListener("mouseleave", handleInteractionEnd);
-    container.addEventListener("touchstart", handleInteractionStart, { passive: true });
-    container.addEventListener("touchend", handleInteractionEnd);
-
-    animationFrameId = requestAnimationFrame(scroll);
-
-    return () => {
-      cancelAnimationFrame(animationFrameId);
-      container.removeEventListener("mouseenter", handleInteractionStart);
-      container.removeEventListener("mouseleave", handleInteractionEnd);
-      container.removeEventListener("touchstart", handleInteractionStart);
-      container.removeEventListener("touchend", handleInteractionEnd);
-    };
-  }, []);
 
   const filteredMenu = ORDER_MENU.filter(item => {
     const matchesCategory = activeCategory === "All" || item.category === activeCategory;
@@ -109,17 +60,20 @@ export default function OrderMenu() {
           />
         </div>
 
-        {/* Category Row */}
-        <div className="w-full pb-4 mt-2">
-          <div 
-            ref={scrollContainerRef}
-            className="flex gap-4 overflow-x-auto px-6 no-scrollbar snap-x"
-          >
-            {ORDER_CATEGORIES.map((cat, i) => (
+        {/* Category Marquee */}
+        <div 
+          className="w-full overflow-hidden pb-4 mt-2" 
+          style={{ 
+            maskImage: "linear-gradient(to right, transparent, black 5%, black 95%, transparent)",
+            WebkitMaskImage: "linear-gradient(to right, transparent, black 5%, black 95%, transparent)"
+          }}
+        >
+          <div className="flex gap-4 w-max animate-marquee hover:[animation-play-state:paused]">
+            {[...ORDER_CATEGORIES, ...ORDER_CATEGORIES, ...ORDER_CATEGORIES].map((cat, i) => (
               <div 
                 key={`${cat}-${i}`}
                 onClick={() => setActiveCategory(cat)}
-                className="flex flex-col items-center gap-2 cursor-pointer group flex-shrink-0 transition-all hover:scale-[1.02] active:scale-95 w-[90px] md:w-[110px] snap-start"
+                className="flex flex-col items-center gap-2 cursor-pointer group flex-shrink-0 transition-all hover:scale-[1.02] active:scale-95 w-[90px] md:w-[110px]"
               >
                  <div className={`relative w-full aspect-[4/3] md:aspect-square rounded-2xl overflow-hidden ${activeCategory === cat ? 'ring-4 ring-[#9A5015] ring-offset-2 ring-offset-[#FCF6F0]' : 'ring-1 ring-ink/10 shadow-sm'}`}>
                    <Image src={CATEGORY_IMAGES[cat] || IMG.warmInterior} alt={cat} fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
