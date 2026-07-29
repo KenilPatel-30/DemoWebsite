@@ -9,7 +9,6 @@ import OrderConfirmation from "@/components/order/OrderConfirmation";
 import BookTable from "@/components/order/BookTable";
 import BookingConfirmation from "@/components/order/BookingConfirmation";
 import ItemDetailsModal from "@/components/order/ItemDetailsModal";
-import FloatingCartButton from "@/components/order/FloatingCartButton";
 import { AnimatePresence } from "framer-motion";
 
 export default function OrderPage() {
@@ -27,7 +26,6 @@ export default function OrderPage() {
 
       {/* Persistent Components over certain views */}
       <AnimatePresence>
-        {currentView === "menu" && <FloatingCartButton />}
         {activeItem && <ItemDetailsModal />}
       </AnimatePresence>
     </main>
