@@ -8,9 +8,9 @@ export default function OrderHistory() {
   const { setCurrentView } = useOrder();
 
   return (
-    <div className="flex flex-col w-full min-h-screen bg-[#FCF6F0] pb-24">
+    <div className="flex flex-col w-full min-h-screen bg-[#FCF6F0] pb-24 pt-[80px]">
       {/* Header */}
-      <div className="sticky top-0 z-20 bg-[#FCF6F0]/90 backdrop-blur-md pt-safe border-b border-ink/5">
+      <div className="sticky top-[80px] z-20 bg-[#FCF6F0]/90 backdrop-blur-md border-b border-ink/5">
         <div className="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto w-full">
           <button onClick={() => setCurrentView("home")} className="p-2 -ml-2 text-[#9A5015]">
             <ArrowLeft className="w-5 h-5" />

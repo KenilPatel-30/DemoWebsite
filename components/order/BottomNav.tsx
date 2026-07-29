@@ -15,8 +15,8 @@ export default function BottomNav() {
   ] as const;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-40 pb-safe">
-      <div className="mx-auto flex max-w-xl items-center justify-around md:justify-between rounded-t-3xl bg-[#FCF6F0]/90 backdrop-blur-lg px-8 py-4 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] border-t border-ink/5">
+    <div className="fixed bottom-6 left-0 right-0 z-40 flex justify-center pointer-events-none pb-safe">
+      <div className="flex items-center gap-2 rounded-full bg-[#FCF6F0]/95 backdrop-blur-lg px-2 py-2 shadow-xl border border-ink/10 pointer-events-auto">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = currentView === item.id || (currentView === "menu" && item.id === "menu"); // Simplified active state
@@ -29,12 +29,12 @@ export default function BottomNav() {
                 }
               }}
               className={cn(
-                "flex flex-col items-center justify-center gap-1 w-16 h-16 rounded-full transition-colors",
-                isActive ? "bg-[#9A5015] text-white" : "text-ink/60 hover:text-ink"
+                "flex flex-row items-center gap-2 px-6 py-3 rounded-full transition-colors",
+                isActive ? "bg-[#9A5015] text-white" : "text-ink/70 hover:text-ink hover:bg-ink/5"
               )}
             >
               <Icon className="h-5 w-5" strokeWidth={isActive ? 2.5 : 2} />
-              <span className="text-[10px] font-medium">{item.label}</span>
+              <span className="text-[14px] font-medium">{item.label}</span>
             </button>
           );
         })}

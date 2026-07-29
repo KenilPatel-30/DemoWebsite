@@ -8,7 +8,7 @@ export default function BookingConfirmation() {
   const { bookingDetails, setCurrentView } = useOrder();
 
   return (
-    <div className="flex flex-col w-full min-h-screen bg-[#FCF6F0] items-center pt-16 px-6 pb-24">
+    <div className="flex flex-col w-full min-h-screen bg-[#FCF6F0] items-center pt-[100px] px-6 pb-24">
       
       {/* Success Icon */}
       <motion.div 

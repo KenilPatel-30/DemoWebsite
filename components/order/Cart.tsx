@@ -12,9 +12,9 @@ export default function Cart() {
   const total = cartTotal + serviceFee + gst;
 
   return (
-    <div className="flex flex-col w-full min-h-screen bg-[#FCF6F0] pb-40 md:pb-24">
+    <div className="flex flex-col w-full min-h-screen bg-[#FCF6F0] pb-40 md:pb-24 pt-[80px]">
       {/* Header */}
-      <div className="sticky top-0 z-20 bg-[#FCF6F0] pt-safe border-b border-ink/5">
+      <div className="sticky top-[80px] z-20 bg-[#FCF6F0] border-b border-ink/5">
         <div className="flex items-center justify-center px-6 py-4 relative">
           <button onClick={() => setCurrentView("menu")} className="absolute left-6 p-2 -ml-2 text-[#9A5015]">
             <ArrowLeft className="w-5 h-5" />

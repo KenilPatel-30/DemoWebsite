@@ -36,8 +36,8 @@ export default function OrderMenu() {
       </div>
 
       {/* Header */}
-      <div className="sticky top-0 z-20 bg-[#FCF6F0]/90 backdrop-blur-md pt-2 shadow-sm">
-        <div className="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto w-full">
+      <div className="sticky top-[80px] z-20 bg-[#FCF6F0]/90 backdrop-blur-md pt-2 pb-2 shadow-sm">
+        <div className="flex items-center justify-between px-6 py-2 max-w-7xl mx-auto w-full">
           <input 
             type="text"
             placeholder="Search items..."

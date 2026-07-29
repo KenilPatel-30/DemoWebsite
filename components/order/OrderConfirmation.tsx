@@ -25,7 +25,7 @@ export default function OrderConfirmation() {
 
   return (
     <div className="flex flex-col w-full min-h-screen bg-[#FCF6F0] pb-24">
-      <div className="flex flex-col items-center pt-16 px-6 max-w-xl mx-auto w-full">
+      <div className="flex flex-col items-center pt-[100px] px-6 max-w-xl mx-auto w-full">
       
       {/* Success Icon */}
       <motion.div 
