@@ -9,11 +9,14 @@ import { Search, Plus, Minus, CupSoda } from "lucide-react";
 
 const CATEGORY_IMAGES: Record<string, string> = {
   "All": IMG.warmInterior,
-  "Coffee": IMG.drinks,
-  "Tea": IMG.matcha,
-  "Breakfast": IMG.brunchPlate,
-  "Lunch": IMG.pizzaCocktails,
+  "Coffee": IMG.latte,
+  "Starter": IMG.brunchPlate,
+  "Main Course": IMG.margherita,
   "Dessert": IMG.dessert,
+  "Mocktails": IMG.drinks,
+  "Shakes": IMG.matcha,
+  "Siders": IMG.pizzaCocktails,
+  "Chef's Recommended": IMG.heroNight,
 };
 
 const basePath = process.env.NODE_ENV === "production" ? "/DemoWebsite" : "";
@@ -70,12 +73,14 @@ export default function OrderMenu() {
               <div 
                 key={`${cat}-${i}`}
                 onClick={() => setActiveCategory(cat)}
-                className={`relative w-[130px] h-[170px] md:w-[160px] md:h-[220px] rounded-2xl overflow-hidden cursor-pointer group flex-shrink-0 transition-all hover:scale-[1.02] active:scale-95 ${activeCategory === cat ? 'ring-4 ring-[#9A5015] ring-offset-2 ring-offset-[#FCF6F0]' : 'ring-1 ring-ink/5'}`}
+                className="flex flex-col items-center gap-2 cursor-pointer group flex-shrink-0 transition-all hover:scale-[1.02] active:scale-95 w-[90px] md:w-[110px]"
               >
-                 <Image src={CATEGORY_IMAGES[cat] || IMG.warmInterior} alt={cat} fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
-                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4">
-                   <span className="text-white font-medium text-[15px] md:text-[17px] tracking-wide shadow-black drop-shadow-lg">{cat}</span>
+                 <div className={`relative w-full aspect-[4/3] md:aspect-square rounded-2xl overflow-hidden ${activeCategory === cat ? 'ring-4 ring-[#9A5015] ring-offset-2 ring-offset-[#FCF6F0]' : 'ring-1 ring-ink/10 shadow-sm'}`}>
+                   <Image src={CATEGORY_IMAGES[cat] || IMG.warmInterior} alt={cat} fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
                  </div>
+                 <span className={`text-[12px] md:text-[14px] font-medium text-center leading-tight ${activeCategory === cat ? 'text-[#9A5015]' : 'text-ink/80'}`}>
+                   {cat}
+                 </span>
               </div>
             ))}
           </div>

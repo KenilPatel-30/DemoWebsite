@@ -20,7 +20,17 @@ export type OrderItem = {
   allergens?: string[];
 };
 
-export const ORDER_CATEGORIES = ["All", "Coffee", "Tea", "Breakfast", "Lunch", "Dessert"];
+export const ORDER_CATEGORIES = [
+  "All", 
+  "Coffee", 
+  "Starter", 
+  "Main Course", 
+  "Dessert", 
+  "Mocktails", 
+  "Shakes", 
+  "Siders", 
+  "Chef's Recommended"
+];
 
 export const ORDER_MENU: OrderItem[] = [
   {
