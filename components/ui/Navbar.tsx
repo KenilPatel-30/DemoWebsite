@@ -6,7 +6,7 @@ import { Menu, X } from "lucide-react";
 import type Lenis from "lenis";
 import { NAV_LINKS, SITE } from "@/lib/site";
 import { cn } from "@/lib/utils";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 
 function scrollToHash(hash: string) {
@@ -28,6 +28,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string>("#top");
   const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -60,10 +61,12 @@ export default function Navbar() {
   const go = (e: React.MouseEvent, hash: string) => {
     e.preventDefault();
     setOpen(false);
-    scrollToHash(hash);
+    if (pathname === "/") {
+      scrollToHash(hash);
+    } else {
+      router.push("/" + hash);
+    }
   };
-
-  if (pathname && (pathname.startsWith("/order") || pathname.startsWith("/reserve"))) return null;
 
   return (
     <>

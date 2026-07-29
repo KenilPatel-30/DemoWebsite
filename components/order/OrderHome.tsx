@@ -28,11 +28,6 @@ export default function OrderHome() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#FCF6F0] to-transparent" />
         
-        <a href={`${basePath}/`} className="absolute top-6 left-6 z-10 text-white/90 hover:text-white transition-colors bg-black/20 hover:bg-black/40 rounded-full p-2 backdrop-blur-sm flex items-center gap-2 pr-4 shadow-sm border border-white/10">
-          <ArrowLeft className="w-4 h-4" />
-          <span className="text-[12px] font-medium leading-none">Main Site</span>
-        </a>
-        
         <div className="absolute inset-0 flex flex-col items-center justify-center pt-8">
           <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg mb-3">
             <CupSoda className="w-8 h-8 text-[#9A5015]" strokeWidth={2} />
