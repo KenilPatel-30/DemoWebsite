@@ -173,9 +173,9 @@ export default function Testimonials() {
       </div>
 
       <div className="relative -mx-4 flex flex-col gap-4 overflow-hidden sm:mx-0 sm:gap-6" style={{ maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}>
-        <MarqueeRow items={ROW_1} direction="left" speed={90} onHoverStart={setHovered} onHoverEnd={() => setHovered(null)} />
-        <MarqueeRow items={ROW_2} direction="right" speed={100} onHoverStart={setHovered} onHoverEnd={() => setHovered(null)} />
-        <MarqueeRow items={ROW_3} direction="left" speed={80} onHoverStart={setHovered} onHoverEnd={() => setHovered(null)} />
+        <MarqueeRow items={ROW_1} direction="left" speed={180} onHoverStart={setHovered} onHoverEnd={() => setHovered(null)} />
+        <MarqueeRow items={ROW_2} direction="right" speed={200} onHoverStart={setHovered} onHoverEnd={() => setHovered(null)} />
+        <MarqueeRow items={ROW_3} direction="left" speed={160} onHoverStart={setHovered} onHoverEnd={() => setHovered(null)} />
       </div>
 
       <AnimatePresence>

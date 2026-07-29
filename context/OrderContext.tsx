@@ -39,7 +39,7 @@ const OrderContext = createContext<OrderContextType | undefined>(undefined);
 
 export function OrderProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [currentView, setCurrentView] = useState<OrderContextType["currentView"]>("home");
+  const [currentView, setCurrentView] = useState<OrderContextType["currentView"]>("menu");
   const [activeItem, setActiveItem] = useState<OrderItem | null>(null);
   const [bookingDetails, setBookingDetails] = useState<any>({});
 

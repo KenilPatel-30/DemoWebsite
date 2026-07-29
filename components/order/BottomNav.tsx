@@ -10,7 +10,6 @@ export default function BottomNav() {
   // Make nav persistent across all screens.
 
   const navItems = [
-    { id: "home", label: "Home", icon: Home },
     { id: "menu", label: "Menu", icon: UtensilsCrossed },
     { id: "orders", label: "Orders", icon: Receipt },
   ] as const;
@@ -25,7 +24,7 @@ export default function BottomNav() {
             <button
               key={item.id}
               onClick={() => {
-                if (item.id === "home" || item.id === "menu" || item.id === "orders") {
+                if (item.id === "menu" || item.id === "orders") {
                   setCurrentView(item.id as any);
                 }
               }}

@@ -1,7 +1,6 @@
 "use client";
 
 import { useOrder } from "@/context/OrderContext";
-import OrderHome from "@/components/order/OrderHome";
 import OrderMenu from "@/components/order/OrderMenu";
 import Cart from "@/components/order/Cart";
 import OrderHistory from "@/components/order/OrderHistory";
@@ -18,7 +17,6 @@ export default function OrderPage() {
 
   return (
     <main className="relative min-h-screen pb-24">
-      {currentView === "home" && <OrderHome />}
       {currentView === "menu" && <OrderMenu />}
       {currentView === "cart" && <Cart />}
       {currentView === "orders" && <OrderHistory />}
@@ -29,7 +27,7 @@ export default function OrderPage() {
 
       {/* Persistent Components over certain views */}
       <AnimatePresence>
-        {(currentView === "home" || currentView === "menu") && <FloatingCartButton />}
+        {currentView === "menu" && <FloatingCartButton />}
         {activeItem && <ItemDetailsModal />}
       </AnimatePresence>
     </main>

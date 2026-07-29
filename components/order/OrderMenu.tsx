@@ -4,7 +4,9 @@ import { useState } from "react";
 import Image from "next/image";
 import { useOrder } from "@/context/OrderContext";
 import { ORDER_CATEGORIES, ORDER_MENU } from "@/lib/orderData";
-import { ArrowLeft, Search, Plus, Minus } from "lucide-react";
+import { Search, Plus, Minus, CupSoda } from "lucide-react";
+
+const basePath = process.env.NODE_ENV === "production" ? "/DemoWebsite" : "";
 
 export default function OrderMenu() {
   const { setCurrentView, setActiveItem, cart, updateQuantity, addToCart } = useOrder();
@@ -19,12 +21,23 @@ export default function OrderMenu() {
 
   return (
     <div className="flex flex-col w-full pb-32 bg-[#FCF6F0] min-h-screen">
+      {/* Header Banner */}
+      <div className="flex flex-col items-center justify-center pt-28 pb-4 w-full">
+        <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-sm border border-ink/5 mb-4">
+          <CupSoda className="w-8 h-8 text-[#9A5015]" strokeWidth={2} />
+        </div>
+        <a href={`${basePath}/`} className="transition-transform hover:scale-105 active:scale-95">
+          <h1 className="text-3xl md:text-4xl font-display font-bold text-ink mb-3 text-center">Demo Cafe</h1>
+        </a>
+        <div className="bg-white border border-ink/5 px-4 py-1.5 rounded-full flex items-center gap-2 text-[12px] font-medium text-ink shadow-sm">
+          <div className="w-2 h-2 rounded-full bg-green-500" />
+          <span>Open Now • Prep: 10 mins</span>
+        </div>
+      </div>
+
       {/* Header */}
-      <div className="sticky top-0 z-20 bg-[#FCF6F0]/90 backdrop-blur-md pt-safe shadow-sm">
+      <div className="sticky top-0 z-20 bg-[#FCF6F0]/90 backdrop-blur-md pt-2 shadow-sm">
         <div className="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto w-full">
-          <button onClick={() => setCurrentView("home")} className="p-2 -ml-2 text-[#9A5015]">
-            <ArrowLeft className="w-5 h-5" />
-          </button>
           <input 
             type="text"
             placeholder="Search items..."
