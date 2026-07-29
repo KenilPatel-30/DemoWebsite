@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { useOrder } from "@/context/OrderContext";
 import { ORDER_CATEGORIES, ORDER_MENU } from "@/lib/orderData";
@@ -25,6 +25,55 @@ export default function OrderMenu() {
   const { setCurrentView, setActiveItem, cart, updateQuantity, addToCart } = useOrder();
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    let animationFrameId: number;
+    let direction = 1;
+    let lastTime = performance.now();
+
+    const scroll = (time: number) => {
+      const deltaTime = time - lastTime;
+      lastTime = time;
+
+      // Adjust speed (pixels per millisecond)
+      const speed = 0.03 * deltaTime;
+
+      if (container.scrollWidth > container.clientWidth) {
+        if (container.scrollLeft >= (container.scrollWidth - container.clientWidth - 1)) {
+          direction = -1;
+        } else if (container.scrollLeft <= 0) {
+          direction = 1;
+        }
+        container.scrollLeft += speed * direction;
+      }
+      animationFrameId = requestAnimationFrame(scroll);
+    };
+
+    const handleInteractionStart = () => cancelAnimationFrame(animationFrameId);
+    const handleInteractionEnd = () => {
+      lastTime = performance.now();
+      animationFrameId = requestAnimationFrame(scroll);
+    };
+
+    container.addEventListener("mouseenter", handleInteractionStart);
+    container.addEventListener("mouseleave", handleInteractionEnd);
+    container.addEventListener("touchstart", handleInteractionStart, { passive: true });
+    container.addEventListener("touchend", handleInteractionEnd);
+
+    animationFrameId = requestAnimationFrame(scroll);
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      container.removeEventListener("mouseenter", handleInteractionStart);
+      container.removeEventListener("mouseleave", handleInteractionEnd);
+      container.removeEventListener("touchstart", handleInteractionStart);
+      container.removeEventListener("touchend", handleInteractionEnd);
+    };
+  }, []);
 
   const filteredMenu = ORDER_MENU.filter(item => {
     const matchesCategory = activeCategory === "All" || item.category === activeCategory;
@@ -62,7 +111,10 @@ export default function OrderMenu() {
 
         {/* Category Row */}
         <div className="w-full pb-4 mt-2">
-          <div className="flex gap-4 overflow-x-auto px-6 no-scrollbar snap-x">
+          <div 
+            ref={scrollContainerRef}
+            className="flex gap-4 overflow-x-auto px-6 no-scrollbar snap-x"
+          >
             {ORDER_CATEGORIES.map((cat, i) => (
               <div 
                 key={`${cat}-${i}`}
