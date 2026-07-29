@@ -46,20 +46,27 @@ export default function OrderMenu() {
       const trackWidth = track.scrollWidth;
       const containerWidth = container.clientWidth;
       
-      // Calculate max translation (if track is wider than container, it's negative)
-      const maxTranslate = Math.min(0, containerWidth - trackWidth);
+      const diff = containerWidth - trackWidth;
 
-      // If it fully fits on screen, just do a gentle +/- 30px pan to satisfy the "keep moving" request
-      if (maxTranslate === 0) {
-        if (position <= -30) direction = 1;
-        else if (position >= 30) direction = -1;
+      if (diff > 0) {
+        // Fits on screen: bounce between 0 and diff (moves right)
+        if (position <= 0) direction = 1;
+        else if (position >= diff) direction = -1;
       } else {
-        // Normal bouncing across the overflow
-        if (position <= maxTranslate) direction = 1;
+        // Overflows screen: bounce between diff and 0 (moves left)
+        if (position <= diff) direction = 1;
         else if (position >= 0) direction = -1;
       }
 
       position += speed * direction;
+
+      // Clamp position to prevent getting stuck if window resizes
+      if (diff > 0) {
+        position = Math.max(0, Math.min(position, diff));
+      } else {
+        position = Math.max(diff, Math.min(position, 0));
+      }
+
       track.style.transform = `translateX(${position}px)`;
 
       animationFrameId = requestAnimationFrame(scroll);
@@ -124,11 +131,11 @@ export default function OrderMenu() {
         {/* Category Row */}
         <div 
           ref={containerRef}
-          className="w-full overflow-hidden pb-4 mt-2 px-6"
+          className="w-full overflow-hidden pb-4 mt-2"
         >
           <div 
             ref={trackRef}
-            className="flex gap-4 w-max"
+            className="flex gap-4 w-max px-6 py-2"
           >
             {ORDER_CATEGORIES.map((cat, i) => (
               <div 
