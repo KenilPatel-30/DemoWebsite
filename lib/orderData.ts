@@ -84,7 +84,7 @@ export const ORDER_MENU: OrderItem[] = [
       { label: "Large", oz: "16 oz", priceAdd: 40 },
     ],
     sugarLevels: ["No Sugar", "Regular", "Extra Sweet"],
-    allergens: ["No known allergens."],
+    allergens: ["No known allergens. Prepared in a facility that handles dairy and nuts."],
   },
   {
     id: "ethiopian-yirgacheffe",
@@ -93,7 +93,7 @@ export const ORDER_MENU: OrderItem[] = [
     price: 340,
     image: IMG.drinks,
     tags: ["Single Origin"],
-    allergens: ["No known allergens."],
+    allergens: ["No known allergens.", "Prepared in a facility that handles dairy and nuts."],
   },
   {
     id: "almond-croissant",

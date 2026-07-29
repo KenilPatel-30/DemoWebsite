@@ -7,6 +7,25 @@ import { ArrowLeft, Clock, Trash2, Plus, Minus } from "lucide-react";
 export default function Cart() {
   const { cart, updateQuantity, removeFromCart, setCurrentView, cartTotal } = useOrder();
 
+  let baseTotal = 0;
+  let addonsTotal = 0;
+  
+  cart.forEach(item => {
+    let base = item.menuItem.price;
+    if (item.selections.size && item.menuItem.sizes) {
+      const s = item.menuItem.sizes.find(x => x.label === item.selections.size);
+      if (s) base += s.priceAdd;
+    }
+    baseTotal += base * item.quantity;
+    
+    if (item.menuItem.addons) {
+      item.selections.addons.forEach(aId => {
+        const a = item.menuItem.addons?.find(ad => ad.id === aId);
+        if (a) addonsTotal += a.price * item.quantity;
+      });
+    }
+  });
+
   const serviceFee = cartTotal * 0.05;
   const gst = cartTotal * 0.18;
   const total = cartTotal + serviceFee + gst;
@@ -136,8 +155,14 @@ export default function Cart() {
               <div className="space-y-3 text-[14px]">
                 <div className="flex justify-between text-ink/80">
                   <span>Subtotal</span>
-                  <span>₹{cartTotal.toFixed(0)}</span>
+                  <span>₹{baseTotal.toFixed(0)}</span>
                 </div>
+                {addonsTotal > 0 && (
+                  <div className="flex justify-between text-ink/80">
+                    <span>Add-ons</span>
+                    <span>₹{addonsTotal.toFixed(0)}</span>
+                  </div>
+                )}
                 <div className="flex justify-between text-ink/80">
                   <span>Service Fee (5%)</span>
                   <span>₹{serviceFee.toFixed(0)}</span>
@@ -165,7 +190,7 @@ export default function Cart() {
                       : "bg-ink/10 text-ink/40 cursor-not-allowed shadow-none"
                   }`}
                 >
-                  <span>Pay Online</span>
+                  <span>{cart.length > 0 ? "Pay Online" : "Cart is Empty"}</span>
                   <span>₹{cart.length > 0 ? total.toFixed(0) : "0"}</span>
                 </button>
                 <button 
@@ -177,7 +202,7 @@ export default function Cart() {
                       : "bg-transparent border border-ink/10 text-ink/30 cursor-not-allowed"
                   }`}
                 >
-                  Pay at Counter
+                  {cart.length > 0 ? "Pay at Counter" : "Add items to order"}
                 </button>
               </div>
           </div>
@@ -185,25 +210,33 @@ export default function Cart() {
       </div>
 
       {/* Mobile Bottom Fixed Action Bar */}
-      {cart.length > 0 && (
-        <div className="md:hidden fixed bottom-[100px] left-0 right-0 bg-[#FCF6F0] p-4 pb-safe border-t border-ink/5 z-50">
-          <div className="max-w-md mx-auto flex flex-col gap-3">
-            <button 
-              onClick={() => setCurrentView("checkout")}
-              className="w-full bg-[#9A5015] hover:bg-[#804210] transition-colors text-white py-3.5 rounded-full font-medium text-[15px] shadow-lg flex items-center justify-between px-6"
-            >
-              <span>Pay Online</span>
-              <span>₹{total.toFixed(0)}</span>
-            </button>
-            <button 
-              onClick={() => setCurrentView("orderConfirmed")}
-              className="w-full bg-transparent border border-ink/20 hover:bg-ink/5 transition-colors text-ink py-3.5 rounded-full font-medium text-[15px]"
-            >
-              Pay at Counter
-            </button>
-          </div>
+      <div className="md:hidden fixed bottom-[100px] left-0 right-0 bg-[#FCF6F0] p-4 pb-safe border-t border-ink/5 z-50">
+        <div className="max-w-md mx-auto flex flex-col gap-3">
+          <button 
+            onClick={() => cart.length > 0 ? setCurrentView("checkout") : undefined}
+            disabled={cart.length === 0}
+            className={`w-full transition-colors py-3.5 rounded-full font-medium text-[15px] flex items-center justify-between px-6 ${
+              cart.length > 0 
+                ? "bg-[#9A5015] hover:bg-[#804210] text-white shadow-lg" 
+                : "bg-ink/10 text-ink/40 cursor-not-allowed"
+            }`}
+          >
+            <span>{cart.length > 0 ? "Pay Online" : "Cart is Empty"}</span>
+            <span>₹{cart.length > 0 ? total.toFixed(0) : "0"}</span>
+          </button>
+          <button 
+            onClick={() => cart.length > 0 ? setCurrentView("orderConfirmed") : undefined}
+            disabled={cart.length === 0}
+            className={`w-full py-3.5 rounded-full font-medium text-[15px] transition-colors ${
+              cart.length > 0 
+                ? "bg-transparent border border-ink/20 hover:bg-ink/5 text-ink" 
+                : "bg-transparent border border-ink/10 text-ink/30 cursor-not-allowed"
+            }`}
+          >
+            {cart.length > 0 ? "Pay at Counter" : "Add items to order"}
+          </button>
         </div>
-      )}
+      </div>
     </div>
   );
 }
