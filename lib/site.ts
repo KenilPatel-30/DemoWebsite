@@ -20,12 +20,12 @@ export const SITE = {
   
   // Location
   address: {
-    line1: "123 Coffee Street",
-    line2: "Downtown District",
-    city: "Metropolis",
-    state: "NY",
-    country: "US",
-    postalCode: "12345",
+    line1: "Cable Bridge",
+    line2: "(opposite of star bazaar)",
+    city: "Surat",
+    state: "Gujarat",
+    country: "IN",
+    postalCode: "",
   },
   geo: {
     lat: 40.7128,

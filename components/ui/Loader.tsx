@@ -63,7 +63,7 @@ export default function Loader() {
         >
           <div className="flex flex-col items-center gap-10">
             <span className="text-[11px] uppercase tracking-[0.5em] text-white/45">
-              Demo Cafe · Metropolis
+              Demo Cafe · Surat
             </span>
 
             {/* Rotating coffee bean */}

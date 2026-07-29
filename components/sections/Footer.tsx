@@ -144,7 +144,7 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-paper/12 pt-8 text-xs text-paper/40 md:flex-row">
-          <p>© 2020–{new Date().getFullYear()} Demo Cafe · Metropolis</p>
+          <p>© 2020–{new Date().getFullYear()} Demo Cafe · Surat</p>
           <button
             onClick={scrollTop}
             data-cursor="Top"
