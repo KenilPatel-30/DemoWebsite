@@ -22,14 +22,14 @@ export type OrderItem = {
 
 export const ORDER_CATEGORIES = [
   "All", 
+  "Chef's Recommended",
   "Coffee", 
-  "Starter", 
-  "Main Course", 
-  "Dessert", 
-  "Mocktails", 
   "Shakes", 
-  "Siders", 
-  "Chef's Recommended"
+  "Mocktail", 
+  "Starters", 
+  "Main Course", 
+  "Siders",
+  "Dessert"
 ];
 
 export const ORDER_MENU: OrderItem[] = [

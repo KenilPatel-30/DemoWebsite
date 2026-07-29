@@ -9,14 +9,14 @@ import { Search, Plus, Minus, CupSoda } from "lucide-react";
 
 const CATEGORY_IMAGES: Record<string, string> = {
   "All": IMG.warmInterior,
-  "Coffee": IMG.latte,
-  "Starter": IMG.brunchPlate,
-  "Main Course": IMG.margherita,
-  "Dessert": IMG.dessert,
-  "Mocktails": IMG.drinks,
-  "Shakes": IMG.matcha,
-  "Siders": IMG.pizzaCocktails,
   "Chef's Recommended": IMG.heroNight,
+  "Coffee": IMG.latte,
+  "Shakes": IMG.matcha,
+  "Mocktail": IMG.drinks,
+  "Starters": IMG.brunchPlate,
+  "Main Course": IMG.margherita,
+  "Siders": IMG.pizzaCocktails,
+  "Dessert": IMG.dessert,
 };
 
 const basePath = process.env.NODE_ENV === "production" ? "/DemoWebsite" : "";
