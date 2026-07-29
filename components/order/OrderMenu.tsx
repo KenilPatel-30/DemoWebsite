@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { useOrder } from "@/context/OrderContext";
 import { ORDER_CATEGORIES, ORDER_MENU } from "@/lib/orderData";
 import { IMG } from "@/lib/site";
@@ -25,64 +26,6 @@ export default function OrderMenu() {
   const { setCurrentView, setActiveItem, cart, updateQuantity, addToCart } = useOrder();
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
-  const containerRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    const track = trackRef.current;
-    if (!container || !track) return;
-
-    let animationFrameId: number;
-    let position = 0;
-    let direction = -1; // start by moving left
-    let lastTime = performance.now();
-
-    const scroll = (time: number) => {
-      const deltaTime = time - lastTime;
-      lastTime = time;
-      
-      const speed = 0.05 * deltaTime;
-      
-      // Get the width of the first set of items
-      const firstSet = track.children[0] as HTMLElement;
-      if (!firstSet) return;
-      const setWidth = firstSet.offsetWidth;
-
-      // Move left continuously
-      position -= speed;
-
-      // Once we've scrolled exactly the width of the first set, snap back
-      if (Math.abs(position) >= setWidth) {
-        position += setWidth;
-      }
-
-      track.style.transform = `translateX(${position}px)`;
-
-      animationFrameId = requestAnimationFrame(scroll);
-    };
-
-    const handleInteractionStart = () => cancelAnimationFrame(animationFrameId);
-    const handleInteractionEnd = () => {
-      lastTime = performance.now();
-      animationFrameId = requestAnimationFrame(scroll);
-    };
-
-    container.addEventListener("mouseenter", handleInteractionStart);
-    container.addEventListener("mouseleave", handleInteractionEnd);
-    container.addEventListener("touchstart", handleInteractionStart, { passive: true });
-    container.addEventListener("touchend", handleInteractionEnd);
-
-    animationFrameId = requestAnimationFrame(scroll);
-
-    return () => {
-      cancelAnimationFrame(animationFrameId);
-      container.removeEventListener("mouseenter", handleInteractionStart);
-      container.removeEventListener("mouseleave", handleInteractionEnd);
-      container.removeEventListener("touchstart", handleInteractionStart);
-      container.removeEventListener("touchend", handleInteractionEnd);
-    };
-  }, []);
 
   const filteredMenu = ORDER_MENU.filter(item => {
     const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -120,13 +63,15 @@ export default function OrderMenu() {
         </div>
 
         {/* Category Row */}
-        <div 
-          ref={containerRef}
-          className="w-full overflow-hidden pb-4 mt-2"
-        >
-          <div 
-            ref={trackRef}
+        <div className="w-full overflow-hidden pb-4 mt-2 group">
+          <motion.div 
             className="flex w-max"
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{
+              duration: 25,
+              ease: "linear",
+              repeat: Infinity,
+            }}
           >
             {/* Set 1 */}
             <div className="flex gap-8 md:gap-10 pr-8 md:pr-10 py-2">
@@ -134,10 +79,10 @@ export default function OrderMenu() {
                 <div 
                   key={`set1-${cat}-${i}`}
                   onClick={() => setActiveCategory(cat)}
-                  className="flex flex-col items-center gap-2 cursor-pointer group flex-shrink-0 transition-all hover:scale-[1.02] active:scale-95 w-[90px] md:w-[110px]"
+                  className="flex flex-col items-center gap-2 cursor-pointer flex-shrink-0 transition-all hover:scale-[1.02] active:scale-95 w-[90px] md:w-[110px]"
                 >
                    <div className={`relative w-full aspect-[4/3] md:aspect-square rounded-2xl overflow-hidden ${activeCategory === cat ? 'ring-4 ring-[#9A5015] ring-offset-2 ring-offset-[#FCF6F0]' : 'ring-1 ring-ink/10 shadow-sm'}`}>
-                     <Image src={CATEGORY_IMAGES[cat] || IMG.warmInterior} alt={cat} fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
+                     <Image src={CATEGORY_IMAGES[cat] || IMG.warmInterior} alt={cat} fill className="object-cover hover:scale-110 transition-transform duration-700" />
                    </div>
                    <span className={`text-[12px] md:text-[14px] font-medium text-center leading-tight ${activeCategory === cat ? 'text-[#9A5015]' : 'text-ink/80'}`}>
                      {cat}
@@ -151,10 +96,10 @@ export default function OrderMenu() {
                 <div 
                   key={`set2-${cat}-${i}`}
                   onClick={() => setActiveCategory(cat)}
-                  className="flex flex-col items-center gap-2 cursor-pointer group flex-shrink-0 transition-all hover:scale-[1.02] active:scale-95 w-[90px] md:w-[110px]"
+                  className="flex flex-col items-center gap-2 cursor-pointer flex-shrink-0 transition-all hover:scale-[1.02] active:scale-95 w-[90px] md:w-[110px]"
                 >
                    <div className={`relative w-full aspect-[4/3] md:aspect-square rounded-2xl overflow-hidden ${activeCategory === cat ? 'ring-4 ring-[#9A5015] ring-offset-2 ring-offset-[#FCF6F0]' : 'ring-1 ring-ink/10 shadow-sm'}`}>
-                     <Image src={CATEGORY_IMAGES[cat] || IMG.warmInterior} alt={cat} fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
+                     <Image src={CATEGORY_IMAGES[cat] || IMG.warmInterior} alt={cat} fill className="object-cover hover:scale-110 transition-transform duration-700" />
                    </div>
                    <span className={`text-[12px] md:text-[14px] font-medium text-center leading-tight ${activeCategory === cat ? 'text-[#9A5015]' : 'text-ink/80'}`}>
                      {cat}
@@ -162,7 +107,7 @@ export default function OrderMenu() {
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
 
