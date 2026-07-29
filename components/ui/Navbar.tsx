@@ -30,10 +30,6 @@ export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
 
-  // Hide global navbar on pages that have their own custom sticky headers (like checkout/reserve)
-  if (pathname === '/reserve') {
-    return null;
-  }
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -72,6 +68,11 @@ export default function Navbar() {
       router.push("/" + hash);
     }
   };
+
+  // Hide global navbar on pages that have their own custom sticky headers (like checkout/reserve)
+  if (pathname === '/reserve') {
+    return null;
+  }
 
   return (
     <>

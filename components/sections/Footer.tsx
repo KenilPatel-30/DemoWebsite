@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import type Lenis from "lenis";
 import { ArrowUpRight, Instagram, Facebook, Check } from "lucide-react";
 import { SITE, NAV_LINKS } from "@/lib/site";
@@ -29,13 +30,13 @@ export default function Footer() {
             className="mt-4 font-display text-[clamp(3.5rem,13vw,11rem)] font-bold leading-[0.85] tracking-tightest text-paper"
           />
           <div className="mt-10 flex flex-wrap items-center gap-8">
-            <a
-              href="#contact"
+            <Link
+              href="/reserve"
               data-cursor="Book"
               className="rounded-full bg-paper px-9 py-4 text-[12px] font-medium uppercase tracking-[0.18em] text-coffee shadow-card transition-transform hover:scale-[1.02]"
             >
               Reserve a Table
-            </a>
+            </Link>
             <a
               href={SITE.mapsUrl}
               target="_blank"
