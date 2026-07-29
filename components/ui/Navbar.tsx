@@ -147,30 +147,25 @@ export default function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-            className="fixed inset-0 z-[75] flex flex-col justify-center bg-paper px-8 lg:hidden"
+            transition={{ duration: 0.4 }}
+            className="fixed inset-0 z-[75] flex flex-col justify-center bg-[#FCF6F0] lg:hidden pt-20 pb-10"
           >
-            <nav className="flex flex-col gap-1">
+            <nav className="flex flex-col px-8 w-full max-w-sm mx-auto">
               {NAV_LINKS.map((link, i) => (
                 <motion.a
                   key={link.href}
                   href={link.href}
                   onClick={(e) => go(e, link.href)}
-                  initial={{ opacity: 0, y: 24 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.08 + i * 0.05, ease: [0.16, 1, 0.3, 1] }}
-                  className="font-display text-5xl font-bold tracking-tightest text-ink"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.1 + i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                  className="w-full border-b border-ink/10 py-6 text-[32px] font-display font-medium text-ink transition-colors flex items-center justify-between active:bg-ink/5 px-2 rounded-lg"
                 >
                   {link.label}
+                  <span className="text-[12px] font-sans tracking-widest text-ink/30">0{i+1}</span>
                 </motion.a>
               ))}
             </nav>
-            <Link
-              href="/reserve"
-              className="mt-12 w-fit border-b border-primary pb-1 text-sm uppercase tracking-[0.2em] text-primary"
-            >
-              Reserve a Table · {SITE.phone}
-            </Link>
           </motion.div>
         )}
       </AnimatePresence>
