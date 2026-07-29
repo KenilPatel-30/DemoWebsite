@@ -4,7 +4,17 @@ import { useState } from "react";
 import Image from "next/image";
 import { useOrder } from "@/context/OrderContext";
 import { ORDER_CATEGORIES, ORDER_MENU } from "@/lib/orderData";
+import { IMG } from "@/lib/site";
 import { Search, Plus, Minus, CupSoda } from "lucide-react";
+
+const CATEGORY_IMAGES: Record<string, string> = {
+  "All": IMG.warmInterior,
+  "Coffee": IMG.drinks,
+  "Tea": IMG.matcha,
+  "Breakfast": IMG.brunchPlate,
+  "Lunch": IMG.pizzaCocktails,
+  "Dessert": IMG.dessert,
+};
 
 const basePath = process.env.NODE_ENV === "production" ? "/DemoWebsite" : "";
 
@@ -47,21 +57,28 @@ export default function OrderMenu() {
           />
         </div>
 
-        {/* Category Pills */}
-        <div className="flex gap-2 overflow-x-auto px-6 pb-4 no-scrollbar max-w-7xl mx-auto w-full">
-          {ORDER_CATEGORIES.map(cat => (
-            <button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
-              className={`px-5 py-2 rounded-full whitespace-nowrap text-[14px] font-medium transition-colors ${
-                activeCategory === cat 
-                  ? "bg-[#9A5015] text-white shadow-md" 
-                  : "bg-[#ebdccc] text-ink hover:bg-[#e4d0bc]"
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
+        {/* Category Marquee */}
+        <div 
+          className="w-full overflow-hidden pb-4 mt-2" 
+          style={{ 
+            maskImage: "linear-gradient(to right, transparent, black 5%, black 95%, transparent)",
+            WebkitMaskImage: "linear-gradient(to right, transparent, black 5%, black 95%, transparent)"
+          }}
+        >
+          <div className="flex gap-4 w-max animate-marquee hover:[animation-play-state:paused]">
+            {[...ORDER_CATEGORIES, ...ORDER_CATEGORIES].map((cat, i) => (
+              <div 
+                key={`${cat}-${i}`}
+                onClick={() => setActiveCategory(cat)}
+                className={`relative w-[130px] h-[170px] md:w-[160px] md:h-[220px] rounded-2xl overflow-hidden cursor-pointer group flex-shrink-0 transition-all hover:scale-[1.02] active:scale-95 ${activeCategory === cat ? 'ring-4 ring-[#9A5015] ring-offset-2 ring-offset-[#FCF6F0]' : 'ring-1 ring-ink/5'}`}
+              >
+                 <Image src={CATEGORY_IMAGES[cat] || IMG.warmInterior} alt={cat} fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
+                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4">
+                   <span className="text-white font-medium text-[15px] md:text-[17px] tracking-wide shadow-black drop-shadow-lg">{cat}</span>
+                 </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
