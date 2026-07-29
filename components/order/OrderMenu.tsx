@@ -27,7 +27,7 @@ export default function OrderMenu() {
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredMenu = ORDER_MENU.filter(item => {
-    const matchesCategory = activeCategory === "All" || true;
+    const matchesCategory = activeCategory === "All" || item.category === activeCategory;
     const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
@@ -83,10 +83,16 @@ export default function OrderMenu() {
 
       {/* Menu List */}
       <div className="px-6 mt-6 max-w-7xl mx-auto w-full">
-        <h2 className="text-[20px] md:text-[24px] font-medium text-ink mb-6">{activeCategory === "All" ? "Coffee" : activeCategory}</h2>
+        <h2 className="text-[20px] md:text-[24px] font-medium text-ink mb-6">{activeCategory === "All" ? "All Items" : activeCategory}</h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredMenu.map(item => {
+        {filteredMenu.length === 0 ? (
+          <div className="py-20 text-center flex flex-col items-center justify-center">
+            <p className="text-ink/50 text-[15px] mb-2">No items found in this category.</p>
+            <button onClick={() => setActiveCategory("All")} className="text-[#9A5015] font-medium text-[14px]">View all items</button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {filteredMenu.map(item => {
             // Check if item is in cart (simple check, assumes no variants for this basic button)
             const cartItem = cart.find(c => c.menuItem.id === item.id);
 
@@ -147,8 +153,9 @@ export default function OrderMenu() {
                 </div>
               </div>
             );
-          })}
-        </div>
+            })}
+          </div>
+        )}
       </div>
     </div>
   );
