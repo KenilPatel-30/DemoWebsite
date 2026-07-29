@@ -60,20 +60,14 @@ export default function OrderMenu() {
           />
         </div>
 
-        {/* Category Marquee */}
-        <div 
-          className="w-full overflow-hidden pb-4 mt-2" 
-          style={{ 
-            maskImage: "linear-gradient(to right, transparent, black 5%, black 95%, transparent)",
-            WebkitMaskImage: "linear-gradient(to right, transparent, black 5%, black 95%, transparent)"
-          }}
-        >
-          <div className="flex gap-4 w-max animate-marquee hover:[animation-play-state:paused]">
-            {[...ORDER_CATEGORIES, ...ORDER_CATEGORIES].map((cat, i) => (
+        {/* Category Row */}
+        <div className="w-full pb-4 mt-2">
+          <div className="flex gap-4 overflow-x-auto px-6 no-scrollbar snap-x">
+            {ORDER_CATEGORIES.map((cat, i) => (
               <div 
                 key={`${cat}-${i}`}
                 onClick={() => setActiveCategory(cat)}
-                className="flex flex-col items-center gap-2 cursor-pointer group flex-shrink-0 transition-all hover:scale-[1.02] active:scale-95 w-[90px] md:w-[110px]"
+                className="flex flex-col items-center gap-2 cursor-pointer group flex-shrink-0 transition-all hover:scale-[1.02] active:scale-95 w-[90px] md:w-[110px] snap-start"
               >
                  <div className={`relative w-full aspect-[4/3] md:aspect-square rounded-2xl overflow-hidden ${activeCategory === cat ? 'ring-4 ring-[#9A5015] ring-offset-2 ring-offset-[#FCF6F0]' : 'ring-1 ring-ink/10 shadow-sm'}`}>
                    <Image src={CATEGORY_IMAGES[cat] || IMG.warmInterior} alt={cat} fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
