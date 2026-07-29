@@ -19,33 +19,16 @@ export default function OrderHome() {
   return (
     <div className="flex flex-col w-full min-h-screen bg-[#FCF6F0] pb-32">
       {/* Header Banner */}
-      <div className="relative h-[280px] md:h-[400px] w-full bg-coffee">
-        <Image 
-          src={IMG.heroNight} 
-          alt="Cafe Interior" 
-          fill 
-          className="object-cover opacity-60" 
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#FCF6F0] to-transparent" />
-        
-        <div className="absolute inset-0 flex flex-col items-center justify-center pt-8">
-          <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg mb-3">
-            <CupSoda className="w-8 h-8 text-[#9A5015]" strokeWidth={2} />
-          </div>
-          <a href={`${basePath}/`} className="transition-transform hover:scale-105 active:scale-95">
-            <h1 className="text-3xl font-display font-bold text-white mb-2 shadow-sm drop-shadow-md text-center">Demo Cafe</h1>
-          </a>
-          <div className="bg-[#FCF6F0] px-4 py-1.5 rounded-full flex items-center gap-2 text-[12px] font-medium text-ink shadow-md mb-6">
-            <div className="w-2 h-2 rounded-full bg-green-500" />
-            <span>Open Now • Prep: 10 mins</span>
-          </div>
-          
-          <button 
-            onClick={() => setCurrentView("menu")}
-            className="w-[200px] bg-[#d87c34] hover:bg-[#c26b27] text-white py-3.5 rounded-full font-medium shadow-lg flex items-center justify-center gap-2 transition hover:scale-105 active:scale-95"
-          >
-            <CupSoda className="w-4 h-4" /> Order Ahead
-          </button>
+      <div className="flex flex-col items-center justify-center pt-28 pb-4 w-full">
+        <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-sm border border-ink/5 mb-4">
+          <CupSoda className="w-8 h-8 text-[#9A5015]" strokeWidth={2} />
+        </div>
+        <a href={`${basePath}/`} className="transition-transform hover:scale-105 active:scale-95">
+          <h1 className="text-3xl md:text-4xl font-display font-bold text-ink mb-3 text-center">Demo Cafe</h1>
+        </a>
+        <div className="bg-white border border-ink/5 px-4 py-1.5 rounded-full flex items-center gap-2 text-[12px] font-medium text-ink shadow-sm">
+          <div className="w-2 h-2 rounded-full bg-green-500" />
+          <span>Open Now • Prep: 10 mins</span>
         </div>
       </div>
 
