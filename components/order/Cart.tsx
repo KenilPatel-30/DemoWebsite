@@ -5,7 +5,7 @@ import { useOrder } from "@/context/OrderContext";
 import { ArrowLeft, Clock, Trash2, Plus, Minus } from "lucide-react";
 
 export default function Cart() {
-  const { cart, updateQuantity, removeFromCart, setCurrentView, cartTotal, orderInstructions, setOrderInstructions } = useOrder();
+  const { cart, updateQuantity, removeFromCart, setCurrentView, cartTotal, orderInstructions, setOrderInstructions, setActiveOrder, clearCart } = useOrder();
 
   let baseTotal = 0;
   let addonsTotal = 0;
@@ -29,6 +29,19 @@ export default function Cart() {
   const serviceFee = cartTotal * 0.05;
   const gst = cartTotal * 0.18;
   const total = cartTotal + serviceFee + gst;
+
+  const handlePayAtCounter = () => {
+    if (cart.length === 0) return;
+    setActiveOrder({
+      items: [...cart],
+      instructions: orderInstructions,
+      total: total,
+      id: "#AB-" + Math.floor(1000 + Math.random() * 9000)
+    });
+    clearCart();
+    setOrderInstructions("");
+    setCurrentView("orderConfirmed");
+  };
 
   return (
     <div className="flex flex-col w-full min-h-screen bg-[#FCF6F0] pb-40 md:pb-40 pt-[80px]">
@@ -196,7 +209,7 @@ export default function Cart() {
                   <span>₹{cart.length > 0 ? total.toFixed(0) : "0"}</span>
                 </button>
                 <button 
-                  onClick={() => cart.length > 0 ? setCurrentView("orderConfirmed") : undefined}
+                  onClick={handlePayAtCounter}
                   disabled={cart.length === 0}
                   className={`w-full py-4 rounded-full font-medium text-[15px] transition-colors ${
                     cart.length > 0 
@@ -227,7 +240,7 @@ export default function Cart() {
             <span>₹{cart.length > 0 ? total.toFixed(0) : "0"}</span>
           </button>
           <button 
-            onClick={() => cart.length > 0 ? setCurrentView("orderConfirmed") : undefined}
+            onClick={handlePayAtCounter}
             disabled={cart.length === 0}
             className={`w-full py-3.5 rounded-full font-medium text-[15px] transition-colors ${
               cart.length > 0 

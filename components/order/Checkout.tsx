@@ -5,12 +5,24 @@ import { useOrder } from "@/context/OrderContext";
 import { ArrowLeft, ShoppingCart, Clock, ChevronUp, Lock, CheckCircle2 } from "lucide-react";
 
 export default function Checkout() {
-  const { cart, cartTotal, setCurrentView } = useOrder();
+  const { cart, cartTotal, setCurrentView, orderInstructions, setOrderInstructions, setActiveOrder, clearCart } = useOrder();
   const [paymentMethod, setPaymentMethod] = useState("UPI");
 
   const serviceFee = cartTotal * 0.05;
   const gst = cartTotal * 0.18;
   const total = cartTotal + serviceFee + gst;
+
+  const handlePlaceOrder = () => {
+    setActiveOrder({
+      items: [...cart],
+      instructions: orderInstructions,
+      total: total,
+      id: "#AB-" + Math.floor(1000 + Math.random() * 9000)
+    });
+    clearCart();
+    setOrderInstructions("");
+    setCurrentView("orderConfirmed");
+  };
 
   return (
     <div className="flex flex-col w-full min-h-screen bg-[#FCF6F0] pb-40 md:pb-24 pt-[80px]">
@@ -121,7 +133,7 @@ export default function Checkout() {
         {/* Desktop Inline Action Bar */}
         <div className="hidden md:block mt-8">
           <button 
-            onClick={() => setCurrentView("orderConfirmed")}
+            onClick={handlePlaceOrder}
             className="w-full bg-[#9A5015] hover:bg-[#804210] transition-colors text-white py-4 rounded-2xl font-medium text-[16px] shadow-lg flex items-center justify-between px-6 mb-3"
           >
             <span>₹{total.toFixed(0)}</span>
@@ -146,7 +158,7 @@ export default function Checkout() {
       <div className="md:hidden fixed bottom-[100px] left-0 right-0 bg-[#FCF6F0] p-4 pb-safe border-t border-ink/5 z-50">
         <div className="max-w-md mx-auto">
           <button 
-            onClick={() => setCurrentView("orderConfirmed")}
+            onClick={handlePlaceOrder}
             className="w-full bg-[#9A5015] hover:bg-[#804210] transition-colors text-white py-4 rounded-2xl font-medium text-[16px] shadow-lg flex items-center justify-between px-6 mb-3"
           >
             <span>₹{total.toFixed(0)}</span>

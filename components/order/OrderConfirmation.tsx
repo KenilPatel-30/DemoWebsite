@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function OrderConfirmation() {
-  const { cart, setCurrentView, clearCart, orderInstructions } = useOrder();
+  const { activeOrder, setCurrentView } = useOrder();
   const router = useRouter();
   
   // A simple countdown timer for visual effect
@@ -22,6 +22,17 @@ export default function OrderConfirmation() {
 
   const mins = Math.floor(timeLeft / 60).toString().padStart(2, '0');
   const secs = (timeLeft % 60).toString().padStart(2, '0');
+
+  if (!activeOrder) {
+    return (
+      <div className="flex flex-col w-full min-h-screen bg-[#FCF6F0] items-center justify-center">
+        <p className="text-ink/60 mb-4">No active order found.</p>
+        <button onClick={() => setCurrentView("menu")} className="text-[#9A5015] font-medium hover:underline">
+          Return to Menu
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col w-full min-h-screen bg-[#FCF6F0] pb-40">
@@ -45,7 +56,7 @@ export default function OrderConfirmation() {
         <div className="flex justify-between items-start border-b border-ink/10 pb-4 mb-4">
           <div>
             <span className="text-[11px] font-bold text-ink/50 tracking-wider mb-1 block">ORDER NUMBER</span>
-            <span className="text-[20px] font-medium text-ink">#AB-2847</span>
+            <span className="text-[20px] font-medium text-ink">{activeOrder.id}</span>
           </div>
           <div className="text-right">
             <span className="text-[11px] font-bold text-ink/50 tracking-wider mb-1 block">EST. READY</span>
@@ -71,7 +82,7 @@ export default function OrderConfirmation() {
       <div className="w-full bg-[#f2e6db] rounded-2xl p-6 mb-8">
         <h3 className="font-medium text-[16px] text-ink mb-4">Order Summary</h3>
         <div className="space-y-4">
-          {cart.map((item) => (
+          {activeOrder.items.map((item: any) => (
             <div key={item.id} className="flex gap-4">
               <div className="w-10 h-10 bg-[#ebdccc] rounded-lg flex items-center justify-center shrink-0 text-[#9A5015]">
                 <Coffee className="w-5 h-5" />
@@ -86,10 +97,10 @@ export default function OrderConfirmation() {
             </div>
           ))}
         </div>
-        {orderInstructions && (
+        {activeOrder.instructions && (
           <div className="mt-6 pt-5 border-t border-ink/10">
             <h4 className="font-medium text-[13px] text-ink/70 mb-2 uppercase tracking-wide">Special Instructions</h4>
-            <p className="text-[14px] text-ink font-medium bg-[#ebdccc] p-3 rounded-xl italic">"{orderInstructions}"</p>
+            <p className="text-[14px] text-ink font-medium bg-[#ebdccc] p-3 rounded-xl italic">"{activeOrder.instructions}"</p>
           </div>
         )}
       </div>
@@ -100,7 +111,6 @@ export default function OrderConfirmation() {
 
       <button 
         onClick={() => {
-          clearCart();
           setCurrentView("menu");
         }}
         className="w-full py-4 text-[#9A5015] font-medium text-[15px] hover:underline"
@@ -110,7 +120,6 @@ export default function OrderConfirmation() {
 
       <button 
         onClick={() => {
-          clearCart();
           router.push("/");
         }}
         className="w-full pb-4 text-ink/50 font-medium text-[13px] hover:underline"
