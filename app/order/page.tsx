@@ -25,9 +25,7 @@ export default function OrderPage() {
       {currentView === "bookingConfirmed" && <BookingConfirmation />}
 
       {/* Persistent Components over certain views */}
-      <AnimatePresence>
-        {activeItem && <ItemDetailsModal />}
-      </AnimatePresence>
+      <ItemDetailsModal />
     </main>
   );
 }
