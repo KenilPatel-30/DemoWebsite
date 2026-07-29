@@ -5,7 +5,7 @@ import { useOrder } from "@/context/OrderContext";
 import { ArrowLeft, Clock, Trash2, Plus, Minus } from "lucide-react";
 
 export default function Cart() {
-  const { cart, updateQuantity, removeFromCart, setCurrentView, cartTotal } = useOrder();
+  const { cart, updateQuantity, removeFromCart, setCurrentView, cartTotal, orderInstructions, setOrderInstructions } = useOrder();
 
   let baseTotal = 0;
   let addonsTotal = 0;
@@ -31,7 +31,7 @@ export default function Cart() {
   const total = cartTotal + serviceFee + gst;
 
   return (
-    <div className="flex flex-col w-full min-h-screen bg-[#FCF6F0] pb-40 md:pb-24 pt-[80px]">
+    <div className="flex flex-col w-full min-h-screen bg-[#FCF6F0] pb-40 md:pb-40 pt-[80px]">
       {/* Header */}
       <div className="sticky top-[80px] z-20 bg-[#FCF6F0] border-b border-ink/5">
         <div className="flex items-center justify-center px-6 py-4 relative">
@@ -132,6 +132,8 @@ export default function Cart() {
               <div>
                 <label className="block text-[13px] font-medium text-ink mb-2">Special Instructions</label>
                 <textarea 
+                  value={orderInstructions}
+                  onChange={(e) => setOrderInstructions(e.target.value)}
                   placeholder="Any special requests?"
                   className="w-full bg-[#f2e6db] rounded-2xl p-4 text-[14px] text-ink placeholder:text-ink/40 resize-none outline-none focus:ring-1 focus:ring-[#9A5015]/30 border border-transparent"
                   rows={2}

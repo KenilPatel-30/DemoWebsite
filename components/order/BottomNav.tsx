@@ -12,11 +12,13 @@ export default function BottomNav() {
     { id: "orders", label: "Orders", icon: Receipt },
   ] as const;
 
+  const showCartButton = cartCount > 0 && !["cart", "checkout", "orderConfirmed"].includes(currentView);
+
   return (
     <div className="fixed bottom-6 left-0 right-0 z-[90] px-4 flex justify-center pointer-events-none pb-safe">
       <div className={cn(
         "flex items-center gap-3 transition-all duration-300 w-full",
-        cartCount > 0 ? "justify-between max-w-[360px] md:max-w-[400px]" : "justify-center max-w-max"
+        showCartButton ? "justify-between max-w-[360px] md:max-w-[400px]" : "justify-center max-w-max"
       )}>
         {/* Main Nav Pill */}
         <div className="flex items-center gap-1 rounded-full bg-[#FCF6F0]/95 backdrop-blur-lg px-1.5 py-1.5 shadow-xl border border-ink/10 pointer-events-auto shrink-0">
@@ -44,7 +46,7 @@ export default function BottomNav() {
         </div>
 
         {/* Floating Cart Button (Right side) */}
-        {cartCount > 0 && (
+        {showCartButton && (
           <button
             onClick={() => setCurrentView("cart")}
             className="flex items-center justify-center gap-2.5 rounded-full bg-[#9A5015] hover:bg-[#804210] text-white px-5 py-3 shadow-2xl pointer-events-auto transition-transform active:scale-95 flex-1 max-w-[140px]"

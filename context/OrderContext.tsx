@@ -33,6 +33,9 @@ type OrderContextType = {
   // Booking State
   bookingDetails: any;
   setBookingDetails: (details: any) => void;
+  // Order Instructions
+  orderInstructions: string;
+  setOrderInstructions: (inst: string) => void;
 };
 
 const OrderContext = createContext<OrderContextType | undefined>(undefined);
@@ -42,6 +45,7 @@ export function OrderProvider({ children }: { children: ReactNode }) {
   const [currentView, setCurrentView] = useState<OrderContextType["currentView"]>("menu");
   const [activeItem, setActiveItem] = useState<OrderItem | null>(null);
   const [bookingDetails, setBookingDetails] = useState<any>({});
+  const [orderInstructions, setOrderInstructions] = useState("");
 
   const addToCart = (item: CartItem) => {
     setCart((prev) => [...prev, item]);
@@ -86,6 +90,8 @@ export function OrderProvider({ children }: { children: ReactNode }) {
         setActiveItem,
         bookingDetails,
         setBookingDetails,
+        orderInstructions,
+        setOrderInstructions,
       }}
     >
       {children}

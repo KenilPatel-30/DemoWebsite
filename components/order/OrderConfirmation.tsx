@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function OrderConfirmation() {
-  const { cart, setCurrentView, clearCart } = useOrder();
+  const { cart, setCurrentView, clearCart, orderInstructions } = useOrder();
   const router = useRouter();
   
   // A simple countdown timer for visual effect
@@ -24,7 +24,7 @@ export default function OrderConfirmation() {
   const secs = (timeLeft % 60).toString().padStart(2, '0');
 
   return (
-    <div className="flex flex-col w-full min-h-screen bg-[#FCF6F0] pb-24">
+    <div className="flex flex-col w-full min-h-screen bg-[#FCF6F0] pb-40">
       <div className="flex flex-col items-center pt-[100px] px-6 max-w-xl mx-auto w-full">
       
       {/* Success Icon */}
@@ -86,6 +86,12 @@ export default function OrderConfirmation() {
             </div>
           ))}
         </div>
+        {orderInstructions && (
+          <div className="mt-6 pt-5 border-t border-ink/10">
+            <h4 className="font-medium text-[13px] text-ink/70 mb-2 uppercase tracking-wide">Special Instructions</h4>
+            <p className="text-[14px] text-ink font-medium bg-[#ebdccc] p-3 rounded-xl italic">"{orderInstructions}"</p>
+          </div>
+        )}
       </div>
 
       <button className="w-full bg-transparent border border-ink hover:bg-ink hover:text-white transition-colors text-ink py-4 rounded-full font-medium text-[15px] flex items-center justify-center gap-2 mb-4">
