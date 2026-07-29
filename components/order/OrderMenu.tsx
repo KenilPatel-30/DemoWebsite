@@ -68,20 +68,20 @@ export default function OrderMenu() {
             className="flex w-max"
             animate={{ x: ["0%", "-50%"] }}
             transition={{
-              duration: 25,
+              duration: 40,
               ease: "linear",
               repeat: Infinity,
             }}
           >
             {/* Set 1 */}
-            <div className="flex gap-8 md:gap-10 pr-8 md:pr-10 py-2">
+            <div className="flex gap-10 md:gap-16 pr-10 md:pr-16 py-2">
               {ORDER_CATEGORIES.map((cat, i) => (
                 <div 
                   key={`set1-${cat}-${i}`}
                   onClick={() => setActiveCategory(cat)}
-                  className="flex flex-col items-center gap-2 cursor-pointer flex-shrink-0 transition-all hover:scale-[1.02] active:scale-95 w-[90px] md:w-[110px]"
+                  className="flex flex-col items-center gap-3 cursor-pointer flex-shrink-0 transition-all hover:scale-[1.02] active:scale-95 w-[140px] md:w-[220px]"
                 >
-                   <div className={`relative w-full aspect-[4/3] md:aspect-square rounded-2xl overflow-hidden ${activeCategory === cat ? 'ring-4 ring-[#9A5015] ring-offset-2 ring-offset-[#FCF6F0]' : 'ring-1 ring-ink/10 shadow-sm'}`}>
+                   <div className={`relative w-full aspect-[4/3] rounded-2xl overflow-hidden ${activeCategory === cat ? 'ring-4 ring-[#9A5015] ring-offset-2 ring-offset-[#FCF6F0]' : 'ring-1 ring-ink/10 shadow-sm'}`}>
                      <Image src={CATEGORY_IMAGES[cat] || IMG.warmInterior} alt={cat} fill className="object-cover hover:scale-110 transition-transform duration-700" />
                    </div>
                    <span className={`text-[12px] md:text-[14px] font-medium text-center leading-tight ${activeCategory === cat ? 'text-[#9A5015]' : 'text-ink/80'}`}>
@@ -91,14 +91,14 @@ export default function OrderMenu() {
               ))}
             </div>
             {/* Set 2 (Duplicate for infinite loop) */}
-            <div className="flex gap-8 md:gap-10 pr-8 md:pr-10 py-2" aria-hidden="true">
+            <div className="flex gap-10 md:gap-16 pr-10 md:pr-16 py-2" aria-hidden="true">
               {ORDER_CATEGORIES.map((cat, i) => (
                 <div 
                   key={`set2-${cat}-${i}`}
                   onClick={() => setActiveCategory(cat)}
-                  className="flex flex-col items-center gap-2 cursor-pointer flex-shrink-0 transition-all hover:scale-[1.02] active:scale-95 w-[90px] md:w-[110px]"
+                  className="flex flex-col items-center gap-3 cursor-pointer flex-shrink-0 transition-all hover:scale-[1.02] active:scale-95 w-[140px] md:w-[220px]"
                 >
-                   <div className={`relative w-full aspect-[4/3] md:aspect-square rounded-2xl overflow-hidden ${activeCategory === cat ? 'ring-4 ring-[#9A5015] ring-offset-2 ring-offset-[#FCF6F0]' : 'ring-1 ring-ink/10 shadow-sm'}`}>
+                   <div className={`relative w-full aspect-[4/3] rounded-2xl overflow-hidden ${activeCategory === cat ? 'ring-4 ring-[#9A5015] ring-offset-2 ring-offset-[#FCF6F0]' : 'ring-1 ring-ink/10 shadow-sm'}`}>
                      <Image src={CATEGORY_IMAGES[cat] || IMG.warmInterior} alt={cat} fill className="object-cover hover:scale-110 transition-transform duration-700" />
                    </div>
                    <span className={`text-[12px] md:text-[14px] font-medium text-center leading-tight ${activeCategory === cat ? 'text-[#9A5015]' : 'text-ink/80'}`}>
