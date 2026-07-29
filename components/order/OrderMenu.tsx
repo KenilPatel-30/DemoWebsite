@@ -95,8 +95,9 @@ export default function OrderMenu() {
   }, []);
 
   const filteredMenu = ORDER_MENU.filter(item => {
-    const matchesCategory = activeCategory === "All" || item.category === activeCategory;
     const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase());
+    // If searching, ignore category filter to search whole menu
+    const matchesCategory = searchQuery ? true : (activeCategory === "All" || item.category === activeCategory);
     return matchesCategory && matchesSearch;
   });
 
@@ -178,6 +179,13 @@ export default function OrderMenu() {
               >
                 <div className="relative w-[100px] h-[100px] md:w-[120px] md:h-[120px] shrink-0 rounded-xl overflow-hidden bg-white/50">
                   <Image src={item.image} alt={item.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                  {searchQuery && (
+                    <div className="absolute top-1 left-1">
+                      <span className="bg-[#9A5015] text-white px-1.5 py-0.5 rounded text-[9px] font-bold uppercase shadow-sm">
+                        {item.category}
+                      </span>
+                    </div>
+                  )}
                 </div>
                 
                 <div className="flex flex-col flex-1 justify-between py-1">
