@@ -98,7 +98,7 @@ export default function Cart() {
                   <Trash2 className="w-4 h-4" />
                 </button>
                 
-                <div className="relative w-[70px] h-[70px] shrink-0 rounded-xl overflow-hidden bg-white/50">
+                <div className="relative w-[70px] h-[70px] shrink-0 rounded-xl overflow-hidden bg-sand/50">
                   <Image src={item.menuItem.image} alt={item.menuItem.name} fill className="object-cover" />
                 </div>
                 
@@ -116,7 +116,7 @@ export default function Cart() {
                   <div className="flex items-center justify-between mt-auto">
                     <span className="font-bold text-primary text-[16px]">₹{item.totalPrice}</span>
                     
-                    <div className="flex items-center justify-between bg-white rounded-full h-8 px-1 w-[90px] border border-ink/5 shadow-sm">
+                    <div className="flex items-center justify-between bg-sand rounded-full h-8 px-1 w-[90px] border border-ink/5 shadow-sm">
                       <button 
                         onClick={() => updateQuantity(item.id, -1)}
                         className="w-7 h-7 flex items-center justify-center text-ink/60 hover:text-ink"

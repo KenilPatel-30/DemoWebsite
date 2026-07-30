@@ -17,7 +17,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative overflow-hidden bg-coffee text-paper">
+    <footer className="relative overflow-hidden bg-coffee text-ink">
       <div className="container-x py-16 md:py-32">
         {/* Big CTA */}
         <div className="border-b border-paper/12 pb-16">
@@ -27,7 +27,7 @@ export default function Footer() {
           <SplitText
             as="h2"
             text="with us."
-            className="mt-4 font-display text-[clamp(3.5rem,13vw,11rem)] font-bold leading-[0.85] tracking-tightest text-paper"
+            className="mt-4 font-display text-[clamp(3.5rem,13vw,11rem)] font-bold leading-[0.85] tracking-tightest text-ink"
           />
           <div className="mt-10 flex flex-wrap items-center gap-8">
             <Link
@@ -42,7 +42,7 @@ export default function Footer() {
               target="_blank"
               rel="noreferrer"
               data-cursor="Map"
-              className="link-underline group inline-flex items-center gap-2 text-[13px] font-medium uppercase tracking-[0.16em] text-paper/80"
+              className="link-underline group inline-flex items-center gap-2 text-[13px] font-medium uppercase tracking-[0.16em] text-ink/80"
             >
               Get Directions
               <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -56,7 +56,7 @@ export default function Footer() {
             <span className="font-display text-2xl font-bold tracking-tightest">
               Demo Cafe
             </span>
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-paper/55">
+            <p className="mt-4 max-w-xs text-sm leading-relaxed text-ink/55">
               Where artisanal roasting meets brutalist design.
             </p>
             <div className="mt-6 flex gap-3">
@@ -66,7 +66,7 @@ export default function Footer() {
                 rel="noreferrer"
                 aria-label="Instagram"
                 data-cursor="Follow"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-paper/20 transition-colors hover:bg-paper hover:text-coffee"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-ink/20 transition-colors hover:bg-ink hover:text-coffee"
               >
                 <Instagram className="h-4 w-4" />
               </a>
@@ -76,7 +76,7 @@ export default function Footer() {
                 rel="noreferrer"
                 aria-label="Facebook"
                 data-cursor="Follow"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-paper/20 transition-colors hover:bg-paper hover:text-coffee"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-ink/20 transition-colors hover:bg-ink hover:text-coffee"
               >
                 <Facebook className="h-4 w-4" />
               </a>
@@ -88,7 +88,7 @@ export default function Footer() {
             <ul className="mt-5 space-y-3">
               {NAV_LINKS.map((link) => (
                 <li key={link.href}>
-                  <a href={link.href} className="link-underline text-sm text-paper/65">
+                  <a href={link.href} className="link-underline text-sm text-ink/65">
                     {link.label}
                   </a>
                 </li>
@@ -98,10 +98,10 @@ export default function Footer() {
 
           <div>
             <h3 className="text-xs uppercase tracking-[0.25em] text-accent">Hours</h3>
-            <ul className="mt-5 space-y-3 text-sm text-paper/65">
+            <ul className="mt-5 space-y-3 text-sm text-ink/65">
               {SITE.hours.map((h) => (
                 <li key={h.day}>
-                  <span className="block text-paper/85">{h.day}</span>
+                  <span className="block text-ink/85">{h.day}</span>
                   {h.time}
                 </li>
               ))}
@@ -110,7 +110,7 @@ export default function Footer() {
 
           <div className="col-span-2 md:col-span-1">
             <h3 className="text-xs uppercase tracking-[0.25em] text-accent">Newsletter</h3>
-            <p className="mt-5 text-sm text-paper/55">
+            <p className="mt-5 text-sm text-ink/55">
               Seasonal menus & events, once a month.
             </p>
             <form
@@ -119,14 +119,14 @@ export default function Footer() {
                 setSubscribed(true);
                 setTimeout(() => setSubscribed(false), 4000);
               }}
-              className="mt-4 flex items-center gap-3 border-b border-paper/25 pb-2"
+              className="mt-4 flex items-center gap-3 border-b border-ink/25 pb-2"
             >
               <input
                 type="email"
                 required
                 placeholder="Your email"
                 aria-label="Email for newsletter"
-                className="w-full bg-transparent text-sm text-paper placeholder:text-paper/40 outline-none"
+                className="w-full bg-transparent text-sm text-ink placeholder:text-ink/40 outline-none"
                 suppressHydrationWarning
               />
               <button
@@ -143,12 +143,12 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-paper/12 pt-8 text-xs text-paper/40 md:flex-row">
+        <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-ink/12 pt-8 text-xs text-ink/40 md:flex-row">
           <p>© 2020–{new Date().getFullYear()} Demo Cafe · Surat</p>
           <button
             onClick={scrollTop}
             data-cursor="Top"
-            className="uppercase tracking-[0.2em] transition-colors hover:text-paper"
+            className="uppercase tracking-[0.2em] transition-colors hover:text-ink"
             suppressHydrationWarning
           >
             Back to top ↑

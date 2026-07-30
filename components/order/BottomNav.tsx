@@ -58,7 +58,7 @@ export default function BottomNav() {
           >
             <div className="relative shrink-0">
               <ShoppingBag className="w-5 h-5" />
-              <span className="absolute -top-1.5 -right-1.5 flex h-[15px] w-[15px] items-center justify-center rounded-full bg-white text-[9px] font-bold text-primary shadow-sm">
+              <span className="absolute -top-1.5 -right-1.5 flex h-[15px] w-[15px] items-center justify-center rounded-full bg-primary text-[9px] font-bold text-white shadow-sm">
                 {displayCount}
               </span>
             </div>

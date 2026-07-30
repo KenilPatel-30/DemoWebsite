@@ -9,10 +9,10 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Emerald & Crimson Luxury System
+        // Emerald & Amber Luxury System
         paper: "#0A1A14", // Deep Emerald Green (page background)
         sand: "#132720", // Lighter Emerald (cards, inputs)
-        primary: "#9E2A2B", // Deep Crimson (buttons, highlights)
+        primary: "#E6A13C", // Warm Amber (buttons, highlights - much brighter and readable)
         coffee: "#05100C", // Darkest Green (footer, deep sections)
         accent: "#E0A96D", // Warm Gold
         ink: "#F4ECD8", // Ivory/Cream (text)

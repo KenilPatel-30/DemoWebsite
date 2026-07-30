@@ -127,7 +127,7 @@ export default function Checkout() {
               className={`flex items-center gap-4 p-4 rounded-2xl border-2 cursor-pointer transition ${
                 paymentMethod === opt.id 
                   ? "border-primary bg-primary/5" 
-                  : "border-transparent bg-white hover:border-primary/30"
+                  : "border-transparent bg-sand hover:border-primary/30"
               }`}
             >
               <div className="w-10 h-10 rounded-xl bg-paper flex items-center justify-center text-primary">

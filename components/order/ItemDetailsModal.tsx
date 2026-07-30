@@ -105,14 +105,14 @@ export default function ItemDetailsModal() {
             {/* Scrollable Content */}
             <div className="flex-1 overflow-y-auto overscroll-contain min-h-0 pb-[100px]">
               {/* Hero Image */}
-              <div className="relative w-full h-[240px] md:h-[320px] shrink-0 bg-white">
+              <div className="relative w-full h-[240px] md:h-[320px] shrink-0 bg-sand">
                 <Image src={displayedItem.image} alt={displayedItem.name} fill className="object-cover" />
                 <button 
                   onClick={(e) => {
                     e.stopPropagation();
                     setActiveItem(null);
                   }}
-                  className="absolute top-4 right-4 w-8 h-8 bg-white/80 backdrop-blur-md rounded-full flex items-center justify-center text-ink shadow-sm z-10"
+                  className="absolute top-4 right-4 w-8 h-8 bg-sand/80 backdrop-blur-md rounded-full flex items-center justify-center text-ink shadow-sm z-10"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -134,7 +134,7 @@ export default function ItemDetailsModal() {
                       <h3 className="font-medium text-[16px] text-ink mb-3">Size</h3>
                       <div className="bg-sand rounded-2xl p-2 space-y-1">
                         {displayedItem.sizes.map((s) => (
-                          <div key={s.label} onClick={() => setSize(s.label)} className="flex items-center justify-between p-3 rounded-xl cursor-pointer hover:bg-white/40 transition">
+                          <div key={s.label} onClick={() => setSize(s.label)} className="flex items-center justify-between p-3 rounded-xl cursor-pointer hover:bg-sand/40 transition">
                             <div className="flex items-center gap-3">
                               <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${size === s.label ? 'border-primary' : 'border-ink/20'}`}>
                                 {size === s.label && <div className="w-2.5 h-2.5 bg-primary rounded-full" />}
@@ -198,7 +198,7 @@ export default function ItemDetailsModal() {
                       <h3 className="font-medium text-[16px] text-ink mb-3">Add-ons</h3>
                       <div className="bg-sand rounded-2xl p-2 space-y-1">
                         {displayedItem.addons.map((a) => (
-                          <div key={a.id} onClick={() => toggleAddon(a.id)} className="flex items-center justify-between p-3 rounded-xl cursor-pointer hover:bg-white/40 transition">
+                          <div key={a.id} onClick={() => toggleAddon(a.id)} className="flex items-center justify-between p-3 rounded-xl cursor-pointer hover:bg-sand/40 transition">
                             <div className="flex items-center gap-3">
                               <div className={`w-5 h-5 rounded-[4px] border-2 flex items-center justify-center ${selectedAddons.includes(a.id) ? 'border-primary bg-primary' : 'border-ink/20 bg-transparent'}`}>
                                 {selectedAddons.includes(a.id) && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>}

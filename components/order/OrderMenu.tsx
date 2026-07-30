@@ -38,13 +38,13 @@ export default function OrderMenu() {
     <div className="flex flex-col w-full pb-32 bg-paper min-h-screen">
       {/* Header Banner */}
       <div className="flex flex-col items-center justify-center pt-28 pb-4 w-full">
-        <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-sm border border-ink/5 mb-4">
+        <div className="w-16 h-16 bg-sand rounded-full flex items-center justify-center shadow-sm border border-ink/5 mb-4">
           <CupSoda className="w-8 h-8 text-primary" strokeWidth={2} />
         </div>
         <a href={`${basePath}/`} className="transition-transform hover:scale-105 active:scale-95">
           <h1 className="text-3xl md:text-4xl font-display font-bold text-ink mb-3 text-center">Demo Cafe</h1>
         </a>
-        <div className="bg-white border border-ink/5 px-4 py-1.5 rounded-full flex items-center gap-2 text-[12px] font-medium text-ink shadow-sm">
+        <div className="bg-sand border border-ink/5 px-4 py-1.5 rounded-full flex items-center gap-2 text-[12px] font-medium text-ink shadow-sm">
           <div className="w-2 h-2 rounded-full bg-green-500" />
           <span>Open Now • Prep: 10 mins</span>
         </div>
@@ -58,7 +58,7 @@ export default function OrderMenu() {
             placeholder="Search items..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="flex-1 mx-4 bg-white border border-ink/10 rounded-full px-4 py-2 text-[14px] outline-none shadow-sm focus:border-primary/30 focus:ring-1 focus:ring-primary/30 transition-all text-ink placeholder:text-ink/40"
+            className="flex-1 mx-4 bg-sand border border-ink/10 rounded-full px-4 py-2 text-[14px] outline-none shadow-sm focus:border-primary/30 focus:ring-1 focus:ring-primary/30 transition-all text-ink placeholder:text-ink/40"
           />
         </div>
 
@@ -132,7 +132,7 @@ export default function OrderMenu() {
                 onClick={() => setActiveItem(item)}
                 className="bg-sand p-4 rounded-2xl flex gap-5 cursor-pointer hover:bg-sand transition-colors group"
               >
-                <div className="relative w-[100px] h-[100px] md:w-[120px] md:h-[120px] shrink-0 rounded-xl overflow-hidden bg-white/50">
+                <div className="relative w-[100px] h-[100px] md:w-[120px] md:h-[120px] shrink-0 rounded-xl overflow-hidden bg-sand/50">
                   <Image src={item.image} alt={item.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
                   {searchQuery && (
                     <div className="absolute top-1 left-1">
@@ -148,7 +148,7 @@ export default function OrderMenu() {
                     <div className="flex justify-between items-start mb-1">
                       <h3 className="font-medium text-[15px] leading-tight text-ink pr-2">{item.name}</h3>
                       {item.tags?.[0] && (
-                        <span className="text-[10px] font-medium text-accent bg-white px-2 py-0.5 rounded-full whitespace-nowrap shadow-sm border border-white/50">
+                        <span className="text-[10px] font-medium text-accent bg-sand px-2 py-0.5 rounded-full whitespace-nowrap shadow-sm border border-sand/50">
                           {item.tags[0] === "Vegan" ? "🌱 Vegan" : `🔥 ${item.tags[0]}`}
                         </span>
                       )}
@@ -160,16 +160,15 @@ export default function OrderMenu() {
                     <span className="font-bold text-primary text-[16px]">₹{item.price}</span>
                     
                     {/* Add Button */}
-                    <button 
-                      className={`h-8 rounded-full flex items-center justify-center font-medium text-[13px] transition border ${
-                        cartItem 
-                          ? "bg-white text-ink border-ink/10 px-1 w-[80px]" 
-                          : "bg-transparent text-primary border-primary px-5 hover:bg-primary hover:text-white"
+                    <div 
+                      className={`flex items-center border rounded-full h-8 overflow-hidden transition-all shadow-sm ${
+                        inCartCount > 0 
+                          ? "bg-sand text-ink border-ink/10 px-1 w-[80px]" 
+                          : "bg-sand text-primary border-primary w-[70px] hover:bg-primary hover:text-white justify-center"
                       }`}
                       onClick={(e) => {
                         e.stopPropagation();
                         if (cartItem) {
-                          // if in cart, just go to item details to modify, or we can handle +/- here
                           setActiveItem(item);
                         } else {
                           setActiveItem(item); // Always open modal first to customize
