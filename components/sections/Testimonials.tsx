@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion, useMotionValue, useSpring, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TESTIMONIALS, SITE, IMG, Testimonial } from "@/lib/site";
 import { SplitText, Reveal } from "@/components/ui/Reveal";
 import CountUp from "@/components/ui/CountUp";
@@ -75,6 +75,7 @@ function ReviewPill({
     <div 
       onMouseEnter={() => onHoverStart(t)}
       onMouseLeave={onHoverEnd}
+      onClick={() => onHoverStart(t)}
       className="flex cursor-pointer items-center gap-4 rounded-full border border-ink/20 bg-ink/5 backdrop-blur-md px-4 py-2.5 shadow-sm transition-transform duration-300 hover:scale-105 hover:shadow-md sm:w-[400px]"
     >
       <RatingCircle rating={t.rating} />
@@ -83,13 +84,16 @@ function ReviewPill({
   );
 }
 
-function MarqueeRow({ items, direction = "left", speed = 40, onHoverStart, onHoverEnd }: { items: Testimonial[], direction?: "left" | "right", speed?: number, onHoverStart: (t: Testimonial) => void, onHoverEnd: () => void }) {
+function MarqueeRow({ items, direction = "left", speed = 40, onHoverStart, onHoverEnd, isPaused }: { items: Testimonial[], direction?: "left" | "right", speed?: number, onHoverStart: (t: Testimonial) => void, onHoverEnd: () => void, isPaused?: boolean }) {
   return (
     <div className="flex w-max overflow-hidden">
-      <motion.div
-        className="flex w-max gap-4 sm:gap-6"
-        animate={{ x: direction === "left" ? ["0%", "-50%"] : ["-50%", "0%"] }}
-        transition={{ duration: speed, ease: "linear", repeat: Infinity }}
+      <div
+        className="flex w-max gap-4 sm:gap-6 animate-marquee"
+        style={{ 
+          animationDuration: `${speed}s`, 
+          animationDirection: direction === 'left' ? 'normal' : 'reverse',
+          animationPlayState: isPaused ? 'paused' : 'running' 
+        }}
       >
         <div className="flex gap-4 pr-4 sm:gap-6 sm:pr-6">
           {items.map((t, i) => (
@@ -101,7 +105,7 @@ function MarqueeRow({ items, direction = "left", speed = 40, onHoverStart, onHov
             <ReviewPill key={`set2-${i}`} t={t} onHoverStart={onHoverStart} onHoverEnd={onHoverEnd} />
           ))}
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }
@@ -112,6 +116,14 @@ export default function Testimonials() {
   const smoothX = useSpring(mouseX, { stiffness: 400, damping: 30 });
   const smoothY = useSpring(mouseY, { stiffness: 400, damping: 30 });
   const [hovered, setHovered] = useState<Testimonial | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const handlePointerMove = (e: React.PointerEvent) => {
     mouseX.set(e.clientX);
@@ -164,37 +176,52 @@ export default function Testimonials() {
       </div>
 
       <div className="relative -mx-4 flex flex-col gap-4 overflow-hidden sm:mx-0 sm:gap-6" style={{ maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}>
-        <MarqueeRow items={ROW_1} direction="left" speed={180} onHoverStart={setHovered} onHoverEnd={() => setHovered(null)} />
-        <MarqueeRow items={ROW_2} direction="right" speed={200} onHoverStart={setHovered} onHoverEnd={() => setHovered(null)} />
-        <MarqueeRow items={ROW_3} direction="left" speed={160} onHoverStart={setHovered} onHoverEnd={() => setHovered(null)} />
+        <MarqueeRow items={ROW_1} direction="left" speed={180} onHoverStart={setHovered} onHoverEnd={() => setHovered(null)} isPaused={!!hovered} />
+        <MarqueeRow items={ROW_2} direction="right" speed={200} onHoverStart={setHovered} onHoverEnd={() => setHovered(null)} isPaused={!!hovered} />
+        <MarqueeRow items={ROW_3} direction="left" speed={160} onHoverStart={setHovered} onHoverEnd={() => setHovered(null)} isPaused={!!hovered} />
       </div>
 
       <AnimatePresence>
         {hovered && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
-            style={{ 
-              x: smoothX, 
-              y: smoothY,
-              translateX: "20px", 
-              translateY: "20px" 
-            }}
-            className="pointer-events-none fixed left-0 top-0 z-50 flex w-[340px] flex-col gap-3 rounded-2xl border border-white/10 bg-ink/75 p-6 shadow-2xl backdrop-blur-xl"
-          >
-            <div className="flex items-center gap-4">
-              <RatingCircle rating={hovered.rating} size={48} strokeWidth={4} />
-              <div className="flex flex-col">
-                <span className="font-display text-2xl font-bold leading-tight text-white">{hovered.name}</span>
-                <span className="text-xs uppercase tracking-wider text-white/60">{hovered.role}</span>
+          <>
+            {isMobile && (
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm"
+                onClick={() => setHovered(null)}
+              />
+            )}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              style={isMobile ? {} : { 
+                x: smoothX, 
+                y: smoothY,
+                translateX: "20px", 
+                translateY: "20px" 
+              }}
+              className={`fixed z-50 flex flex-col gap-4 rounded-2xl border border-primary/20 bg-sand p-6 shadow-2xl ${
+                isMobile 
+                  ? "inset-0 m-auto h-fit w-[90vw] max-w-[400px]" 
+                  : "left-0 top-0 w-[360px] pointer-events-none"
+              }`}
+            >
+              <div className="flex items-center gap-4">
+                <RatingCircle rating={hovered.rating} size={48} strokeWidth={4} />
+                <div className="flex flex-col">
+                  <span className="font-display text-2xl font-bold leading-tight text-ink">{hovered.name}</span>
+                  <span className="text-xs uppercase tracking-wider text-ink/60">{hovered.role}</span>
+                </div>
               </div>
-            </div>
-            <p className="mt-2 text-sm leading-relaxed text-white/90">
-              "{hovered.quote}"
-            </p>
-          </motion.div>
+              <p className="mt-2 text-[15px] leading-relaxed text-ink/90">
+                "{hovered.quote}"
+              </p>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </section>
