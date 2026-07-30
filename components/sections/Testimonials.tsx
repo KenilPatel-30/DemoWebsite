@@ -125,14 +125,14 @@ export default function Testimonials() {
       className="relative isolate overflow-hidden py-20 text-paper md:py-32"
     >
       <Image
-        src={IMG.warmInterior}
-        alt=""
+        src={IMG.bgAbstractEmeraldGold}
+        alt="Abstract Emerald Gold Fluid Texture"
         fill
         aria-hidden
         sizes="100vw"
         className="-z-20 object-cover"
       />
-      <div aria-hidden className="absolute inset-0 -z-10 bg-coffee/85" />
+      <div aria-hidden className="absolute inset-0 -z-10 bg-coffee/40" />
       <AmbientParticles count={14} tone="light" className="-z-10 opacity-60" />
 
       <div className="container-x relative mb-16">
