@@ -151,7 +151,7 @@ export default function OrderConfirmation() {
         </button>
       )}
 
-      <button className="w-full bg-transparent border border-ink hover:bg-ink hover:text-white transition-colors text-ink py-4 rounded-full font-medium text-[15px] flex items-center justify-center gap-2 mb-4">
+      <button className="w-full bg-transparent border border-ink hover:bg-ink hover:text-paper transition-colors text-ink py-4 rounded-full font-medium text-[15px] flex items-center justify-center gap-2 mb-4">
         <Upload className="w-4 h-4" /> Share with Friends
       </button>
 

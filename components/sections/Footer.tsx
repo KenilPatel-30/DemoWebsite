@@ -33,7 +33,7 @@ export default function Footer() {
             <Link
               href="/reserve"
               data-cursor="Book"
-              className="rounded-full bg-paper px-9 py-4 text-[12px] font-medium uppercase tracking-[0.18em] text-coffee shadow-card transition-transform hover:scale-[1.02]"
+              className="rounded-full bg-ink px-9 py-4 text-[12px] font-medium uppercase tracking-[0.18em] text-coffee shadow-card transition-transform hover:scale-[1.02]"
             >
               Reserve a Table
             </Link>
