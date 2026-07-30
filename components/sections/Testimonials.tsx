@@ -124,15 +124,9 @@ export default function Testimonials() {
       onPointerMove={handlePointerMove}
       className="relative isolate overflow-hidden py-20 text-paper md:py-32"
     >
-      <Image
-        src={IMG.bgEmeraldTexture}
-        alt="Emerald Texture Background"
-        fill
-        aria-hidden
-        sizes="100vw"
-        className="-z-20 object-cover"
-      />
-      <div aria-hidden className="absolute inset-0 -z-10 bg-coffee/85" />
+      <div aria-hidden className="absolute inset-0 -z-20 bg-coffee" />
+      <div aria-hidden className="absolute -top-[30%] -left-[10%] -z-10 h-[800px] w-[800px] rounded-full bg-primary/10 blur-[140px] mix-blend-screen" />
+      <div aria-hidden className="absolute -bottom-[30%] -right-[10%] -z-10 h-[800px] w-[800px] rounded-full bg-primary/10 blur-[140px] mix-blend-screen" />
       <AmbientParticles count={14} tone="light" className="-z-10 opacity-60" />
 
       <div className="container-x relative mb-16">
