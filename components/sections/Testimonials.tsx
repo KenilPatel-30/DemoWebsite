@@ -122,17 +122,8 @@ export default function Testimonials() {
     <section
       id="reviews"
       onPointerMove={handlePointerMove}
-      className="relative isolate overflow-hidden py-20 text-ink md:py-32"
+      className="relative isolate overflow-hidden py-20 bg-coffee text-ink md:py-32"
     >
-      <Image
-        src={IMG.bgEmeraldTexture}
-        alt="Emerald Texture Background"
-        fill
-        aria-hidden
-        sizes="100vw"
-        className="-z-20 object-cover"
-      />
-      <div aria-hidden className="absolute inset-0 -z-10 bg-coffee/85" />
       <AmbientParticles count={14} tone="light" className="-z-10 opacity-60" />
 
       <div className="container-x relative mb-16">
