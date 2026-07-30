@@ -184,7 +184,7 @@ export default function OrderMenu() {
                       ) : (
                         "Add"
                       )}
-                    </button>
+                    </div>
                   </div>
                 </div>
               </div>
