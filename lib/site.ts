@@ -67,6 +67,7 @@ export const NAV_LINKS = [
 
 /** Curated, cleaned photographs of the real Belluno Cafe (in /public/venue). */
 export const IMG = {
+  bgEmeraldTexture: `${basePath}/images/bg_emerald_texture.jpg`,
   bgAbstractEmeraldGold: `${basePath}/images/bg_abstract_emerald_gold.jpg`,
   heroNight: `${basePath}/venue/venue-03.jpg`,
   signInterior: `${basePath}/venue/venue-04.jpg`,
