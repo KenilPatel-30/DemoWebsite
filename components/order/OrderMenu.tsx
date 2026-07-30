@@ -162,7 +162,7 @@ export default function OrderMenu() {
                     {/* Add Button */}
                     <div 
                       className={`flex items-center border rounded-full h-8 overflow-hidden transition-all shadow-sm ${
-                        inCartCount > 0 
+                        cartItem 
                           ? "bg-sand text-ink border-ink/10 px-1 w-[80px]" 
                           : "bg-sand text-primary border-primary w-[70px] hover:bg-primary hover:text-white justify-center"
                       }`}
