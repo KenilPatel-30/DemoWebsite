@@ -41,7 +41,7 @@ function RatingCircle({ rating, size = 32, strokeWidth = 3 }: { rating: number; 
           cx={size / 2}
           cy={size / 2}
           r={radius}
-          stroke="rgba(0,0,0,0.06)"
+          stroke="rgba(255,255,255,0.1)"
           strokeWidth={strokeWidth}
           fill="none"
         />
@@ -75,10 +75,10 @@ function ReviewPill({
     <div 
       onMouseEnter={() => onHoverStart(t)}
       onMouseLeave={onHoverEnd}
-      className="flex cursor-pointer items-center gap-4 rounded-full border border-ink/5 bg-paper px-4 py-2.5 shadow-sm transition-transform duration-300 hover:scale-105 hover:shadow-md sm:w-[400px]"
+      className="flex cursor-pointer items-center gap-4 rounded-full border border-ink/20 bg-ink/5 backdrop-blur-md px-4 py-2.5 shadow-sm transition-transform duration-300 hover:scale-105 hover:shadow-md sm:w-[400px]"
     >
       <RatingCircle rating={t.rating} />
-      <p className="truncate text-sm font-medium text-ink/80">{t.quote}</p>
+      <p className="truncate text-sm font-medium text-ink/90">{t.quote}</p>
     </div>
   );
 }
@@ -122,11 +122,17 @@ export default function Testimonials() {
     <section
       id="reviews"
       onPointerMove={handlePointerMove}
-      className="relative isolate overflow-hidden py-20 text-paper md:py-32"
+      className="relative isolate overflow-hidden py-20 text-ink md:py-32"
     >
-      <div aria-hidden className="absolute inset-0 -z-20 bg-coffee" />
-      <div aria-hidden className="absolute -top-[30%] -left-[10%] -z-10 h-[800px] w-[800px] rounded-full bg-primary/10 blur-[140px] mix-blend-screen" />
-      <div aria-hidden className="absolute -bottom-[30%] -right-[10%] -z-10 h-[800px] w-[800px] rounded-full bg-primary/10 blur-[140px] mix-blend-screen" />
+      <Image
+        src={IMG.bgEmeraldTexture}
+        alt="Emerald Texture Background"
+        fill
+        aria-hidden
+        sizes="100vw"
+        className="-z-20 object-cover"
+      />
+      <div aria-hidden className="absolute inset-0 -z-10 bg-coffee/85" />
       <AmbientParticles count={14} tone="light" className="-z-10 opacity-60" />
 
       <div className="container-x relative mb-16">
@@ -139,19 +145,19 @@ export default function Testimonials() {
           <SplitText
             as="h2"
             text="Loved across Surat."
-            className="mt-4 display-md text-paper"
+            className="mt-4 display-md text-ink"
           />
-          <div className="mt-8 flex flex-col items-center justify-center gap-2 border-t border-paper/15 pt-8">
+          <div className="mt-8 flex flex-col items-center justify-center gap-2 border-t border-ink/20 pt-8">
             <div className="flex items-end gap-2">
               <CountUp
                 value={SITE.rating}
                 decimals={1}
-                className="font-display text-5xl font-bold tracking-tightest text-paper"
+                className="font-display text-5xl font-bold tracking-tightest text-ink"
               />
-              <span className="mb-1 text-base text-paper/60">/ 5</span>
+              <span className="mb-1 text-base text-ink/60">/ 5</span>
             </div>
-            <p className="mt-2 text-sm text-paper/65">
-              Across <CountUp value={SITE.reviews} className="font-medium text-paper" />+ verified Google reviews
+            <p className="mt-2 text-sm text-ink/80">
+              Across <CountUp value={SITE.reviews} className="font-medium text-ink" />+ verified Google reviews
             </p>
             <a
               href={SITE.mapsUrl}
