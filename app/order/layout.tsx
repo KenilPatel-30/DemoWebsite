@@ -8,7 +8,7 @@ export const metadata = {
 
 export default function OrderLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-[100dvh] bg-[#FCF6F0] font-sans text-ink selection:bg-primary/20 antialiased overflow-x-hidden">
+    <div className="min-h-[100dvh] bg-paper font-sans text-ink selection:bg-primary/20 antialiased overflow-x-hidden">
       <OrderProvider>
         {children}
         <BottomNav />

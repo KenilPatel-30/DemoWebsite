@@ -48,7 +48,7 @@ export default function ReservePage() {
 
   if (step === "confirm") {
     return (
-      <div className="flex flex-col w-full min-h-screen bg-[#FCF6F0] items-center pt-24 px-6 pb-24 font-sans text-ink">
+      <div className="flex flex-col w-full min-h-screen bg-paper items-center pt-24 px-6 pb-24 font-sans text-ink">
         <motion.div 
           initial={{ scale: 0.5, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -61,10 +61,10 @@ export default function ReservePage() {
         <h1 className="text-[28px] font-bold text-ink mb-2">Table Reserved!</h1>
         <p className="text-[15px] text-ink/60 mb-10 text-center">We're looking forward to hosting you.</p>
 
-        <div className="w-full max-w-lg bg-[#f2e6db] rounded-2xl p-8 mb-8">
+        <div className="w-full max-w-lg bg-sand rounded-2xl p-8 mb-8">
           <div className="flex justify-between items-center border-b border-ink/10 pb-6 mb-6">
             <span className="text-[11px] font-bold text-ink/50 tracking-wider">CONFIRMATION</span>
-            <span className="text-[22px] font-bold text-[#9A5015]">TB-8472</span>
+            <span className="text-[22px] font-bold text-primary">TB-8472</span>
           </div>
 
           <div className="space-y-6">
@@ -95,7 +95,7 @@ export default function ReservePage() {
         </div>
 
         <div className="w-full max-w-lg flex flex-col sm:flex-row gap-4 mb-10">
-          <button className="flex-1 bg-[#9A5015] hover:bg-[#804210] transition-colors text-white py-4 rounded-full font-medium text-[15px] shadow-lg flex items-center justify-center gap-2">
+          <button className="flex-1 bg-primary hover:bg-primary/80 transition-colors text-white py-4 rounded-full font-medium text-[15px] shadow-lg flex items-center justify-center gap-2">
             <CalendarDays className="w-4 h-4" /> Add to Calendar
           </button>
           <a href="https://maps.google.com/?q=Surat" target="_blank" rel="noreferrer" className="flex-1 bg-transparent border border-ink hover:bg-ink hover:text-white transition-colors text-ink py-4 rounded-full font-medium text-[15px] flex items-center justify-center gap-2">
@@ -111,8 +111,8 @@ export default function ReservePage() {
   }
 
   return (
-    <div className="flex flex-col w-full min-h-screen bg-[#FCF6F0] font-sans text-ink">
-      <div className="sticky top-0 z-20 bg-[#FCF6F0]/90 backdrop-blur-md pt-safe border-b border-ink/5">
+    <div className="flex flex-col w-full min-h-screen bg-paper font-sans text-ink">
+      <div className="sticky top-0 z-20 bg-paper/90 backdrop-blur-md pt-safe border-b border-ink/5">
         <div className="max-w-3xl mx-auto flex items-center px-6 py-4 relative">
           <Link href="/" className="absolute left-6 p-2 -ml-2 text-ink/60 hover:text-ink">
             <ArrowLeft className="w-5 h-5" />
@@ -135,8 +135,8 @@ export default function ReservePage() {
                 onClick={() => setPartySize(size)}
                 className={`w-14 h-14 rounded-full font-medium flex items-center justify-center transition-colors ${
                   partySize === size 
-                    ? "bg-[#9A5015] text-white shadow-md" 
-                    : "bg-[#f2e6db] text-ink hover:bg-[#ebdccc]"
+                    ? "bg-primary text-white shadow-md" 
+                    : "bg-sand text-ink hover:bg-sand"
                 }`}
               >
                 {size}
@@ -158,7 +158,7 @@ export default function ReservePage() {
             <select 
               value={time} 
               onChange={e => setTime(e.target.value)}
-              className="w-full bg-[#f2e6db] text-[15px] font-medium text-ink rounded-2xl px-5 py-4 appearance-none outline-none focus:ring-1 focus:ring-[#9A5015]/30 cursor-pointer shadow-sm"
+              className="w-full bg-sand text-[15px] font-medium text-ink rounded-2xl px-5 py-4 appearance-none outline-none focus:ring-1 focus:ring-primary/30 cursor-pointer shadow-sm"
             >
               {times.map((t, i) => (
                 <option key={t} value={t} disabled={i === 5}>{t}</option>
@@ -182,8 +182,8 @@ export default function ReservePage() {
                 onClick={() => setSeating(pref)}
                 className={`px-6 py-3 rounded-full text-[14px] font-medium transition-colors ${
                   seating === pref 
-                    ? "bg-[#9A5015] text-white shadow-md" 
-                    : "bg-[#f2e6db] text-ink hover:bg-[#ebdccc]"
+                    ? "bg-primary text-white shadow-md" 
+                    : "bg-sand text-ink hover:bg-sand"
                 }`}
               >
                 {pref}
@@ -193,7 +193,7 @@ export default function ReservePage() {
         </div>
 
         {/* Guest Details */}
-        <div className="bg-[#f2e6db] rounded-3xl p-6 sm:p-8 mb-8">
+        <div className="bg-sand rounded-3xl p-6 sm:p-8 mb-8">
           <h2 className="text-[18px] font-medium text-ink mb-6">Guest Details</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <input 
@@ -201,21 +201,21 @@ export default function ReservePage() {
               placeholder="Full Name" 
               value={name}
               onChange={e => setName(e.target.value)}
-              className="w-full bg-[#FCF6F0] rounded-xl px-5 py-4 text-[15px] text-ink placeholder:text-ink/40 outline-none focus:ring-1 focus:ring-[#9A5015]/30"
+              className="w-full bg-paper rounded-xl px-5 py-4 text-[15px] text-ink placeholder:text-ink/40 outline-none focus:ring-1 focus:ring-primary/30"
             />
             <input 
               type="tel" 
               placeholder="Phone Number" 
               value={phone}
               onChange={e => setPhone(e.target.value)}
-              className="w-full bg-[#FCF6F0] rounded-xl px-5 py-4 text-[15px] text-ink placeholder:text-ink/40 outline-none focus:ring-1 focus:ring-[#9A5015]/30"
+              className="w-full bg-paper rounded-xl px-5 py-4 text-[15px] text-ink placeholder:text-ink/40 outline-none focus:ring-1 focus:ring-primary/30"
             />
             <input 
               type="email" 
               placeholder="Email Address" 
               value={email}
               onChange={e => setEmail(e.target.value)}
-              className="w-full bg-[#FCF6F0] rounded-xl px-5 py-4 text-[15px] text-ink placeholder:text-ink/40 outline-none focus:ring-1 focus:ring-[#9A5015]/30 sm:col-span-2"
+              className="w-full bg-paper rounded-xl px-5 py-4 text-[15px] text-ink placeholder:text-ink/40 outline-none focus:ring-1 focus:ring-primary/30 sm:col-span-2"
             />
           </div>
         </div>
@@ -226,7 +226,7 @@ export default function ReservePage() {
 
         <button 
           onClick={handleConfirm}
-          className="w-full bg-[#9A5015] hover:bg-[#804210] transition-colors text-white py-4 sm:py-5 rounded-full font-medium text-[16px] shadow-lg flex items-center justify-center gap-2"
+          className="w-full bg-primary hover:bg-primary/80 transition-colors text-white py-4 sm:py-5 rounded-full font-medium text-[16px] shadow-lg flex items-center justify-center gap-2"
         >
           Confirm Reservation <CheckCircle className="w-5 h-5" />
         </button>

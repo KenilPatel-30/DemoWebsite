@@ -8,11 +8,11 @@ export default function OrderHistory() {
   const { setCurrentView } = useOrder();
 
   return (
-    <div className="flex flex-col w-full min-h-screen bg-[#FCF6F0] pb-24 pt-[80px]">
+    <div className="flex flex-col w-full min-h-screen bg-paper pb-24 pt-[80px]">
       {/* Header */}
-      <div className="sticky top-[80px] z-20 bg-[#FCF6F0]/90 backdrop-blur-md border-b border-ink/5">
+      <div className="sticky top-[80px] z-20 bg-paper/90 backdrop-blur-md border-b border-ink/5">
         <div className="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto w-full">
-          <button onClick={() => setCurrentView("home")} className="p-2 -ml-2 text-[#9A5015]">
+          <button onClick={() => setCurrentView("home")} className="p-2 -ml-2 text-primary">
             <ArrowLeft className="w-5 h-5" />
           </button>
           <h1 className="text-[18px] font-medium text-ink">My Orders</h1>
@@ -21,7 +21,7 @@ export default function OrderHistory() {
       </div>
 
       <div className="px-6 mt-12 max-w-lg mx-auto w-full flex flex-col items-center text-center">
-        <div className="w-24 h-24 bg-[#ebdccc] rounded-full flex items-center justify-center mb-6 text-[#9A5015]">
+        <div className="w-24 h-24 bg-sand rounded-full flex items-center justify-center mb-6 text-primary">
           <Receipt className="w-10 h-10" />
         </div>
         <h2 className="text-[22px] font-bold text-ink mb-2">No past orders yet</h2>
@@ -29,7 +29,7 @@ export default function OrderHistory() {
         
         <button 
           onClick={() => setCurrentView("menu")}
-          className="bg-[#9A5015] hover:bg-[#804210] transition-colors text-white py-4 px-10 rounded-full font-medium text-[16px] shadow-lg flex items-center justify-center gap-2"
+          className="bg-primary hover:bg-primary/80 transition-colors text-white py-4 px-10 rounded-full font-medium text-[16px] shadow-lg flex items-center justify-center gap-2"
         >
           Start a new order
         </button>

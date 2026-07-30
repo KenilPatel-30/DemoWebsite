@@ -23,7 +23,7 @@ export default function BottomNav() {
         showCartButton ? "justify-between max-w-[360px] md:max-w-[400px]" : "justify-center max-w-max"
       )}>
         {/* Main Nav Pill */}
-        <div className="flex items-center gap-1 rounded-full bg-[#FCF6F0]/95 backdrop-blur-lg px-1.5 py-1.5 shadow-xl border border-ink/10 pointer-events-auto shrink-0">
+        <div className="flex items-center gap-1 rounded-full bg-paper/95 backdrop-blur-lg px-1.5 py-1.5 shadow-xl border border-ink/10 pointer-events-auto shrink-0">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = currentView === item.id || (currentView === "menu" && item.id === "menu");
@@ -37,7 +37,7 @@ export default function BottomNav() {
                 }}
                 className={cn(
                   "flex flex-row items-center gap-1.5 px-4 py-2.5 rounded-full transition-colors",
-                  isActive ? "bg-[#9A5015] text-white shadow-sm" : "text-ink/70 hover:text-ink hover:bg-ink/5"
+                  isActive ? "bg-primary text-white shadow-sm" : "text-ink/70 hover:text-ink hover:bg-ink/5"
                 )}
               >
                 <Icon className="h-4 w-4" strokeWidth={isActive ? 2.5 : 2} />
@@ -54,11 +54,11 @@ export default function BottomNav() {
               if (cartCount > 0) setCurrentView("cart");
               else if (unpaidTab) setCurrentView("orderConfirmed");
             }}
-            className="flex items-center justify-center gap-2.5 rounded-full bg-[#9A5015] hover:bg-[#804210] text-white px-5 py-3 shadow-2xl pointer-events-auto transition-transform active:scale-95 flex-1 max-w-[140px]"
+            className="flex items-center justify-center gap-2.5 rounded-full bg-primary hover:bg-primary/80 text-white px-5 py-3 shadow-2xl pointer-events-auto transition-transform active:scale-95 flex-1 max-w-[140px]"
           >
             <div className="relative shrink-0">
               <ShoppingBag className="w-5 h-5" />
-              <span className="absolute -top-1.5 -right-1.5 flex h-[15px] w-[15px] items-center justify-center rounded-full bg-white text-[9px] font-bold text-[#9A5015] shadow-sm">
+              <span className="absolute -top-1.5 -right-1.5 flex h-[15px] w-[15px] items-center justify-center rounded-full bg-white text-[9px] font-bold text-primary shadow-sm">
                 {displayCount}
               </span>
             </div>

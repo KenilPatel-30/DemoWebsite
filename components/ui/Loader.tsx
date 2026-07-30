@@ -57,7 +57,7 @@ export default function Loader() {
     <AnimatePresence>
       {!done && (
         <motion.div
-          className="fixed inset-0 z-[110] flex flex-col items-center justify-center bg-[#0B0B0B] text-paper"
+          className="fixed inset-0 z-[110] flex flex-col items-center justify-center bg-paper text-paper"
           exit={{ opacity: 0 }}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
         >

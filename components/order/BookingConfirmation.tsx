@@ -8,26 +8,26 @@ export default function BookingConfirmation() {
   const { bookingDetails, setCurrentView } = useOrder();
 
   return (
-    <div className="flex flex-col w-full min-h-screen bg-[#FCF6F0] items-center pt-[100px] px-6 pb-24">
+    <div className="flex flex-col w-full min-h-screen bg-paper items-center pt-[100px] px-6 pb-24">
       
       {/* Success Icon */}
       <motion.div 
         initial={{ scale: 0.5, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ type: "spring", damping: 15 }}
-        className="w-24 h-24 bg-[#c8e6c9] rounded-full flex items-center justify-center mb-6"
+        className="w-24 h-24 bg-green-900/40 rounded-full flex items-center justify-center mb-6"
       >
-        <Check className="w-12 h-12 text-[#2e7d32]" strokeWidth={3} />
+        <Check className="w-12 h-12 text-green-400" strokeWidth={3} />
       </motion.div>
 
       <h1 className="text-[28px] font-bold text-ink mb-2">Table Reserved!</h1>
       <p className="text-[15px] text-ink/60 mb-10 text-center">We're looking forward to hosting you.</p>
 
       {/* Confirmation Card */}
-      <div className="w-full bg-[#f2e6db] rounded-2xl p-6 mb-8">
+      <div className="w-full bg-sand rounded-2xl p-6 mb-8">
         <div className="flex justify-between items-center border-b border-ink/10 pb-6 mb-6">
           <span className="text-[11px] font-bold text-ink/50 tracking-wider">CONFIRMATION</span>
-          <span className="text-[22px] font-bold text-[#9A5015]">TB-8472</span>
+          <span className="text-[22px] font-bold text-primary">TB-8472</span>
         </div>
 
         <div className="space-y-6">
@@ -58,7 +58,7 @@ export default function BookingConfirmation() {
       </div>
 
       <div className="w-full space-y-4 mb-10">
-        <button className="w-full bg-[#9A5015] hover:bg-[#804210] transition-colors text-white py-4 rounded-full font-medium text-[15px] shadow-lg flex items-center justify-center gap-2">
+        <button className="w-full bg-primary hover:bg-primary/80 transition-colors text-white py-4 rounded-full font-medium text-[15px] shadow-lg flex items-center justify-center gap-2">
           <CalendarDays className="w-4 h-4" /> Add to Calendar
         </button>
         <button className="w-full bg-transparent border border-ink hover:bg-ink hover:text-white transition-colors text-ink py-4 rounded-full font-medium text-[15px] flex items-center justify-center gap-2">

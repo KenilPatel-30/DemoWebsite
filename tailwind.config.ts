@@ -9,15 +9,15 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Editorial warm-paper luxury system
-        paper: "#F7F4EE", // page background
-        sand: "#F2EEE7", // section background
-        primary: "#8B4513", // primary brown
-        coffee: "#5A3726", // deep coffee
-        accent: "#C18A53", // copper accent
-        ink: "#1C1C1C", // text
-        line: "rgba(0,0,0,0.06)", // hairline border
-        muted: "#6B6259", // muted text
+        // Emerald & Crimson Luxury System
+        paper: "#0A1A14", // Deep Emerald Green (page background)
+        sand: "#132720", // Lighter Emerald (cards, inputs)
+        primary: "#9E2A2B", // Deep Crimson (buttons, highlights)
+        coffee: "#05100C", // Darkest Green (footer, deep sections)
+        accent: "#E0A96D", // Warm Gold
+        ink: "#F4ECD8", // Ivory/Cream (text)
+        line: "rgba(244, 236, 216, 0.1)", // Faint Ivory border
+        muted: "#82978D", // Muted Green-Grey
       },
       fontFamily: {
         display: ["var(--font-display)", "Georgia", "serif"],

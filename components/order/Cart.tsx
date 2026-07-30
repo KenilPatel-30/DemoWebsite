@@ -54,11 +54,11 @@ export default function Cart() {
   };
 
   return (
-    <div className="flex flex-col w-full min-h-screen bg-[#FCF6F0] pb-40 md:pb-40 pt-[80px]">
+    <div className="flex flex-col w-full min-h-screen bg-paper pb-40 md:pb-40 pt-[80px]">
       {/* Header */}
-      <div className="sticky top-[80px] z-20 bg-[#FCF6F0] border-b border-ink/5">
+      <div className="sticky top-[80px] z-20 bg-paper border-b border-ink/5">
         <div className="flex items-center justify-center px-6 py-4 relative">
-          <button onClick={() => setCurrentView("menu")} className="absolute left-6 p-2 -ml-2 text-[#9A5015]">
+          <button onClick={() => setCurrentView("menu")} className="absolute left-6 p-2 -ml-2 text-primary">
             <ArrowLeft className="w-5 h-5" />
           </button>
           <h1 className="text-[18px] font-medium text-ink">Your Cart</h1>
@@ -72,7 +72,7 @@ export default function Cart() {
           {/* Left Column: Items */}
           <div className="md:col-span-7">
         {/* Info Banner */}
-        <div className="bg-[#f2e6db] rounded-xl p-3 flex justify-center items-center gap-2 text-[#9A5015] font-medium text-[13px] mb-6">
+        <div className="bg-sand rounded-xl p-3 flex justify-center items-center gap-2 text-primary font-medium text-[13px] mb-6">
           <Clock className="w-4 h-4" />
           <span>Ready in 10-15 mins</span>
         </div>
@@ -82,7 +82,7 @@ export default function Cart() {
             <p className="text-ink/50 mb-6">Your cart is empty.</p>
             <button 
               onClick={() => setCurrentView("menu")}
-              className="inline-flex items-center gap-2 bg-[#9A5015] hover:bg-[#804210] text-white px-6 py-3 rounded-full font-medium transition-colors"
+              className="inline-flex items-center gap-2 bg-primary hover:bg-primary/80 text-white px-6 py-3 rounded-full font-medium transition-colors"
             >
               <Plus className="w-5 h-5" /> Add Item
             </button>
@@ -90,7 +90,7 @@ export default function Cart() {
         ) : (
           <div className="space-y-4">
             {cart.map((item) => (
-              <div key={item.id} className="bg-[#f2e6db] p-4 rounded-2xl flex gap-4 relative">
+              <div key={item.id} className="bg-sand p-4 rounded-2xl flex gap-4 relative">
                 <button 
                   onClick={() => removeFromCart(item.id)}
                   className="absolute top-4 right-4 text-ink/40 hover:text-red-500 transition"
@@ -114,7 +114,7 @@ export default function Cart() {
                   </p>
                   
                   <div className="flex items-center justify-between mt-auto">
-                    <span className="font-bold text-[#9A5015] text-[16px]">₹{item.totalPrice}</span>
+                    <span className="font-bold text-primary text-[16px]">₹{item.totalPrice}</span>
                     
                     <div className="flex items-center justify-between bg-white rounded-full h-8 px-1 w-[90px] border border-ink/5 shadow-sm">
                       <button 
@@ -138,7 +138,7 @@ export default function Cart() {
             
             <button 
               onClick={() => setCurrentView("menu")}
-              className="flex items-center gap-2 text-[#9A5015] font-medium text-[14px] py-2"
+              className="flex items-center gap-2 text-primary font-medium text-[14px] py-2"
             >
               <Plus className="w-4 h-4" /> Add more items
             </button>
@@ -158,7 +158,7 @@ export default function Cart() {
                   value={orderInstructions}
                   onChange={(e) => setOrderInstructions(e.target.value)}
                   placeholder="Any special requests?"
-                  className="w-full bg-[#f2e6db] rounded-2xl p-4 text-[14px] text-ink placeholder:text-ink/40 resize-none outline-none focus:ring-1 focus:ring-[#9A5015]/30 border border-transparent"
+                  className="w-full bg-sand rounded-2xl p-4 text-[14px] text-ink placeholder:text-ink/40 resize-none outline-none focus:ring-1 focus:ring-primary/30 border border-transparent"
                   rows={2}
                 />
               </div>
@@ -167,15 +167,15 @@ export default function Cart() {
                 <input 
                   type="text" 
                   placeholder="Promo Code" 
-                  className="flex-1 bg-[#f2e6db] rounded-xl px-4 py-3.5 text-[14px] text-ink placeholder:text-ink/40 outline-none border border-transparent focus:ring-1 focus:ring-[#9A5015]/30"
+                  className="flex-1 bg-sand rounded-xl px-4 py-3.5 text-[14px] text-ink placeholder:text-ink/40 outline-none border border-transparent focus:ring-1 focus:ring-primary/30"
                 />
-                <button className="bg-[#ebdccc] hover:bg-[#e4d0bc] transition px-6 rounded-xl text-[14px] font-medium text-ink">
+                <button className="bg-sand hover:opacity-80 transition px-6 rounded-xl text-[14px] font-medium text-ink">
                   Apply
                 </button>
               </div>
             </div>
 
-            <div className="mt-8 bg-[#f2e6db] rounded-2xl p-5 mb-8">
+            <div className="mt-8 bg-sand rounded-2xl p-5 mb-8">
               <h3 className="font-medium text-[16px] text-ink mb-4">Order Summary</h3>
               <div className="space-y-3 text-[14px]">
                 <div className="flex justify-between text-ink/80">
@@ -198,7 +198,7 @@ export default function Cart() {
                 </div>
                 <div className="flex justify-between text-[16px] font-bold text-ink pt-1">
                   <span>Total</span>
-                  <span className="text-[#9A5015]">₹{total.toFixed(0)}</span>
+                  <span className="text-primary">₹{total.toFixed(0)}</span>
                 </div>
               </div>
             </div>
@@ -211,7 +211,7 @@ export default function Cart() {
                   disabled={cart.length === 0}
                   className={`w-full py-4 rounded-full font-medium text-[15px] flex items-center justify-between px-6 transition-colors ${
                     cart.length > 0 
-                      ? "bg-[#9A5015] hover:bg-[#804210] text-white shadow-lg" 
+                      ? "bg-primary hover:bg-primary/80 text-white shadow-lg" 
                       : "bg-ink/10 text-ink/40 cursor-not-allowed shadow-none"
                   }`}
                 >
@@ -235,14 +235,14 @@ export default function Cart() {
       </div>
 
       {/* Mobile Bottom Fixed Action Bar */}
-      <div className="md:hidden fixed bottom-[100px] left-0 right-0 bg-[#FCF6F0] p-4 pb-safe border-t border-ink/5 z-50">
+      <div className="md:hidden fixed bottom-[100px] left-0 right-0 bg-paper p-4 pb-safe border-t border-ink/5 z-50">
         <div className="max-w-md mx-auto flex flex-col gap-3">
           <button 
             onClick={() => cart.length > 0 ? setCurrentView("checkout") : undefined}
             disabled={cart.length === 0}
             className={`w-full transition-colors py-3.5 rounded-full font-medium text-[15px] flex items-center justify-between px-6 ${
               cart.length > 0 
-                ? "bg-[#9A5015] hover:bg-[#804210] text-white shadow-lg" 
+                ? "bg-primary hover:bg-primary/80 text-white shadow-lg" 
                 : "bg-ink/10 text-ink/40 cursor-not-allowed"
             }`}
           >

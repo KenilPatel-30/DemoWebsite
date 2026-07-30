@@ -3,13 +3,9 @@
 @tailwind utilities;
 
 :root {
-  --paper: #f7f4ee;
-  --sand: #f2eee7;
-  --primary: #8b4513;
-  --coffee: #5a3726;
-  --accent: #c18a53;
-  --ink: #1c1c1c;
-  --line: rgba(0, 0, 0, 0.06);
+  --paper: #0A1A14;
+  --ink: #F4ECD8;
+  --line: rgba(244, 236, 216, 0.1);
 }
 
 @layer base {

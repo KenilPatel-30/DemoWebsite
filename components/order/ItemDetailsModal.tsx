@@ -100,7 +100,7 @@ export default function ItemDetailsModal() {
             exit={{ y: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-md md:max-w-xl h-[90dvh] md:h-[85dvh] bg-[#FCF6F0] rounded-t-3xl md:rounded-3xl flex flex-col overflow-hidden shadow-2xl relative"
+            className="w-full max-w-md md:max-w-xl h-[90dvh] md:h-[85dvh] bg-paper rounded-t-3xl md:rounded-3xl flex flex-col overflow-hidden shadow-2xl relative"
           >
             {/* Scrollable Content */}
             <div className="flex-1 overflow-y-auto overscroll-contain min-h-0 pb-[100px]">
@@ -121,7 +121,7 @@ export default function ItemDetailsModal() {
               <div className="px-6 py-6">
                 <div className="flex justify-between items-start mb-2">
                   <h2 className="text-[24px] font-medium text-ink leading-tight pr-4">{displayedItem.name}</h2>
-                  <span className="text-[18px] font-bold text-[#9A5015]">₹{displayedItem.price}</span>
+                  <span className="text-[18px] font-bold text-primary">₹{displayedItem.price}</span>
                 </div>
                 <p className="text-[14px] text-ink/70 leading-relaxed mb-8">
                   {displayedItem.description}
@@ -132,12 +132,12 @@ export default function ItemDetailsModal() {
                   {displayedItem.sizes && (
                     <div>
                       <h3 className="font-medium text-[16px] text-ink mb-3">Size</h3>
-                      <div className="bg-[#f2e6db] rounded-2xl p-2 space-y-1">
+                      <div className="bg-sand rounded-2xl p-2 space-y-1">
                         {displayedItem.sizes.map((s) => (
                           <div key={s.label} onClick={() => setSize(s.label)} className="flex items-center justify-between p-3 rounded-xl cursor-pointer hover:bg-white/40 transition">
                             <div className="flex items-center gap-3">
-                              <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${size === s.label ? 'border-[#9A5015]' : 'border-ink/20'}`}>
-                                {size === s.label && <div className="w-2.5 h-2.5 bg-[#9A5015] rounded-full" />}
+                              <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${size === s.label ? 'border-primary' : 'border-ink/20'}`}>
+                                {size === s.label && <div className="w-2.5 h-2.5 bg-primary rounded-full" />}
                               </div>
                               <span className="text-[15px] text-ink">{s.label}</span>
                             </div>
@@ -161,7 +161,7 @@ export default function ItemDetailsModal() {
                             onClick={() => setMilk(m)}
                             className={`px-5 py-2.5 rounded-full text-[14px] font-medium transition border ${
                               milk === m 
-                                ? "bg-[#9A5015] text-white border-[#9A5015]" 
+                                ? "bg-primary text-white border-primary" 
                                 : "bg-transparent text-ink border-ink/10 hover:border-ink/30"
                             }`}
                           >
@@ -182,7 +182,7 @@ export default function ItemDetailsModal() {
                             onClick={() => setSugar(s)}
                             className={`px-5 py-2.5 rounded-full text-[14px] font-medium transition border ${
                               sugar === s 
-                                ? "bg-[#9A5015] text-white border-[#9A5015]" 
+                                ? "bg-primary text-white border-primary" 
                                 : "bg-transparent text-ink border-ink/10 hover:border-ink/30"
                             }`}
                           >
@@ -196,11 +196,11 @@ export default function ItemDetailsModal() {
                   {displayedItem.addons && (
                     <div>
                       <h3 className="font-medium text-[16px] text-ink mb-3">Add-ons</h3>
-                      <div className="bg-[#f2e6db] rounded-2xl p-2 space-y-1">
+                      <div className="bg-sand rounded-2xl p-2 space-y-1">
                         {displayedItem.addons.map((a) => (
                           <div key={a.id} onClick={() => toggleAddon(a.id)} className="flex items-center justify-between p-3 rounded-xl cursor-pointer hover:bg-white/40 transition">
                             <div className="flex items-center gap-3">
-                              <div className={`w-5 h-5 rounded-[4px] border-2 flex items-center justify-center ${selectedAddons.includes(a.id) ? 'border-[#9A5015] bg-[#9A5015]' : 'border-ink/20 bg-transparent'}`}>
+                              <div className={`w-5 h-5 rounded-[4px] border-2 flex items-center justify-center ${selectedAddons.includes(a.id) ? 'border-primary bg-primary' : 'border-ink/20 bg-transparent'}`}>
                                 {selectedAddons.includes(a.id) && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>}
                               </div>
                               <span className="text-[15px] text-ink">{a.name}</span>
@@ -215,13 +215,13 @@ export default function ItemDetailsModal() {
                   <div className="pt-2">
                     <button 
                       onClick={() => setShowAllergens(!showAllergens)}
-                      className="w-full flex items-center justify-between bg-[#f2e6db] p-4 rounded-2xl text-[15px] font-medium text-ink"
+                      className="w-full flex items-center justify-between bg-sand p-4 rounded-2xl text-[15px] font-medium text-ink"
                     >
                       <span>Allergens & Info</span>
                       <ChevronDown className={`w-5 h-5 text-ink/50 transition-transform ${showAllergens ? 'rotate-180' : ''}`} />
                     </button>
                     {showAllergens && (
-                      <div className="bg-[#f2e6db]/50 p-4 rounded-2xl text-[14px] text-ink/80 mt-2">
+                      <div className="bg-sand/50 p-4 rounded-2xl text-[14px] text-ink/80 mt-2">
                         {displayedItem.allergens && displayedItem.allergens.length > 1 ? (
                           <ul className="list-disc pl-5 space-y-1">
                             {displayedItem.allergens.map((allergen, idx) => (
@@ -241,8 +241,8 @@ export default function ItemDetailsModal() {
             </div>
 
             {/* Bottom Fixed Action Bar */}
-            <div className="absolute bottom-0 left-0 right-0 bg-[#FCF6F0] p-4 pb-safe border-t border-ink/5 flex gap-4 items-center">
-              <div className="flex items-center justify-between bg-[#f2e6db] rounded-full h-12 px-2 w-[120px] shrink-0">
+            <div className="absolute bottom-0 left-0 right-0 bg-paper p-4 pb-safe border-t border-ink/5 flex gap-4 items-center">
+              <div className="flex items-center justify-between bg-sand rounded-full h-12 px-2 w-[120px] shrink-0">
                 <button 
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
                   className="w-8 h-8 flex items-center justify-center text-ink/60 hover:text-ink transition"
@@ -260,7 +260,7 @@ export default function ItemDetailsModal() {
               
               <button 
                 onClick={handleAddToCart}
-                className="flex-1 bg-[#9A5015] hover:bg-[#804210] transition-colors text-white h-12 rounded-full font-medium text-[15px] shadow-lg flex items-center justify-center"
+                className="flex-1 bg-primary hover:bg-primary/80 transition-colors text-white h-12 rounded-full font-medium text-[15px] shadow-lg flex items-center justify-center"
               >
                 Add to Cart - ₹{currentPrice * quantity}
               </button>

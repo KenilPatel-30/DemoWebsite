@@ -39,11 +39,11 @@ export default function Checkout() {
   };
 
   return (
-    <div className="flex flex-col w-full min-h-screen bg-[#FCF6F0] pb-40 md:pb-24 pt-[80px]">
+    <div className="flex flex-col w-full min-h-screen bg-paper pb-40 md:pb-24 pt-[80px]">
       {/* Header */}
-      <div className="sticky top-[80px] z-20 bg-[#FCF6F0] border-b border-ink/5">
+      <div className="sticky top-[80px] z-20 bg-paper border-b border-ink/5">
         <div className="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto w-full">
-          <button onClick={() => setCurrentView("cart")} className="p-2 -ml-2 text-[#9A5015]">
+          <button onClick={() => setCurrentView("cart")} className="p-2 -ml-2 text-primary">
             <ArrowLeft className="w-5 h-5" />
           </button>
           <h1 className="text-[18px] font-medium text-ink">Demo Cafe</h1>
@@ -66,7 +66,7 @@ export default function Checkout() {
         </div>
 
         {/* Order Summary Dropdown (Expanded by default for design match) */}
-        <div className="bg-[#f2e6db] rounded-2xl p-5 mb-8">
+        <div className="bg-sand rounded-2xl p-5 mb-8">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-medium text-[16px] text-ink">Order Summary</h3>
             <div className="flex items-center gap-2 text-ink font-bold text-[16px]">
@@ -126,19 +126,19 @@ export default function Checkout() {
               onClick={() => setPaymentMethod(opt.id)}
               className={`flex items-center gap-4 p-4 rounded-2xl border-2 cursor-pointer transition ${
                 paymentMethod === opt.id 
-                  ? "border-[#9A5015] bg-[#9A5015]/5" 
-                  : "border-transparent bg-white hover:border-[#9A5015]/30"
+                  ? "border-primary bg-primary/5" 
+                  : "border-transparent bg-white hover:border-primary/30"
               }`}
             >
-              <div className="w-10 h-10 rounded-xl bg-[#FCF6F0] flex items-center justify-center text-[#9A5015]">
+              <div className="w-10 h-10 rounded-xl bg-paper flex items-center justify-center text-primary">
                 {opt.icon}
               </div>
               <div className="flex-1">
                 <h4 className="font-medium text-[15px] text-ink leading-tight">{opt.title}</h4>
                 {opt.desc && <p className={`text-[12px] mt-0.5 ${opt.id === "Wallet" ? "text-green-600 font-medium" : "text-ink/50"}`}>{opt.desc}</p>}
               </div>
-              <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${paymentMethod === opt.id ? 'border-[#9A5015]' : 'border-ink/20'}`}>
-                {paymentMethod === opt.id && <div className="w-2.5 h-2.5 bg-[#9A5015] rounded-full" />}
+              <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${paymentMethod === opt.id ? 'border-primary' : 'border-ink/20'}`}>
+                {paymentMethod === opt.id && <div className="w-2.5 h-2.5 bg-primary rounded-full" />}
               </div>
             </div>
           ))}
@@ -148,7 +148,7 @@ export default function Checkout() {
         <div className="hidden md:block mt-8">
           <button 
             onClick={handlePlaceOrder}
-            className="w-full bg-[#9A5015] hover:bg-[#804210] transition-colors text-white py-4 rounded-2xl font-medium text-[16px] shadow-lg flex items-center justify-between px-6 mb-3"
+            className="w-full bg-primary hover:bg-primary/80 transition-colors text-white py-4 rounded-2xl font-medium text-[16px] shadow-lg flex items-center justify-between px-6 mb-3"
           >
             <span>₹{total.toFixed(0)}</span>
             <span>Place Order</span>
@@ -169,11 +169,11 @@ export default function Checkout() {
       </div>
 
       {/* Mobile Bottom Fixed Action Bar */}
-      <div className="md:hidden fixed bottom-[100px] left-0 right-0 bg-[#FCF6F0] p-4 pb-safe border-t border-ink/5 z-50">
+      <div className="md:hidden fixed bottom-[100px] left-0 right-0 bg-paper p-4 pb-safe border-t border-ink/5 z-50">
         <div className="max-w-md mx-auto">
           <button 
             onClick={handlePlaceOrder}
-            className="w-full bg-[#9A5015] hover:bg-[#804210] transition-colors text-white py-4 rounded-2xl font-medium text-[16px] shadow-lg flex items-center justify-between px-6 mb-3"
+            className="w-full bg-primary hover:bg-primary/80 transition-colors text-white py-4 rounded-2xl font-medium text-[16px] shadow-lg flex items-center justify-between px-6 mb-3"
           >
             <span>₹{total.toFixed(0)}</span>
             <span>Place Order</span>

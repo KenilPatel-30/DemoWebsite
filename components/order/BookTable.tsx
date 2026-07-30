@@ -52,11 +52,11 @@ export default function BookTable() {
   };
 
   return (
-    <div className="flex flex-col w-full min-h-screen bg-[#FCF6F0] pb-10 pt-[80px]">
+    <div className="flex flex-col w-full min-h-screen bg-paper pb-10 pt-[80px]">
       {/* Header */}
-      <div className="sticky top-[80px] z-20 bg-[#FCF6F0] border-b border-ink/5">
+      <div className="sticky top-[80px] z-20 bg-paper border-b border-ink/5">
         <div className="flex items-center justify-between px-6 py-4">
-          <button onClick={() => setCurrentView("home")} className="p-2 -ml-2 text-[#9A5015]">
+          <button onClick={() => setCurrentView("home")} className="p-2 -ml-2 text-primary">
             <ArrowLeft className="w-5 h-5" />
           </button>
           <h1 className="text-[18px] font-medium text-ink">Demo Cafe</h1>
@@ -80,8 +80,8 @@ export default function BookTable() {
                 onClick={() => setPartySize(size)}
                 className={`w-12 h-12 shrink-0 rounded-full font-medium flex items-center justify-center transition-colors ${
                   partySize === size 
-                    ? "bg-[#9A5015] text-white shadow-md" 
-                    : "bg-[#f2e6db] text-ink hover:bg-[#ebdccc]"
+                    ? "bg-primary text-white shadow-md" 
+                    : "bg-sand text-ink hover:bg-sand"
                 }`}
               >
                 {size}
@@ -103,7 +103,7 @@ export default function BookTable() {
             <select 
               value={time} 
               onChange={e => setTime(e.target.value)}
-              className="w-full bg-[#f2e6db] text-[15px] font-medium text-ink rounded-2xl px-5 py-4 appearance-none outline-none focus:ring-1 focus:ring-[#9A5015]/30 cursor-pointer shadow-sm"
+              className="w-full bg-sand text-[15px] font-medium text-ink rounded-2xl px-5 py-4 appearance-none outline-none focus:ring-1 focus:ring-primary/30 cursor-pointer shadow-sm"
             >
               {times.map((t, i) => (
                 <option key={t} value={t} disabled={i === 5}>{t}</option>
@@ -127,8 +127,8 @@ export default function BookTable() {
                 onClick={() => setSeating(pref)}
                 className={`px-5 py-3 rounded-full text-[13px] font-medium transition-colors ${
                   seating === pref 
-                    ? "bg-[#9A5015] text-white shadow-md" 
-                    : "bg-[#f2e6db] text-ink hover:bg-[#ebdccc]"
+                    ? "bg-primary text-white shadow-md" 
+                    : "bg-sand text-ink hover:bg-sand"
                 }`}
               >
                 {pref}
@@ -138,7 +138,7 @@ export default function BookTable() {
         </div>
 
         {/* Guest Details */}
-        <div className="bg-[#f2e6db] rounded-2xl p-5 mb-8">
+        <div className="bg-sand rounded-2xl p-5 mb-8">
           <h2 className="text-[16px] font-medium text-ink mb-4">Guest Details</h2>
           <div className="space-y-3">
             <input 
@@ -146,21 +146,21 @@ export default function BookTable() {
               placeholder="Full Name" 
               value={name}
               onChange={e => setName(e.target.value)}
-              className="w-full bg-[#FCF6F0] rounded-xl px-4 py-3.5 text-[14px] text-ink placeholder:text-ink/40 outline-none border border-transparent focus:border-[#9A5015]/30"
+              className="w-full bg-paper rounded-xl px-4 py-3.5 text-[14px] text-ink placeholder:text-ink/40 outline-none border border-transparent focus:border-primary/30"
             />
             <input 
               type="tel" 
               placeholder="Phone Number" 
               value={phone}
               onChange={e => setPhone(e.target.value)}
-              className="w-full bg-[#FCF6F0] rounded-xl px-4 py-3.5 text-[14px] text-ink placeholder:text-ink/40 outline-none border border-transparent focus:border-[#9A5015]/30"
+              className="w-full bg-paper rounded-xl px-4 py-3.5 text-[14px] text-ink placeholder:text-ink/40 outline-none border border-transparent focus:border-primary/30"
             />
             <input 
               type="email" 
               placeholder="Email Address" 
               value={email}
               onChange={e => setEmail(e.target.value)}
-              className="w-full bg-[#FCF6F0] rounded-xl px-4 py-3.5 text-[14px] text-ink placeholder:text-ink/40 outline-none border border-transparent focus:border-[#9A5015]/30"
+              className="w-full bg-paper rounded-xl px-4 py-3.5 text-[14px] text-ink placeholder:text-ink/40 outline-none border border-transparent focus:border-primary/30"
             />
           </div>
         </div>
@@ -171,7 +171,7 @@ export default function BookTable() {
 
         <button 
           onClick={handleConfirm}
-          className="w-full bg-[#9A5015] hover:bg-[#804210] transition-colors text-white py-4 rounded-full font-medium text-[16px] shadow-lg flex items-center justify-center gap-2"
+          className="w-full bg-primary hover:bg-primary/80 transition-colors text-white py-4 rounded-full font-medium text-[16px] shadow-lg flex items-center justify-center gap-2"
         >
           Confirm Reservation <CheckCircle className="w-5 h-5" />
         </button>

@@ -154,7 +154,7 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
-            className="fixed inset-0 z-[75] flex flex-col justify-center bg-[#FCF6F0] lg:hidden pt-20 pb-10"
+            className="fixed inset-0 z-[75] flex flex-col justify-center bg-paper lg:hidden pt-20 pb-10"
           >
             <nav className="flex flex-col px-8 w-full max-w-sm mx-auto">
               {NAV_LINKS.map((link, i) => (

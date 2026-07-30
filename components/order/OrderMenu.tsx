@@ -35,11 +35,11 @@ export default function OrderMenu() {
   });
 
   return (
-    <div className="flex flex-col w-full pb-32 bg-[#FCF6F0] min-h-screen">
+    <div className="flex flex-col w-full pb-32 bg-paper min-h-screen">
       {/* Header Banner */}
       <div className="flex flex-col items-center justify-center pt-28 pb-4 w-full">
         <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-sm border border-ink/5 mb-4">
-          <CupSoda className="w-8 h-8 text-[#9A5015]" strokeWidth={2} />
+          <CupSoda className="w-8 h-8 text-primary" strokeWidth={2} />
         </div>
         <a href={`${basePath}/`} className="transition-transform hover:scale-105 active:scale-95">
           <h1 className="text-3xl md:text-4xl font-display font-bold text-ink mb-3 text-center">Demo Cafe</h1>
@@ -51,14 +51,14 @@ export default function OrderMenu() {
       </div>
 
       {/* Header */}
-      <div className="sticky top-[80px] z-20 bg-[#FCF6F0]/90 backdrop-blur-md pt-2 pb-2 shadow-sm">
+      <div className="sticky top-[80px] z-20 bg-paper/90 backdrop-blur-md pt-2 pb-2 shadow-sm">
         <div className="flex items-center justify-between px-6 py-2 max-w-7xl mx-auto w-full">
           <input 
             type="text"
             placeholder="Search items..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="flex-1 mx-4 bg-white border border-ink/10 rounded-full px-4 py-2 text-[14px] outline-none shadow-sm focus:border-[#9A5015]/30 focus:ring-1 focus:ring-[#9A5015]/30 transition-all text-ink placeholder:text-ink/40"
+            className="flex-1 mx-4 bg-white border border-ink/10 rounded-full px-4 py-2 text-[14px] outline-none shadow-sm focus:border-primary/30 focus:ring-1 focus:ring-primary/30 transition-all text-ink placeholder:text-ink/40"
           />
         </div>
 
@@ -81,10 +81,10 @@ export default function OrderMenu() {
                   onClick={() => setActiveCategory(cat)}
                   className="flex flex-col items-center gap-3 cursor-pointer flex-shrink-0 transition-all hover:scale-[1.02] active:scale-95 w-[140px] md:w-[220px]"
                 >
-                   <div className={`relative w-full aspect-[4/3] rounded-2xl overflow-hidden ${activeCategory === cat ? 'ring-4 ring-[#9A5015] ring-offset-2 ring-offset-[#FCF6F0]' : 'ring-1 ring-ink/10 shadow-sm'}`}>
+                   <div className={`relative w-full aspect-[4/3] rounded-2xl overflow-hidden ${activeCategory === cat ? 'ring-4 ring-primary ring-offset-2 ring-offset-paper' : 'ring-1 ring-ink/10 shadow-sm'}`}>
                      <Image src={CATEGORY_IMAGES[cat] || IMG.warmInterior} alt={cat} fill className="object-cover hover:scale-110 transition-transform duration-700" />
                    </div>
-                   <span className={`text-[12px] md:text-[14px] font-medium text-center leading-tight ${activeCategory === cat ? 'text-[#9A5015]' : 'text-ink/80'}`}>
+                   <span className={`text-[12px] md:text-[14px] font-medium text-center leading-tight ${activeCategory === cat ? 'text-primary' : 'text-ink/80'}`}>
                      {cat}
                    </span>
                 </div>
@@ -98,10 +98,10 @@ export default function OrderMenu() {
                   onClick={() => setActiveCategory(cat)}
                   className="flex flex-col items-center gap-3 cursor-pointer flex-shrink-0 transition-all hover:scale-[1.02] active:scale-95 w-[140px] md:w-[220px]"
                 >
-                   <div className={`relative w-full aspect-[4/3] rounded-2xl overflow-hidden ${activeCategory === cat ? 'ring-4 ring-[#9A5015] ring-offset-2 ring-offset-[#FCF6F0]' : 'ring-1 ring-ink/10 shadow-sm'}`}>
+                   <div className={`relative w-full aspect-[4/3] rounded-2xl overflow-hidden ${activeCategory === cat ? 'ring-4 ring-primary ring-offset-2 ring-offset-paper' : 'ring-1 ring-ink/10 shadow-sm'}`}>
                      <Image src={CATEGORY_IMAGES[cat] || IMG.warmInterior} alt={cat} fill className="object-cover hover:scale-110 transition-transform duration-700" />
                    </div>
-                   <span className={`text-[12px] md:text-[14px] font-medium text-center leading-tight ${activeCategory === cat ? 'text-[#9A5015]' : 'text-ink/80'}`}>
+                   <span className={`text-[12px] md:text-[14px] font-medium text-center leading-tight ${activeCategory === cat ? 'text-primary' : 'text-ink/80'}`}>
                      {cat}
                    </span>
                 </div>
@@ -118,7 +118,7 @@ export default function OrderMenu() {
         {filteredMenu.length === 0 ? (
           <div className="py-20 text-center flex flex-col items-center justify-center">
             <p className="text-ink/50 text-[15px] mb-2">No items found in this category.</p>
-            <button onClick={() => setActiveCategory("All")} className="text-[#9A5015] font-medium text-[14px]">View all items</button>
+            <button onClick={() => setActiveCategory("All")} className="text-primary font-medium text-[14px]">View all items</button>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -130,13 +130,13 @@ export default function OrderMenu() {
               <div 
                 key={item.id}
                 onClick={() => setActiveItem(item)}
-                className="bg-[#f2e6db] p-4 rounded-2xl flex gap-5 cursor-pointer hover:bg-[#ebdccc] transition-colors group"
+                className="bg-sand p-4 rounded-2xl flex gap-5 cursor-pointer hover:bg-sand transition-colors group"
               >
                 <div className="relative w-[100px] h-[100px] md:w-[120px] md:h-[120px] shrink-0 rounded-xl overflow-hidden bg-white/50">
                   <Image src={item.image} alt={item.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
                   {searchQuery && (
                     <div className="absolute top-1 left-1">
-                      <span className="bg-[#9A5015] text-white px-1.5 py-0.5 rounded text-[9px] font-bold uppercase shadow-sm">
+                      <span className="bg-primary text-white px-1.5 py-0.5 rounded text-[9px] font-bold uppercase shadow-sm">
                         {item.category}
                       </span>
                     </div>
@@ -148,7 +148,7 @@ export default function OrderMenu() {
                     <div className="flex justify-between items-start mb-1">
                       <h3 className="font-medium text-[15px] leading-tight text-ink pr-2">{item.name}</h3>
                       {item.tags?.[0] && (
-                        <span className="text-[10px] font-medium text-[#d87c34] bg-white px-2 py-0.5 rounded-full whitespace-nowrap shadow-sm border border-white/50">
+                        <span className="text-[10px] font-medium text-accent bg-white px-2 py-0.5 rounded-full whitespace-nowrap shadow-sm border border-white/50">
                           {item.tags[0] === "Vegan" ? "🌱 Vegan" : `🔥 ${item.tags[0]}`}
                         </span>
                       )}
@@ -157,14 +157,14 @@ export default function OrderMenu() {
                   </div>
                   
                   <div className="flex items-center justify-between mt-2">
-                    <span className="font-bold text-[#9A5015] text-[16px]">₹{item.price}</span>
+                    <span className="font-bold text-primary text-[16px]">₹{item.price}</span>
                     
                     {/* Add Button */}
                     <button 
                       className={`h-8 rounded-full flex items-center justify-center font-medium text-[13px] transition border ${
                         cartItem 
                           ? "bg-white text-ink border-ink/10 px-1 w-[80px]" 
-                          : "bg-transparent text-[#9A5015] border-[#9A5015] px-5 hover:bg-[#9A5015] hover:text-white"
+                          : "bg-transparent text-primary border-primary px-5 hover:bg-primary hover:text-white"
                       }`}
                       onClick={(e) => {
                         e.stopPropagation();
