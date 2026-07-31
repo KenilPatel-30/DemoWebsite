@@ -43,7 +43,7 @@ export default function MenuStory() {
       {/* Circular Arc Marquee */}
       <div 
         className="relative w-full h-[450px] md:h-[600px] overflow-hidden mt-6"
-        style={{ '--radius': 'min(225vw, 1225px)' } as React.CSSProperties}
+        style={{ '--radius': 'min(202vw, 1100px)' } as React.CSSProperties}
       >
         <motion.div
           className="absolute left-1/2 top-[80px]"
