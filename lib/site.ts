@@ -11,8 +11,8 @@ export const SITE = {
   url: "https://democafe.com",
   description:
     "Visit Demo Cafe for handcrafted coffee, brunch, desserts, lunch, dinner and catering. A premium modern cafe template.",
-  phone: "+1 234 567 8900",
-  whatsapp: "12345678900",
+  phone: "6354533292",
+  whatsapp: "916354533292",
   email: "hello@democafe.com",
   rating: 4.8,
   reviews: 150,

@@ -1,6 +1,6 @@
 "use client";
 
-import { MapPin, Phone, Clock } from "lucide-react";
+import { MapPin, Phone, Clock, MessageCircle } from "lucide-react";
 import { SITE } from "@/lib/site";
 import { SplitText, Reveal } from "@/components/ui/Reveal";
 
@@ -78,13 +78,24 @@ export default function Contact() {
             ))}
 
             <Reveal delay={0.1}>
-              <a
-                href={`tel:${SITE.phone}`}
-                data-cursor="Call"
-                className="mt-8 inline-flex items-center gap-2 rounded-full border border-ink/20 px-8 py-4 text-[12px] font-medium uppercase tracking-[0.18em] text-ink transition-colors hover:bg-ink hover:text-paper"
-              >
-                <Phone className="h-4 w-4" /> Call the cafe
-              </a>
+              <div className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <a
+                  href={`tel:${SITE.phone}`}
+                  data-cursor="Call"
+                  className="inline-flex items-center gap-2 rounded-full border border-ink/20 px-8 py-4 text-[12px] font-medium uppercase tracking-[0.18em] text-ink transition-colors hover:bg-ink hover:text-paper w-full sm:w-auto justify-center"
+                >
+                  <Phone className="h-4 w-4" /> Call the cafe
+                </a>
+                <a
+                  href={`https://wa.me/${SITE.whatsapp}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  data-cursor="Message"
+                  className="inline-flex items-center gap-2 rounded-full border border-primary px-8 py-4 text-[12px] font-medium uppercase tracking-[0.18em] text-primary transition-colors hover:bg-primary hover:text-paper w-full sm:w-auto justify-center"
+                >
+                  <MessageCircle className="h-4 w-4" /> Message on WhatsApp
+                </a>
+              </div>
             </Reveal>
           </div>
         </div>
