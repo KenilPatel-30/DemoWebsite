@@ -15,8 +15,8 @@ const images = [
   IMG.pizzaCocktails,
 ];
 
-// Duplicate for seamless infinite scrolling
-const marqueeImages = [...images, ...images];
+// Tripled for seamless infinite scrolling and proper arc density
+const marqueeImages = [...images, ...images, ...images];
 
 export default function MenuStory() {
   return (
@@ -40,31 +40,40 @@ export default function MenuStory() {
         </Reveal>
       </div>
 
-      {/* Infinite Horizontal Marquee */}
-      <div className="relative w-full overflow-hidden flex items-center mb-16 py-4">
+      {/* Circular Arc Marquee */}
+      <div className="relative w-full h-[400px] md:h-[550px] overflow-hidden flex justify-center mt-10">
         <motion.div
-          className="flex gap-4 md:gap-8 px-4 whitespace-nowrap w-max"
-          animate={{ x: ["0%", "-50%"] }}
+          className="absolute top-0 flex justify-center"
+          style={{ width: "100%", height: "2400px" }}
+          animate={{ rotate: -360 }}
           transition={{
-            duration: 40,
+            duration: 90, // Slow, premium rotation
             ease: "linear",
             repeat: Infinity,
           }}
         >
-          {marqueeImages.map((src, i) => (
-            <div
-              key={i}
-              className="relative z-50 w-[70vw] md:w-[35vw] lg:w-[25vw] aspect-[4/5] shrink-0 overflow-hidden rounded-[8px]"
-            >
-              <Image
-                src={src}
-                alt="Menu Item"
-                fill
-                className="object-cover transition-transform duration-700 hover:scale-105"
-                sizes="(max-width: 768px) 70vw, 35vw"
-              />
-            </div>
-          ))}
+          {marqueeImages.map((src, i) => {
+            const totalItems = marqueeImages.length;
+            const angle = (i / totalItems) * 360;
+            return (
+              <div
+                key={i}
+                className="absolute top-0 left-1/2 -translate-x-1/2 w-[60vw] md:w-[25vw] max-w-[320px] aspect-[4/5] rounded-[24px] overflow-hidden shadow-2xl"
+                style={{
+                  transformOrigin: "50% 1200px",
+                  transform: `rotate(${angle}deg)`,
+                }}
+              >
+                <Image
+                  src={src}
+                  alt="Menu Item"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 60vw, 25vw"
+                />
+              </div>
+            );
+          })}
         </motion.div>
       </div>
 
