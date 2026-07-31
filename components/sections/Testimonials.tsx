@@ -141,7 +141,7 @@ export default function Testimonials() {
       <div className="container-x relative mb-16">
         <div className="flex flex-col items-center text-center">
           <Reveal>
-            <span className="text-[11px] font-medium uppercase tracking-[0.35em] text-accent">
+            <span className="text-[11px] font-medium uppercase tracking-[0.35em] text-primary">
               05 — Kind Words
             </span>
           </Reveal>
@@ -167,7 +167,7 @@ export default function Testimonials() {
               target="_blank"
               rel="noreferrer"
               data-cursor="Reviews"
-              className="link-underline mt-4 inline-block text-[12px] font-medium uppercase tracking-[0.16em] text-accent"
+              className="link-underline mt-4 inline-block text-[12px] font-medium uppercase tracking-[0.16em] text-primary"
             >
               Read on Google
             </a>

@@ -21,7 +21,7 @@ export default function Footer() {
       <div className="container-x py-16 md:py-32">
         {/* Big CTA */}
         <div className="border-b border-paper/12 pb-16">
-          <span className="text-[11px] uppercase tracking-[0.35em] text-accent">
+          <span className="text-[11px] uppercase tracking-[0.35em] text-primary">
             Let&apos;s meet
           </span>
           <SplitText
@@ -84,7 +84,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="text-xs uppercase tracking-[0.25em] text-accent">Explore</h3>
+            <h3 className="text-xs uppercase tracking-[0.25em] text-primary">Explore</h3>
             <ul className="mt-5 space-y-3">
               {NAV_LINKS.map((link) => (
                 <li key={link.href}>
@@ -97,7 +97,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="text-xs uppercase tracking-[0.25em] text-accent">Hours</h3>
+            <h3 className="text-xs uppercase tracking-[0.25em] text-primary">Hours</h3>
             <ul className="mt-5 space-y-3 text-sm text-ink/65">
               {SITE.hours.map((h) => (
                 <li key={h.day}>
@@ -109,7 +109,7 @@ export default function Footer() {
           </div>
 
           <div className="col-span-2 md:col-span-1">
-            <h3 className="text-xs uppercase tracking-[0.25em] text-accent">Newsletter</h3>
+            <h3 className="text-xs uppercase tracking-[0.25em] text-primary">Newsletter</h3>
             <p className="mt-5 text-sm text-ink/55">
               Seasonal menus & events, once a month.
             </p>
@@ -133,7 +133,7 @@ export default function Footer() {
                 type="submit"
                 aria-label="Subscribe"
                 data-cursor="Join"
-                className="shrink-0 text-accent transition-transform hover:translate-x-0.5"
+                className="shrink-0 text-primary transition-transform hover:translate-x-0.5"
                 suppressHydrationWarning
               >
                 {subscribed ? <Check className="h-5 w-5" /> : <ArrowUpRight className="h-5 w-5" />}

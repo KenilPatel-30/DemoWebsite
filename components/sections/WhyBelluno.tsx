@@ -92,7 +92,7 @@ export default function WhyBelluno() {
               >
                 <div className="flex items-baseline gap-1 font-display text-5xl font-bold tracking-tightest text-ink md:text-6xl">
                   <CountUp value={num} decimals={decimals} />
-                  <span className="text-accent">{s.suffix}</span>
+                  <span className="text-primary">{s.suffix}</span>
                 </div>
                 <div className="mt-2 text-xs uppercase tracking-[0.2em] text-muted">
                   {s.label}

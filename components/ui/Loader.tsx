@@ -95,13 +95,13 @@ export default function Loader() {
 
             <div className="flex items-baseline gap-1 font-display text-5xl font-bold tabular-nums tracking-tightest">
               {progress}
-              <span className="text-2xl text-accent">%</span>
+              <span className="text-2xl text-primary">%</span>
             </div>
           </div>
 
           <div className="absolute bottom-0 left-0 h-px w-full bg-white/10">
             <motion.div
-              className="h-full bg-accent"
+              className="h-full bg-primary"
               style={{ width: `${progress}%` }}
             />
           </div>

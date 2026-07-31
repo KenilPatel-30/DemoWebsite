@@ -148,7 +148,7 @@ export default function OrderMenu() {
                     <div className="flex justify-between items-start mb-1">
                       <h3 className="font-medium text-[15px] leading-tight text-ink pr-2">{item.name}</h3>
                       {item.tags?.[0] && (
-                        <span className="text-[10px] font-medium text-accent bg-sand px-2 py-0.5 rounded-full whitespace-nowrap shadow-sm border border-sand/50">
+                        <span className="text-[10px] font-medium text-primary bg-sand px-2 py-0.5 rounded-full whitespace-nowrap shadow-sm border border-sand/50">
                           {item.tags[0] === "Vegan" ? "🌱 Vegan" : `🔥 ${item.tags[0]}`}
                         </span>
                       )}

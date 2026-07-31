@@ -14,7 +14,6 @@ const config: Config = {
         sand: "#132720", // Lighter Emerald (cards, inputs)
         primary: "#E6A13C", // Warm Amber (buttons, highlights - much brighter and readable)
         coffee: "#05100C", // Darkest Green (footer, deep sections)
-        accent: "#E0A96D", // Warm Gold
         ink: "#F4ECD8", // Ivory/Cream (text)
         line: "rgba(244, 236, 216, 0.1)", // Faint Ivory border
         muted: "#82978D", // Muted Green-Grey
