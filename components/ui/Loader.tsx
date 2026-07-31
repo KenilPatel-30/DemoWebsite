@@ -57,7 +57,7 @@ export default function Loader() {
     <AnimatePresence>
       {!done && (
         <motion.div
-          className="fixed inset-0 z-[110] flex flex-col items-center justify-center bg-paper text-paper"
+          className="fixed inset-0 z-[110] flex flex-col items-center justify-center bg-paper text-ink"
           exit={{ opacity: 0 }}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
         >
@@ -81,13 +81,13 @@ export default function Loader() {
                 ry="40"
                 transform="rotate(28 50 50)"
                 fill="none"
-                stroke="#C18A53"
+                stroke="#EFA03D"
                 strokeWidth="2.5"
               />
               <path
                 d="M62 22 C40 40 60 60 38 78"
                 fill="none"
-                stroke="#C18A53"
+                stroke="#EFA03D"
                 strokeWidth="2.5"
                 strokeLinecap="round"
               />
