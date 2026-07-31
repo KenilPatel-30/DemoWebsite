@@ -15,8 +15,8 @@ const images = [
   IMG.pizzaCocktails,
 ];
 
-// 5 copies (25 items) for a very tight, continuous arc with minimal gaps
-const marqueeImages = [...images, ...images, ...images, ...images, ...images];
+// 4 copies (20 items) perfectly calculated for a ~5px gap across all devices
+const marqueeImages = [...images, ...images, ...images, ...images];
 
 export default function MenuStory() {
   return (
@@ -43,7 +43,7 @@ export default function MenuStory() {
       {/* Circular Arc Marquee */}
       <div 
         className="relative w-full h-[450px] md:h-[600px] overflow-hidden mt-6"
-        style={{ '--radius': 'clamp(700px, 120vw, 1100px)' } as React.CSSProperties}
+        style={{ '--radius': 'min(179vw, 975px)' } as React.CSSProperties}
       >
         <motion.div
           className="absolute left-1/2 top-[80px]"
@@ -65,7 +65,7 @@ export default function MenuStory() {
             return (
               <div
                 key={i}
-                className="absolute top-0 left-1/2 w-[55vw] md:w-[25vw] max-w-[300px] aspect-[4/5] rounded-[24px] overflow-hidden shadow-2xl"
+                className="absolute top-0 left-1/2 w-[55vw] max-w-[300px] aspect-[4/5] rounded-[24px] overflow-hidden shadow-2xl"
                 style={{
                   transformOrigin: "50% var(--radius)",
                   transform: `translateX(-50%) rotate(${angle}deg)`,
@@ -76,7 +76,7 @@ export default function MenuStory() {
                   alt="Menu Item"
                   fill
                   className="object-cover"
-                  sizes="(max-width: 768px) 55vw, 25vw"
+                  sizes="(max-width: 545px) 55vw, 300px"
                 />
               </div>
             );
