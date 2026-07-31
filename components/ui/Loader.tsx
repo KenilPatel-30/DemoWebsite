@@ -25,28 +25,49 @@ export default function Loader() {
     document.body.style.overflow = "hidden";
     let current = 0;
     
-    // Fallback: forcefully remove loader and overflow after 5 seconds no matter what
+    // Check if the page is already fully loaded (e.g. from cache)
+    let isPageLoaded = document.readyState === "complete";
+    
+    const handleLoad = () => {
+      isPageLoaded = true;
+    };
+    window.addEventListener("load", handleLoad);
+
+    // Fallback: forcefully finish loader after 5 seconds just in case
     const fallback = window.setTimeout(() => {
-      setDone(true);
-      document.body.style.overflow = "";
+      isPageLoaded = true;
     }, 5000);
 
     let timer = window.setTimeout(function tick() {
-      const step = Math.max(0.6, (100 - current) * 0.045);
+      const distance = 100 - current;
+      let step;
+      
+      if (isPageLoaded) {
+        // Once page actually loads, accelerate to 100%
+        step = Math.max(3, distance * 0.15); 
+      } else {
+        // While waiting, slow down as it approaches 92%, then pause
+        step = Math.max(0.1, distance * 0.04);
+        if (current > 92) step = 0; 
+      }
+
       current = Math.min(100, current + step);
       setProgress(Math.floor(current));
+
       if (current < 100) {
-        timer = window.setTimeout(tick, 55);
+        // Run tick at 40ms intervals for a smooth visual count up
+        timer = window.setTimeout(tick, 40);
       } else {
         window.setTimeout(() => {
           setDone(true);
           document.body.style.overflow = "";
           try { sessionStorage.setItem("belluno-loaded", "1"); } catch (e) {}
-        }, 420);
+        }, 400);
       }
-    }, 260);
+    }, 50);
 
     return () => {
+      window.removeEventListener("load", handleLoad);
       window.clearTimeout(timer);
       window.clearTimeout(fallback);
       document.body.style.overflow = "";
