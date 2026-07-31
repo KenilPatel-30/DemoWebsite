@@ -41,13 +41,20 @@ export default function MenuStory() {
       </div>
 
       {/* Circular Arc Marquee */}
-      <div className="relative w-full h-[450px] md:h-[600px] overflow-hidden flex justify-center mt-6">
+      <div 
+        className="relative w-full h-[450px] md:h-[600px] overflow-hidden mt-6"
+        style={{ '--radius': 'clamp(700px, 120vw, 1100px)' } as React.CSSProperties}
+      >
         <motion.div
-          className="absolute top-[60px] flex justify-center"
-          style={{ width: "100%", height: "2400px" }}
+          className="absolute left-1/2 top-[80px]"
+          style={{ 
+            width: "calc(var(--radius) * 2)", 
+            height: "calc(var(--radius) * 2)",
+            x: "-50%" // Framer Motion proper translation
+          }}
           animate={{ rotate: -360 }}
           transition={{
-            duration: 90, // Slow, premium rotation
+            duration: 120, // Slightly slower for premium feel
             ease: "linear",
             repeat: Infinity,
           }}
@@ -58,10 +65,9 @@ export default function MenuStory() {
             return (
               <div
                 key={i}
-                className="absolute top-0 left-1/2 w-[60vw] md:w-[25vw] max-w-[320px] aspect-[4/5] rounded-[24px] overflow-hidden shadow-2xl"
+                className="absolute top-0 left-1/2 w-[55vw] md:w-[25vw] max-w-[300px] aspect-[4/5] rounded-[24px] overflow-hidden shadow-2xl"
                 style={{
-                  transformOrigin: "50% 1200px",
-                  // We MUST include translateX(-50%) here because the style tag overrides Tailwind's -translate-x-1/2 class
+                  transformOrigin: "50% var(--radius)",
                   transform: `translateX(-50%) rotate(${angle}deg)`,
                 }}
               >
@@ -70,7 +76,7 @@ export default function MenuStory() {
                   alt="Menu Item"
                   fill
                   className="object-cover"
-                  sizes="(max-width: 768px) 60vw, 25vw"
+                  sizes="(max-width: 768px) 55vw, 25vw"
                 />
               </div>
             );
