@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useOrder } from "@/context/OrderContext";
@@ -26,6 +26,18 @@ export default function OrderMenu() {
   const { setCurrentView, setActiveItem, cart, updateQuantity, addToCart } = useOrder();
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
+  const [isPaused, setIsPaused] = useState(false);
+  const categoryRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (categoryRef.current && !categoryRef.current.contains(e.target as Node)) {
+        setIsPaused(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const filteredMenu = ORDER_MENU.filter(item => {
     const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -63,14 +75,12 @@ export default function OrderMenu() {
         </div>
 
         {/* Category Row */}
-        <div className="w-full overflow-hidden pb-4 mt-2 group">
-          <motion.div 
-            className="flex w-max"
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{
-              duration: 40,
-              ease: "linear",
-              repeat: Infinity,
+        <div className="w-full overflow-hidden pb-4 mt-2 group" ref={categoryRef}>
+          <div 
+            className="flex w-max animate-marquee"
+            style={{ 
+              animationDuration: '40s',
+              animationPlayState: isPaused ? 'paused' : 'running'
             }}
           >
             {/* Set 1 */}
@@ -78,7 +88,10 @@ export default function OrderMenu() {
               {ORDER_CATEGORIES.map((cat, i) => (
                 <div 
                   key={`set1-${cat}-${i}`}
-                  onClick={() => setActiveCategory(cat)}
+                  onClick={() => {
+                    setActiveCategory(cat);
+                    setIsPaused(true);
+                  }}
                   className="flex flex-col items-center gap-3 cursor-pointer flex-shrink-0 transition-all hover:scale-[1.02] active:scale-95 w-[140px] md:w-[220px]"
                 >
                    <div className={`relative w-full aspect-[4/3] rounded-2xl overflow-hidden ${activeCategory === cat ? 'ring-4 ring-primary ring-offset-2 ring-offset-paper' : 'ring-1 ring-ink/10 shadow-sm'}`}>
@@ -95,7 +108,10 @@ export default function OrderMenu() {
               {ORDER_CATEGORIES.map((cat, i) => (
                 <div 
                   key={`set2-${cat}-${i}`}
-                  onClick={() => setActiveCategory(cat)}
+                  onClick={() => {
+                    setActiveCategory(cat);
+                    setIsPaused(true);
+                  }}
                   className="flex flex-col items-center gap-3 cursor-pointer flex-shrink-0 transition-all hover:scale-[1.02] active:scale-95 w-[140px] md:w-[220px]"
                 >
                    <div className={`relative w-full aspect-[4/3] rounded-2xl overflow-hidden ${activeCategory === cat ? 'ring-4 ring-primary ring-offset-2 ring-offset-paper' : 'ring-1 ring-ink/10 shadow-sm'}`}>
@@ -107,7 +123,7 @@ export default function OrderMenu() {
                 </div>
               ))}
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
 
