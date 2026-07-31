@@ -3,6 +3,7 @@
 import { MapPin, Phone, Clock, MessageCircle } from "lucide-react";
 import { SITE } from "@/lib/site";
 import { SplitText, Reveal } from "@/components/ui/Reveal";
+import Button from "@/components/ui/Button";
 
 export default function Contact() {
   return (
@@ -79,22 +80,22 @@ export default function Contact() {
 
             <Reveal delay={0.1}>
               <div className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                <a
+                <Button
                   href={`tel:${SITE.phone}`}
-                  data-cursor="Call"
-                  className="inline-flex items-center gap-2 rounded-full border border-ink/20 px-8 py-4 text-[12px] font-medium uppercase tracking-[0.18em] text-ink transition-colors hover:bg-ink hover:text-paper w-full sm:w-auto justify-center"
+                  cursor="Call"
+                  variant="outline"
+                  className="w-full sm:w-auto"
                 >
                   <Phone className="h-4 w-4" /> Call the cafe
-                </a>
-                <a
+                </Button>
+                <Button
                   href={`https://wa.me/${SITE.whatsapp}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  data-cursor="Message"
-                  className="inline-flex items-center gap-2 rounded-full border border-primary px-8 py-4 text-[12px] font-medium uppercase tracking-[0.18em] text-primary transition-colors hover:bg-primary hover:text-paper w-full sm:w-auto justify-center"
+                  cursor="Message"
+                  variant="solid"
+                  className="w-full sm:w-auto"
                 >
                   <MessageCircle className="h-4 w-4" /> Message on WhatsApp
-                </a>
+                </Button>
               </div>
             </Reveal>
           </div>
