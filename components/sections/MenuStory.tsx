@@ -15,8 +15,8 @@ const images = [
   IMG.pizzaCocktails,
 ];
 
-// 4 copies (20 items) perfectly calculated for a ~5px gap across all devices
-const marqueeImages = [...images, ...images, ...images, ...images];
+// 3 copies (15 items) to ensure a clear gap at the inner radius (bottom of images)
+const marqueeImages = [...images, ...images, ...images];
 
 export default function MenuStory() {
   return (
@@ -43,7 +43,7 @@ export default function MenuStory() {
       {/* Circular Arc Marquee */}
       <div 
         className="relative w-full h-[450px] md:h-[600px] overflow-hidden mt-6"
-        style={{ '--radius': 'min(179vw, 975px)' } as React.CSSProperties}
+        style={{ '--radius': 'min(225vw, 1225px)' } as React.CSSProperties}
       >
         <motion.div
           className="absolute left-1/2 top-[80px]"
