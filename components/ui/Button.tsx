@@ -69,7 +69,7 @@ export default function Button({
   }
 
   const base = cn(
-    "group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full px-8 py-4 text-[12px] font-medium uppercase tracking-[0.18em] transition-colors duration-500 ease-power4",
+    "group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full px-8 py-4 text-[12px] font-medium uppercase tracking-[0.18em] transition-colors duration-500 ease-power4 whitespace-nowrap",
     variant === "solid"
       ? "bg-primary text-paper shadow-card"
       : "border border-ink/20 text-ink hover:border-ink",
@@ -87,7 +87,7 @@ export default function Button({
         width: "260%",
         aspectRatio: "1",
         transform: `translate(-50%, -50%) scale(${fill.on ? 1 : 0})`,
-        background: variant === "solid" ? "#5A3726" : "#1C1C1C",
+        background: variant === "solid" ? "#0F1F1C" : "#FFFFF0",
       }}
     />
   );
@@ -96,7 +96,8 @@ export default function Button({
     <span
       className={cn(
         "relative z-10 flex items-center gap-2 transition-colors duration-500",
-        variant === "outline" && fill.on && "text-paper"
+        variant === "outline" && fill.on && "text-paper",
+        variant === "solid" && fill.on && "text-ink"
       )}
     >
       {children}
