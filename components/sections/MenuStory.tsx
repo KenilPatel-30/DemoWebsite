@@ -15,8 +15,8 @@ const images = [
   IMG.pizzaCocktails,
 ];
 
-// Tripled for seamless infinite scrolling and proper arc density
-const marqueeImages = [...images, ...images, ...images];
+// 5 copies (25 items) for a very tight, continuous arc with minimal gaps
+const marqueeImages = [...images, ...images, ...images, ...images, ...images];
 
 export default function MenuStory() {
   return (
@@ -41,9 +41,9 @@ export default function MenuStory() {
       </div>
 
       {/* Circular Arc Marquee */}
-      <div className="relative w-full h-[400px] md:h-[550px] overflow-hidden flex justify-center mt-10">
+      <div className="relative w-full h-[450px] md:h-[600px] overflow-hidden flex justify-center mt-6">
         <motion.div
-          className="absolute top-0 flex justify-center"
+          className="absolute top-[60px] flex justify-center"
           style={{ width: "100%", height: "2400px" }}
           animate={{ rotate: -360 }}
           transition={{
@@ -58,10 +58,11 @@ export default function MenuStory() {
             return (
               <div
                 key={i}
-                className="absolute top-0 left-1/2 -translate-x-1/2 w-[60vw] md:w-[25vw] max-w-[320px] aspect-[4/5] rounded-[24px] overflow-hidden shadow-2xl"
+                className="absolute top-0 left-1/2 w-[60vw] md:w-[25vw] max-w-[320px] aspect-[4/5] rounded-[24px] overflow-hidden shadow-2xl"
                 style={{
                   transformOrigin: "50% 1200px",
-                  transform: `rotate(${angle}deg)`,
+                  // We MUST include translateX(-50%) here because the style tag overrides Tailwind's -translate-x-1/2 class
+                  transform: `translateX(-50%) rotate(${angle}deg)`,
                 }}
               >
                 <Image
