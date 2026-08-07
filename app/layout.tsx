@@ -98,7 +98,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${display.variable} ${sans.variable} ${syne.variable}`}>
-      <body className="font-sans antialiased paper-grain">
+      <body className="font-sans antialiased paper-grain selection:bg-primary selection:text-paper">
         <LocalBusinessSchema />
         <Loader />
         <ScrollProgress />

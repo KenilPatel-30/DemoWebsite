@@ -5,6 +5,7 @@
 :root {
   --paper: #0A1A14;
   --ink: #F4ECD8;
+  --primary: #E6A13C;
   --line: rgba(244, 236, 216, 0.1);
 }
 
@@ -25,7 +26,7 @@
   }
 
   ::selection {
-    background: var(--primary);
+    background-color: var(--primary);
     color: var(--paper);
   }
 

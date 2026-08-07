@@ -2,40 +2,55 @@
 
 import { useState } from "react";
 import { useOrder } from "@/context/OrderContext";
-import { ArrowLeft, ShoppingCart, Clock, ChevronUp, Lock, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, ShoppingCart, Clock, ChevronUp, Lock, CheckCircle2, Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { orderService } from "@/services/orderService";
+import { OrderItemData } from "@/types/restaurant";
 
 export default function Checkout() {
+  const router = useRouter();
   const { cart, cartTotal, setCurrentView, orderInstructions, setOrderInstructions, setActiveOrder, clearCart, setUnpaidTab } = useOrder();
   const [paymentMethod, setPaymentMethod] = useState("UPI");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const serviceFee = cartTotal * 0.05;
   const gst = cartTotal * 0.18;
   const total = cartTotal + serviceFee + gst;
 
-  const handlePlaceOrder = () => {
+  const handlePlaceOrder = async () => {
+    setIsSubmitting(true);
     const isUnpaid = paymentMethod === "Cash";
     
-    setActiveOrder({
-      items: [...cart],
-      instructions: orderInstructions,
-      total: total,
-      id: "#AB-" + Math.floor(1000 + Math.random() * 9000),
-      status: isUnpaid ? "unpaid" : "paid"
-    });
+    try {
+      const orderItems: OrderItemData[] = cart.map(item => ({
+        menuItemId: item.menuItem.id || "unknown",
+        name: item.menuItem.name,
+        quantity: item.quantity,
+        price: item.menuItem.price,
+        selections: item.selections
+      }));
 
-    if (isUnpaid) {
-      setUnpaidTab((prev: any) => {
-        if (!prev) return { items: [...cart], total: total };
-        return {
-          items: [...prev.items, ...cart],
-          total: prev.total + total
-        };
+      // Create order in Firestore
+      const orderDocId = await orderService.createOrder({
+        customerName: "Guest", // Can be enhanced later to collect real name
+        tableNumber: "TBD", // Can be enhanced later 
+        items: orderItems,
+        subtotal: cartTotal,
+        tax: gst + serviceFee,
+        total: total,
+        status: "Pending",
+        paymentStatus: isUnpaid ? "Pending" : "Paid",
+        notes: orderInstructions,
       });
-    }
 
-    clearCart();
-    setOrderInstructions("");
-    setCurrentView("orderConfirmed");
+      clearCart();
+      setOrderInstructions("");
+      router.push(`/order/${orderDocId}`);
+    } catch (error) {
+      console.error("Failed to place order:", error);
+      alert("Failed to place order. Please try again.");
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -148,10 +163,14 @@ export default function Checkout() {
         <div className="hidden md:block mt-8">
           <button 
             onClick={handlePlaceOrder}
-            className="w-full bg-primary hover:bg-primary/80 transition-colors text-white py-4 rounded-2xl font-medium text-[16px] shadow-lg flex items-center justify-between px-6 mb-3"
+            disabled={isSubmitting}
+            className="w-full bg-primary hover:bg-primary/80 transition-colors text-white py-4 rounded-2xl font-medium text-[16px] shadow-lg flex items-center justify-between px-6 mb-3 disabled:opacity-70"
           >
             <span>₹{total.toFixed(0)}</span>
-            <span>Place Order</span>
+            <span className="flex items-center gap-2">
+              {isSubmitting ? <Loader2 className="w-5 h-5 animate-spin" /> : null}
+              {isSubmitting ? "Processing..." : "Place Order"}
+            </span>
           </button>
           
           <div className="flex items-center justify-center gap-6 text-[11px] font-medium text-ink/40">
@@ -173,10 +192,14 @@ export default function Checkout() {
         <div className="max-w-md mx-auto">
           <button 
             onClick={handlePlaceOrder}
-            className="w-full bg-primary hover:bg-primary/80 transition-colors text-white py-4 rounded-2xl font-medium text-[16px] shadow-lg flex items-center justify-between px-6 mb-3"
+            disabled={isSubmitting}
+            className="w-full bg-primary hover:bg-primary/80 transition-colors text-white py-4 rounded-2xl font-medium text-[16px] shadow-lg flex items-center justify-between px-6 mb-3 disabled:opacity-70"
           >
             <span>₹{total.toFixed(0)}</span>
-            <span>Place Order</span>
+            <span className="flex items-center gap-2">
+              {isSubmitting ? <Loader2 className="w-5 h-5 animate-spin" /> : null}
+              {isSubmitting ? "Processing..." : "Place Order"}
+            </span>
           </button>
           
           <div className="flex items-center justify-center gap-6 text-[11px] font-medium text-ink/40">

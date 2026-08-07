@@ -6,7 +6,9 @@ import { motion } from "framer-motion";
 import { useOrder } from "@/context/OrderContext";
 import { ORDER_CATEGORIES, ORDER_MENU } from "@/lib/orderData";
 import { IMG } from "@/lib/site";
-import { Search, Plus, Minus, CupSoda } from "lucide-react";
+import { Search, Plus, Minus, CupSoda, Loader2 } from "lucide-react";
+import { menuService } from "@/services/menuService";
+import { MenuItem } from "@/types/restaurant";
 
 const CATEGORY_IMAGES: Record<string, string> = {
   "All": IMG.warmInterior,
@@ -27,7 +29,25 @@ export default function OrderMenu() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [isPaused, setIsPaused] = useState(false);
+  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+  const [loading, setLoading] = useState(true);
   const categoryRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const fetchMenu = async () => {
+      try {
+        const items = await menuService.getAllItems();
+        // Fallback to hardcoded if DB is empty (i.e. not seeded yet)
+        setMenuItems(items.length > 0 ? items : (ORDER_MENU as unknown as MenuItem[]));
+      } catch (err) {
+        console.error("Failed to load menu", err);
+        setMenuItems(ORDER_MENU as unknown as MenuItem[]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchMenu();
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -39,9 +59,8 @@ export default function OrderMenu() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const filteredMenu = ORDER_MENU.filter(item => {
+  const filteredMenu = menuItems.filter(item => {
     const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase());
-    // If searching, ignore category filter to search whole menu
     const matchesCategory = searchQuery ? true : (activeCategory === "All" || item.category === activeCategory);
     return matchesCategory && matchesSearch;
   });
@@ -131,7 +150,12 @@ export default function OrderMenu() {
       <div className="px-6 mt-6 max-w-7xl mx-auto w-full">
         <h2 className="text-[20px] md:text-[24px] font-medium text-ink mb-6">{activeCategory === "All" ? "All Items" : activeCategory}</h2>
         
-        {filteredMenu.length === 0 ? (
+        {loading ? (
+          <div className="py-20 flex flex-col items-center justify-center text-ink/50 gap-4">
+            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            <p className="text-[14px]">Loading fresh menu...</p>
+          </div>
+        ) : filteredMenu.length === 0 ? (
           <div className="py-20 text-center flex flex-col items-center justify-center">
             <p className="text-ink/50 text-[15px] mb-2">No items found in this category.</p>
             <button onClick={() => setActiveCategory("All")} className="text-primary font-medium text-[14px]">View all items</button>
@@ -145,7 +169,7 @@ export default function OrderMenu() {
             return (
               <div 
                 key={item.id}
-                onClick={() => setActiveItem(item)}
+                onClick={() => setActiveItem(item as any)}
                 className="bg-sand p-4 rounded-2xl flex gap-5 cursor-pointer hover:bg-sand transition-colors group"
               >
                 <div className="relative w-[100px] h-[100px] md:w-[120px] md:h-[120px] shrink-0 rounded-xl overflow-hidden bg-sand/50">
@@ -185,9 +209,9 @@ export default function OrderMenu() {
                       onClick={(e) => {
                         e.stopPropagation();
                         if (cartItem) {
-                          setActiveItem(item);
+                          setActiveItem(item as any);
                         } else {
-                          setActiveItem(item); // Always open modal first to customize
+                          setActiveItem(item as any); // Always open modal first to customize
                         }
                       }}
                     >
