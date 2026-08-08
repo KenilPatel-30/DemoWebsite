@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import { orderService } from "@/services/orderService";
 import { Order, OrderStatus } from "@/types/restaurant";
-import { Clock, Loader2, Check } from "lucide-react";
+import { Clock, Loader2, Check, Bell } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 
 const COLUMNS: { id: OrderStatus; label: string; color: string }[] = [
   { id: "Pending", label: "New Orders", color: "border-orange-500/50" },
@@ -15,15 +16,33 @@ const COLUMNS: { id: OrderStatus; label: string; color: string }[] = [
 export default function KitchenPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
+  const [newOrderAlert, setNewOrderAlert] = useState<Order | null>(null);
 
   useEffect(() => {
+    let initialLoad = true;
+    
     const unsubscribe = orderService.listenToActiveOrders((liveOrders) => {
+      if (!initialLoad && liveOrders.length > orders.length) {
+        // Find the new order (simplistic approach: just get the latest pending order)
+        const newOrders = liveOrders.filter(lo => !orders.find(o => o.id === lo.id));
+        if (newOrders.length > 0) {
+          setNewOrderAlert(newOrders[0]);
+          // play a sound if possible (optional)
+          try {
+            const audio = new Audio('/notification.mp3');
+            audio.play().catch(e => console.log('Audio play blocked'));
+          } catch(e) {}
+          
+          setTimeout(() => setNewOrderAlert(null), 5000); // hide after 5s
+        }
+      }
       setOrders(liveOrders);
       setLoading(false);
+      initialLoad = false;
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [orders]);
 
   const handleUpdateStatus = async (orderId: string, currentStatus: OrderStatus) => {
     const currentIndex = COLUMNS.findIndex(c => c.id === currentStatus);
@@ -48,7 +67,7 @@ export default function KitchenPage() {
   }
 
   return (
-    <div className="flex gap-6 h-full w-full">
+    <div className="flex gap-6 h-full w-full relative">
       {COLUMNS.map(col => {
         const columnOrders = orders.filter(o => o.status === col.id);
         
@@ -135,6 +154,34 @@ export default function KitchenPage() {
           </div>
         );
       })}
+
+      {/* New Order Toast */}
+      <AnimatePresence>
+        {newOrderAlert && (
+          <motion.div
+            initial={{ opacity: 0, y: 50, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.9 }}
+            className="fixed bottom-8 right-8 z-50 bg-primary text-paper px-6 py-4 rounded-2xl shadow-2xl shadow-primary/20 flex items-center gap-4 border border-paper/10"
+          >
+            <div className="w-12 h-12 bg-paper/10 rounded-full flex items-center justify-center">
+              <Bell className="w-6 h-6 animate-pulse" />
+            </div>
+            <div>
+              <h4 className="font-bold text-lg">New Order Received!</h4>
+              <p className="text-paper/80 text-sm font-medium">
+                {newOrderAlert.orderId} from {newOrderAlert.customerName}
+              </p>
+            </div>
+            <button 
+              onClick={() => setNewOrderAlert(null)}
+              className="ml-4 p-2 hover:bg-paper/10 rounded-full transition-colors"
+            >
+              <Check className="w-5 h-5" />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

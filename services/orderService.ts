@@ -65,14 +65,16 @@ export const orderService = {
   listenToActiveOrders(callback: (orders: Order[]) => void): () => void {
     const q = query(
       collection(db, COLLECTION_NAME),
-      where("status", "!=", "Delivered"),
       orderBy("createdAt", "asc")
     );
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const orders: Order[] = [];
       querySnapshot.forEach((doc) => {
-        orders.push({ id: doc.id, ...doc.data() } as Order);
+        const data = doc.data() as Order;
+        if (data.status !== "Delivered") {
+          orders.push({ id: doc.id, ...data });
+        }
       });
       callback(orders);
     }, (error) => {
