@@ -9,7 +9,7 @@ import { OrderItemData } from "@/types/restaurant";
 
 export default function Checkout() {
   const router = useRouter();
-  const { cart, cartTotal, setCurrentView, orderInstructions, setOrderInstructions, setActiveOrder, clearCart, setUnpaidTab } = useOrder();
+  const { cart, cartTotal, setCurrentView, orderInstructions, setOrderInstructions, tableNumber, setActiveOrder, clearCart, setUnpaidTab } = useOrder();
   const [paymentMethod, setPaymentMethod] = useState("UPI");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -40,7 +40,7 @@ export default function Checkout() {
       // Create order in Firestore
       const orderDocId = await orderService.createOrder({
         customerName: "Guest", // Can be enhanced later to collect real name
-        tableNumber: "TBD", // Can be enhanced later 
+        tableNumber: tableNumber || "Takeaway",
         items: orderItems,
         subtotal: cartTotal,
         tax: gst + serviceFee,

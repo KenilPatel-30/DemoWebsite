@@ -36,6 +36,9 @@ type OrderContextType = {
   // Order Instructions
   orderInstructions: string;
   setOrderInstructions: (inst: string) => void;
+  // Table Number
+  tableNumber: string;
+  setTableNumber: (num: string) => void;
   // Active placed order (for receipt)
   activeOrder: {
     items: CartItem[];
@@ -62,6 +65,7 @@ export function OrderProvider({ children }: { children: ReactNode }) {
   const [activeItem, setActiveItem] = useState<OrderItem | null>(null);
   const [bookingDetails, setBookingDetails] = useState<any>({});
   const [orderInstructions, setOrderInstructions] = useState("");
+  const [tableNumber, setTableNumber] = useState("");
   const [activeOrder, setActiveOrder] = useState<any>(null);
   const [unpaidTab, setUnpaidTab] = useState<{ items: CartItem[]; total: number } | null>(null);
 
@@ -112,6 +116,8 @@ export function OrderProvider({ children }: { children: ReactNode }) {
         setBookingDetails,
         orderInstructions,
         setOrderInstructions,
+        tableNumber,
+        setTableNumber,
         activeOrder,
         setActiveOrder,
         unpaidTab,

@@ -2,10 +2,16 @@
 
 import Image from "next/image";
 import { useOrder } from "@/context/OrderContext";
-import { ArrowLeft, Clock, Trash2, Plus, Minus } from "lucide-react";
+import { ArrowLeft, Clock, Trash2, Plus, Minus, Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { orderService } from "@/services/orderService";
+import { useState } from "react";
+import { OrderItemData } from "@/types/restaurant";
 
 export default function Cart() {
-  const { cart, updateQuantity, removeFromCart, setCurrentView, cartTotal, orderInstructions, setOrderInstructions, setActiveOrder, clearCart, setUnpaidTab } = useOrder();
+  const { cart, updateQuantity, removeFromCart, setCurrentView, cartTotal, orderInstructions, setOrderInstructions, tableNumber, setTableNumber, setActiveOrder, clearCart, setUnpaidTab } = useOrder();
+  const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   let baseTotal = 0;
   let addonsTotal = 0;
@@ -30,27 +36,56 @@ export default function Cart() {
   const gst = cartTotal * 0.18;
   const total = cartTotal + serviceFee + gst;
 
-  const handlePayAtCounter = () => {
+  const handlePayAtCounter = async () => {
     if (cart.length === 0) return;
-    setActiveOrder({
-      items: [...cart],
-      instructions: orderInstructions,
-      total: total,
-      id: "#AB-" + Math.floor(1000 + Math.random() * 9000),
-      status: "unpaid"
-    });
+    setIsSubmitting(true);
+    
+    try {
+      const orderItems: OrderItemData[] = cart.map(item => {
+        const cleanSelections: any = { addons: item.selections.addons || [] };
+        if (item.selections.size) cleanSelections.size = item.selections.size;
+        if (item.selections.milkType) cleanSelections.milkType = item.selections.milkType;
+        if (item.selections.sugarLevel) cleanSelections.sugarLevel = item.selections.sugarLevel;
 
-    setUnpaidTab((prev: any) => {
-      if (!prev) return { items: [...cart], total: total };
-      return {
-        items: [...prev.items, ...cart],
-        total: prev.total + total
-      };
-    });
+        return {
+          menuItemId: item.menuItem.id || "unknown",
+          name: item.menuItem.name,
+          quantity: item.quantity,
+          price: item.menuItem.price,
+          selections: cleanSelections
+        };
+      });
 
-    clearCart();
-    setOrderInstructions("");
-    setCurrentView("orderConfirmed");
+      const orderDocId = await orderService.createOrder({
+        customerName: "Guest",
+        tableNumber: tableNumber || "Takeaway",
+        items: orderItems,
+        subtotal: cartTotal,
+        tax: gst + serviceFee,
+        total: total,
+        status: "Pending",
+        paymentStatus: "Pending",
+        paymentMethod: "Pay at Counter",
+        notes: orderInstructions || "",
+      });
+
+      setUnpaidTab((prev: any) => {
+        if (!prev) return { items: [...cart], total: total };
+        return {
+          items: [...prev.items, ...cart],
+          total: prev.total + total
+        };
+      });
+
+      clearCart();
+      setOrderInstructions("");
+      setTableNumber("");
+      router.push(`/order/${orderDocId}`);
+    } catch (error) {
+      console.error("Failed to place order:", error);
+      alert("Failed to place order. Please try again.");
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -152,15 +187,27 @@ export default function Cart() {
         {cart.length > 0 && (
           <>
             <div className="mt-8 md:mt-0 space-y-4">
-              <div>
-                <label className="block text-[13px] font-medium text-ink mb-2">Special Instructions</label>
-                <textarea 
-                  value={orderInstructions}
-                  onChange={(e) => setOrderInstructions(e.target.value)}
-                  placeholder="Any special requests?"
-                  className="w-full bg-sand rounded-2xl p-4 text-[14px] text-ink placeholder:text-ink/40 resize-none outline-none focus:ring-1 focus:ring-primary/30 border border-transparent"
-                  rows={2}
-                />
+              <div className="flex gap-4">
+                <div className="w-1/3">
+                  <label className="block text-[13px] font-medium text-ink mb-2">Table #</label>
+                  <input 
+                    type="text" 
+                    value={tableNumber}
+                    onChange={(e) => setTableNumber(e.target.value)}
+                    placeholder="e.g. 12" 
+                    className="w-full bg-sand rounded-xl px-4 py-3.5 text-[14px] text-ink placeholder:text-ink/40 outline-none border border-transparent focus:ring-1 focus:ring-primary/30"
+                  />
+                </div>
+                <div className="flex-1">
+                  <label className="block text-[13px] font-medium text-ink mb-2">Special Instructions</label>
+                  <textarea 
+                    value={orderInstructions}
+                    onChange={(e) => setOrderInstructions(e.target.value)}
+                    placeholder="Any special requests?"
+                    className="w-full bg-sand rounded-xl p-3.5 text-[14px] text-ink placeholder:text-ink/40 resize-none outline-none focus:ring-1 focus:ring-primary/30 border border-transparent"
+                    rows={1}
+                  />
+                </div>
               </div>
 
               <div className="flex gap-2">
@@ -220,14 +267,15 @@ export default function Cart() {
                 </button>
                 <button 
                   onClick={handlePayAtCounter}
-                  disabled={cart.length === 0}
-                  className={`w-full py-4 rounded-full font-medium text-[15px] transition-colors ${
-                    cart.length > 0 
+                  disabled={cart.length === 0 || isSubmitting}
+                  className={`w-full py-4 rounded-full font-medium text-[15px] transition-colors flex items-center justify-center gap-2 ${
+                    cart.length > 0 && !isSubmitting
                       ? "bg-transparent border border-ink/20 hover:bg-ink/5 text-ink" 
                       : "bg-transparent border border-ink/10 text-ink/30 cursor-not-allowed"
                   }`}
                 >
-                  {cart.length > 0 ? "Pay at Counter" : "Add items to order"}
+                  {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
+                  {cart.length > 0 ? (isSubmitting ? "Processing..." : "Pay at Counter") : "Add items to order"}
                 </button>
               </div>
           </div>
@@ -251,14 +299,15 @@ export default function Cart() {
           </button>
           <button 
             onClick={handlePayAtCounter}
-            disabled={cart.length === 0}
-            className={`w-full py-3.5 rounded-full font-medium text-[15px] transition-colors ${
-              cart.length > 0 
+            disabled={cart.length === 0 || isSubmitting}
+            className={`w-full py-3.5 rounded-full font-medium text-[15px] transition-colors flex items-center justify-center gap-2 ${
+              cart.length > 0 && !isSubmitting
                 ? "bg-transparent border border-ink/20 hover:bg-ink/5 text-ink" 
                 : "bg-transparent border border-ink/10 text-ink/30 cursor-not-allowed"
             }`}
           >
-            {cart.length > 0 ? "Pay at Counter" : "Add items to order"}
+            {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
+            {cart.length > 0 ? (isSubmitting ? "Processing..." : "Pay at Counter") : "Add items to order"}
           </button>
         </div>
       </div>
