@@ -22,13 +22,20 @@ export default function Checkout() {
     const isUnpaid = paymentMethod === "Cash";
     
     try {
-      const orderItems: OrderItemData[] = cart.map(item => ({
-        menuItemId: item.menuItem.id || "unknown",
-        name: item.menuItem.name,
-        quantity: item.quantity,
-        price: item.menuItem.price,
-        selections: item.selections
-      }));
+      const orderItems: OrderItemData[] = cart.map(item => {
+        const cleanSelections: any = { addons: item.selections.addons || [] };
+        if (item.selections.size) cleanSelections.size = item.selections.size;
+        if (item.selections.milkType) cleanSelections.milkType = item.selections.milkType;
+        if (item.selections.sugarLevel) cleanSelections.sugarLevel = item.selections.sugarLevel;
+
+        return {
+          menuItemId: item.menuItem.id || "unknown",
+          name: item.menuItem.name,
+          quantity: item.quantity,
+          price: item.menuItem.price,
+          selections: cleanSelections
+        };
+      });
 
       // Create order in Firestore
       const orderDocId = await orderService.createOrder({
@@ -41,7 +48,7 @@ export default function Checkout() {
         status: "Pending",
         paymentStatus: isUnpaid ? "Pending" : "Paid",
         paymentMethod: paymentMethod,
-        notes: orderInstructions,
+        notes: orderInstructions || "",
       });
 
       clearCart();
