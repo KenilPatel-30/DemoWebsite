@@ -1,20 +1,69 @@
 "use client";
 
-import { TrendingUp, Users, Receipt, Coffee, ArrowUpRight } from "lucide-react";
+import { useEffect, useState } from "react";
+import { TrendingUp, Users, Receipt, Coffee, ArrowUpRight, Loader2 } from "lucide-react";
+import { orderService } from "@/services/orderService";
+import { Order } from "@/types/restaurant";
 
 export default function AdminDashboard() {
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const data = await orderService.getOrderHistory();
+        setOrders(data);
+      } catch (error) {
+        console.error("Failed to load orders for dashboard", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchOrders();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64 text-ink/50">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+        <span className="ml-3 text-lg font-medium">Loading Dashboard Data...</span>
+      </div>
+    );
+  }
+
+  // Calculate metrics
+  const validOrders = orders.filter(o => o.status !== "Cancelled");
+  
+  const totalRevenue = validOrders.reduce((sum, order) => sum + order.total, 0);
+  const totalOrdersCount = validOrders.length;
+  
+  const uniqueCustomers = new Set(validOrders.map(o => o.customerName)).size;
+  
+  const itemsSold = validOrders.reduce((sum, order) => {
+    return sum + order.items.reduce((itemSum, item) => itemSum + item.quantity, 0);
+  }, 0);
+
   const stats = [
-    { title: "Total Revenue", value: "₹45,231", trend: "+12.5%", icon: TrendingUp },
-    { title: "Total Orders", value: "156", trend: "+8.2%", icon: Receipt },
-    { title: "Active Customers", value: "84", trend: "+2.4%", icon: Users },
-    { title: "Items Sold", value: "412", trend: "+15.3%", icon: Coffee },
+    { title: "Total Revenue", value: `₹${totalRevenue.toFixed(0)}`, trend: "+12.5%", icon: TrendingUp },
+    { title: "Total Orders", value: totalOrdersCount.toString(), trend: "+8.2%", icon: Receipt },
+    { title: "Active Customers", value: uniqueCustomers.toString(), trend: "+2.4%", icon: Users },
+    { title: "Items Sold", value: itemsSold.toString(), trend: "+15.3%", icon: Coffee },
   ];
 
-  const recentOrders = [
-    { id: "ORD-1024", customer: "Rahul Mehta", items: 3, total: "₹850", status: "Delivered", time: "10 mins ago" },
-    { id: "ORD-1025", customer: "Sneha Patel", items: 2, total: "₹420", status: "Preparing", time: "5 mins ago" },
-    { id: "ORD-1026", customer: "Vikram Singh", items: 5, total: "₹1,250", status: "Pending", time: "Just now" },
-  ];
+  const recentOrders = validOrders.slice(0, 4); // Top 4 recent
+
+  // Calculate top selling items
+  const itemSales: Record<string, number> = {};
+  validOrders.forEach(order => {
+    order.items.forEach(item => {
+      itemSales[item.name] = (itemSales[item.name] || 0) + item.quantity;
+    });
+  });
+  const topSellingItems = Object.entries(itemSales)
+    .map(([name, sales]) => ({ name, sales }))
+    .sort((a, b) => b.sales - a.sales)
+    .slice(0, 5); // Top 5
 
   return (
     <div className="space-y-8 text-ink">
@@ -33,7 +82,7 @@ export default function AdminDashboard() {
                 <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
                   <Icon className="w-5 h-5" />
                 </div>
-                <div className="flex items-center gap-1 text-green-500 text-xs font-medium bg-green-500/10 px-2 py-1 rounded-full">
+                <div className="flex items-center gap-1 text-green-500 text-xs font-medium bg-green-500/10 px-2 py-1 rounded-full opacity-50">
                   <ArrowUpRight className="w-3 h-3" />
                   {stat.trend}
                 </div>
@@ -49,33 +98,39 @@ export default function AdminDashboard() {
         {/* Recent Orders */}
         <div className="col-span-2 bg-sand border border-line rounded-xl p-6">
           <div className="flex justify-between items-center mb-6">
-            <h3 className="font-bold text-lg">Recent Orders (Dummy Data)</h3>
+            <h3 className="font-bold text-lg">Recent Orders</h3>
             <button className="text-sm text-primary hover:underline">View All</button>
           </div>
           <div className="space-y-4">
-            {recentOrders.map((order, i) => (
-              <div key={i} className="flex items-center justify-between p-4 bg-paper rounded-lg border border-line">
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold text-xs">
-                    {order.customer.charAt(0)}
+            {recentOrders.length === 0 ? (
+              <div className="text-ink/50 py-4 text-center">No recent orders found.</div>
+            ) : (
+              recentOrders.map((order, i) => (
+                <div key={i} className="flex items-center justify-between p-4 bg-paper rounded-lg border border-line">
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold text-xs uppercase">
+                      {order.customerName.charAt(0)}
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-sm">{order.customerName}</h4>
+                      <p className="text-xs text-ink/50">
+                        {order.orderId} • {order.items.length} items • Table: {order.tableNumber || "N/A"}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="font-medium text-sm">{order.customer}</h4>
-                    <p className="text-xs text-ink/50">{order.id} • {order.items} items</p>
+                  <div className="text-right">
+                    <div className="font-bold text-sm mb-1">₹{order.total.toFixed(0)}</div>
+                    <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${
+                      order.status === "Delivered" ? "bg-green-500/10 text-green-400" :
+                      order.status === "Pending" ? "bg-orange-500/10 text-orange-400" :
+                      "bg-blue-500/10 text-blue-400"
+                    }`}>
+                      {order.status}
+                    </span>
                   </div>
                 </div>
-                <div className="text-right">
-                  <div className="font-bold text-sm mb-1">{order.total}</div>
-                  <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${
-                    order.status === "Delivered" ? "bg-green-500/10 text-green-400" :
-                    order.status === "Pending" ? "bg-orange-500/10 text-orange-400" :
-                    "bg-blue-500/10 text-blue-400"
-                  }`}>
-                    {order.status}
-                  </span>
-                </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
 
@@ -83,20 +138,19 @@ export default function AdminDashboard() {
         <div className="col-span-1 bg-sand border border-line rounded-xl p-6">
           <h3 className="font-bold text-lg mb-6">Top Selling Items</h3>
           <div className="space-y-4">
-            {[
-              { name: "Iced Caramel Macchiato", sales: 124 },
-              { name: "Avocado Toast", sales: 98 },
-              { name: "Classic Cappuccino", sales: 85 },
-              { name: "Truffle Fries", sales: 64 },
-            ].map((item, i) => (
-              <div key={i} className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <span className="text-ink/30 font-bold text-sm">0{i+1}</span>
-                  <span className="font-medium text-sm">{item.name}</span>
+            {topSellingItems.length === 0 ? (
+              <div className="text-ink/50 py-4 text-center">No sales data yet.</div>
+            ) : (
+              topSellingItems.map((item, i) => (
+                <div key={i} className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <span className="text-ink/30 font-bold text-sm">0{i+1}</span>
+                    <span className="font-medium text-sm truncate max-w-[150px]">{item.name}</span>
+                  </div>
+                  <span className="text-xs text-ink/50 bg-paper px-2 py-1 rounded-md whitespace-nowrap">{item.sales} sold</span>
                 </div>
-                <span className="text-xs text-ink/50 bg-paper px-2 py-1 rounded-md">{item.sales} sold</span>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
       </div>

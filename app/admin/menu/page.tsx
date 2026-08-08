@@ -3,13 +3,22 @@
 import { useEffect, useState } from "react";
 import { menuService } from "@/services/menuService";
 import { MenuItem } from "@/types/restaurant";
-import { ORDER_MENU } from "@/lib/orderData";
-import { Plus, Database, Trash2, Edit2 } from "lucide-react";
+import { ORDER_MENU, ORDER_CATEGORIES } from "@/lib/orderData";
+import { Plus, Database, Trash2, Edit2, X, Loader2 } from "lucide-react";
 
 export default function MenuManagementPage() {
   const [items, setItems] = useState<MenuItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [seeding, setSeeding] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    description: "",
+    category: ORDER_CATEGORIES[0],
+    price: "",
+    image: "",
+  });
 
   useEffect(() => {
     fetchItems();
@@ -69,6 +78,30 @@ export default function MenuManagementPage() {
     }
   };
 
+  const handleAddItem = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      await menuService.createItem({
+        name: formData.name,
+        description: formData.description,
+        category: formData.category,
+        price: Number(formData.price),
+        image: formData.image || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop&q=60", // default placeholder
+        availability: true,
+        isVeg: false,
+      });
+      setIsModalOpen(false);
+      setFormData({ name: "", description: "", category: ORDER_CATEGORIES[0], price: "", image: "" });
+      fetchItems();
+    } catch (error) {
+      console.error("Error adding item", error);
+      alert("Failed to add item.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   if (loading) {
     return <div className="p-8 text-ink/50 animate-pulse">Loading menu items...</div>;
   }
@@ -89,7 +122,10 @@ export default function MenuManagementPage() {
             <Database className="w-4 h-4" />
             {seeding ? "Seeding..." : "Seed from Hardcoded Data"}
           </button>
-          <button className="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/90 text-paper rounded-lg transition-colors shadow-card">
+          <button 
+            onClick={() => setIsModalOpen(true)}
+            className="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/90 text-paper rounded-lg transition-colors shadow-card"
+          >
             <Plus className="w-4 h-4" />
             Add New Item
           </button>
@@ -159,6 +195,61 @@ export default function MenuManagementPage() {
           </tbody>
         </table>
       </div>
+
+      {/* Add Item Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-ink/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-paper rounded-2xl w-full max-w-md shadow-2xl overflow-hidden animate-fade-in-up">
+            <div className="flex justify-between items-center p-6 border-b border-line">
+              <h3 className="font-bold text-xl text-ink">Add New Menu Item</h3>
+              <button onClick={() => setIsModalOpen(false)} className="text-ink/40 hover:text-ink">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            
+            <form onSubmit={handleAddItem} className="p-6 space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-ink mb-1">Name</label>
+                <input required type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full bg-sand border border-line rounded-lg px-4 py-2 focus:outline-none focus:border-primary/50 text-ink" placeholder="e.g. Avocado Toast" />
+              </div>
+              
+              <div className="flex gap-4">
+                <div className="flex-1">
+                  <label className="block text-sm font-medium text-ink mb-1">Category</label>
+                  <select value={formData.category} onChange={e => setFormData({...formData, category: e.target.value})} className="w-full bg-sand border border-line rounded-lg px-4 py-2 focus:outline-none focus:border-primary/50 text-ink">
+                    {ORDER_CATEGORIES.map(cat => (
+                      <option key={cat} value={cat}>{cat}</option>
+                    ))}
+                  </select>
+                </div>
+                <div className="w-1/3">
+                  <label className="block text-sm font-medium text-ink mb-1">Price (₹)</label>
+                  <input required type="number" min="0" value={formData.price} onChange={e => setFormData({...formData, price: e.target.value})} className="w-full bg-sand border border-line rounded-lg px-4 py-2 focus:outline-none focus:border-primary/50 text-ink" placeholder="0" />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-ink mb-1">Description</label>
+                <textarea required value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} className="w-full bg-sand border border-line rounded-lg px-4 py-2 focus:outline-none focus:border-primary/50 text-ink resize-none" rows={2} placeholder="Brief description of the item" />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-ink mb-1">Image URL</label>
+                <input required type="url" value={formData.image} onChange={e => setFormData({...formData, image: e.target.value})} className="w-full bg-sand border border-line rounded-lg px-4 py-2 focus:outline-none focus:border-primary/50 text-ink" placeholder="https://..." />
+              </div>
+
+              <div className="pt-4 flex gap-3">
+                <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 px-4 py-2 border border-line rounded-lg text-ink font-medium hover:bg-ink/5">
+                  Cancel
+                </button>
+                <button type="submit" disabled={isSubmitting} className="flex-1 px-4 py-2 bg-primary text-paper rounded-lg font-medium hover:bg-primary/90 flex items-center justify-center gap-2 disabled:opacity-50">
+                  {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : "Save Item"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
