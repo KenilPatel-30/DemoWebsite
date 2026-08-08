@@ -80,7 +80,7 @@ export default function Cart() {
       clearCart();
       setOrderInstructions("");
       setTableNumber("");
-      router.push(`/order/${orderDocId}`);
+      setCurrentView("orderConfirmed");
     } catch (error) {
       console.error("Failed to place order:", error);
       alert("Failed to place order. Please try again.");

@@ -51,9 +51,16 @@ export default function Checkout() {
         notes: orderInstructions || "",
       });
 
+      setActiveOrder({
+        id: orderDocId,
+        items: cart,
+        instructions: orderInstructions,
+        total: total,
+        status: isUnpaid ? "unpaid" : "paid"
+      });
       clearCart();
       setOrderInstructions("");
-      router.push(`/order/${orderDocId}`);
+      setCurrentView("orderConfirmed");
     } catch (error) {
       console.error("Failed to place order:", error);
       alert("Failed to place order. Please try again.");
