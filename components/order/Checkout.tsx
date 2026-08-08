@@ -40,6 +40,7 @@ export default function Checkout() {
         total: total,
         status: "Pending",
         paymentStatus: isUnpaid ? "Pending" : "Paid",
+        paymentMethod: paymentMethod,
         notes: orderInstructions,
       });
 

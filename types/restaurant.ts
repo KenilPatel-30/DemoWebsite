@@ -49,6 +49,7 @@ export interface Order {
   total: number;
   status: OrderStatus;
   paymentStatus: "Pending" | "Paid";
+  paymentMethod?: string;
   notes?: string;
   createdAt: any; // Firestore Timestamp
   updatedAt: any; // Firestore Timestamp

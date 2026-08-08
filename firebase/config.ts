@@ -3,12 +3,13 @@ import { getFirestore } from "firebase/firestore";
 
 // Stubbed config - the user will replace these with their actual credentials
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID",
+  apiKey: "AIzaSyBXV0mCUGq80jvygNSljLgo2f6V71mdI6M",
+  authDomain: "demowebsite-ab190.firebaseapp.com",
+  projectId: "demowebsite-ab190",
+  storageBucket: "demowebsite-ab190.firebasestorage.app",
+  messagingSenderId: "768036954015",
+  appId: "1:768036954015:web:33cbe298cfe8d9b98aa7aa",
+  measurementId: "G-67W8DLG8C7"
 };
 
 // Initialize Firebase only if it hasn't been initialized already

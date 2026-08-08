@@ -67,7 +67,7 @@ export default function FloatingActions() {
     else window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  if (pathname && (pathname.startsWith("/order") || pathname.startsWith("/reserve"))) return null;
+  if (pathname && (pathname.startsWith("/order") || pathname.startsWith("/reserve") || pathname.startsWith("/admin") || pathname.startsWith("/kitchen"))) return null;
 
   return (
     <motion.div

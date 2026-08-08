@@ -69,8 +69,8 @@ export default function Navbar() {
     }
   };
 
-  // Hide global navbar on pages that have their own custom sticky headers (like checkout/reserve)
-  if (pathname === '/reserve') {
+  // Hide global navbar on pages that have their own custom layouts
+  if (pathname === '/reserve' || pathname?.startsWith('/admin') || pathname?.startsWith('/kitchen') || pathname?.startsWith('/order/')) {
     return null;
   }
 

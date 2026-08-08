@@ -76,7 +76,14 @@ export default function KitchenPage() {
                       </div>
                       <div className="text-right">
                         <div className="font-medium text-sm text-white/80">{order.customerName}</div>
-                        <div className="text-xs text-white/40">{order.items.length} items</div>
+                        <div className="text-xs text-white/40 mb-1">{order.items.length} items</div>
+                        {order.paymentMethod && (
+                          <div className={`text-[10px] inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-medium ${
+                            order.paymentStatus === 'Paid' ? 'bg-green-500/10 text-green-400' : 'bg-orange-500/10 text-orange-400'
+                          }`}>
+                            {order.paymentMethod} {order.paymentStatus === 'Paid' ? '✓' : '(Unpaid)'}
+                          </div>
+                        )}
                       </div>
                     </div>
                     
