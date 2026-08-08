@@ -35,13 +35,14 @@ export default function AdminDashboard() {
   // Calculate metrics
   const validOrders = orders.filter(o => o.status !== "Cancelled");
   
-  const totalRevenue = validOrders.reduce((sum, order) => sum + order.total, 0);
+  const totalRevenue = validOrders.reduce((sum, order) => sum + (order.total || 0), 0);
   const totalOrdersCount = validOrders.length;
   
   const uniqueCustomers = new Set(validOrders.map(o => o.customerName)).size;
   
   const itemsSold = validOrders.reduce((sum, order) => {
-    return sum + order.items.reduce((itemSum, item) => itemSum + item.quantity, 0);
+    const items = order.items || [];
+    return sum + items.reduce((itemSum, item) => itemSum + (item.quantity || 1), 0);
   }, 0);
 
   const stats = [
@@ -56,8 +57,9 @@ export default function AdminDashboard() {
   // Calculate top selling items
   const itemSales: Record<string, number> = {};
   validOrders.forEach(order => {
-    order.items.forEach(item => {
-      itemSales[item.name] = (itemSales[item.name] || 0) + item.quantity;
+    const items = order.items || [];
+    items.forEach(item => {
+      itemSales[item.name] = (itemSales[item.name] || 0) + (item.quantity || 1);
     });
   });
   const topSellingItems = Object.entries(itemSales)
@@ -114,7 +116,7 @@ export default function AdminDashboard() {
                     <div>
                       <h4 className="font-medium text-sm">{order.customerName}</h4>
                       <p className="text-xs text-ink/50">
-                        {order.orderId} • {order.items.length} items • Table: {order.tableNumber || "N/A"}
+                        {order.orderId} • {(order.items || []).length} items • Table: {order.tableNumber || "N/A"}
                       </p>
                     </div>
                   </div>

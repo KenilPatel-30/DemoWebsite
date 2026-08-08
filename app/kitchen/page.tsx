@@ -94,9 +94,9 @@ export default function KitchenPage() {
                         </div>
                       </div>
                       <div className="text-right">
-                        <div className="font-medium text-sm text-ink/80">{order.customerName}</div>
-                        <div className="text-xs text-ink/40 mb-1">
-                          {order.items.length} items • Table: <span className="font-bold text-ink">{order.tableNumber || "N/A"}</span>
+                        <div className="flex items-center gap-1.5 text-ink/70">
+                          <Receipt className="w-3.5 h-3.5" />
+                          {(order.items || []).length} items • Table: <span className="font-bold text-ink">{order.tableNumber || "N/A"}</span>
                         </div>
                         {order.paymentMethod && (
                           <div className={`text-[10px] inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-medium ${
@@ -108,8 +108,8 @@ export default function KitchenPage() {
                       </div>
                     </div>
                     
-                    <ul className="space-y-3 mb-4 text-ink">
-                      {order.items.map((item, idx) => (
+                    <div className="mt-4 space-y-3">
+                      {(order.items || []).map((item, idx) => (
                         <li key={idx} className="text-sm">
                           <div className="flex items-start gap-2">
                             <span className="font-bold bg-ink/10 px-2 rounded">{item.quantity}x</span>
