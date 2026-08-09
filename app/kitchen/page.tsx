@@ -108,7 +108,7 @@ export default function KitchenPage() {
                       </div>
                     </div>
                     
-                    <div className="mt-4 space-y-3">
+                    <ul className="mt-4 space-y-3">
                       {(order.items || []).map((item, idx) => (
                         <li key={idx} className="text-sm">
                           <div className="flex items-start gap-2">
